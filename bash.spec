@@ -206,39 +206,3 @@ rm -rf $RPM_BUILD_ROOT
 
 %files static
 %attr(755,root,root) /bin/bash.static
-
-%changelog
-* Sat Jun  5 1999 Jan Rêkorajski <baggins@pld.org.pl>
-  [2.03-7]
-- added static subpackage
-
-* Wed May 19 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
-  [2.03-5]
-- more macros,
-- FHS 2.0.
-
-* Mon May  3 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
-  [2.03-4]
-- added {un}registering info page for bash (added bash-info.patch).
-
-* Mon Feb 22 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
-  [2.03-1]
-- removed /bin/sh link from bash (this is now provided by pdksh),
-- removed man group from man pages,
-- gzipping instead bzipping2 man pages,
-- rewrited %post, %preun,
-- removed %config and %verify rules from /etc/bashrc (all extensions can be
-  added by adding /etc/profile.d/*.sh scripts).
-
-* Sun Sep 05 1998 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
-  [2.02.1-1d]
-- fixed files permissions,
-- build with restricted shell support.
-
-* Wed Jun 17 1998 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
-  [14.7-9d]
-- build against glibc-2.1,
-- translation modified for pl,
-- added %defattr support,
-- build from non root's account,
-- start at RH spec.
