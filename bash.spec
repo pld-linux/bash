@@ -26,7 +26,7 @@ BuildRequires:	readline-static >= 4.1
 Prereq:		/usr/sbin/fix-info-dir
 PreReq:		grep
 PreReq:		fileutils
-Buildroot:	/tmp/%{name}-%{version}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	bash2
 Obsoletes:	bash2-doc
 
