@@ -134,7 +134,7 @@ install -d $RPM_BUILD_ROOT/{bin,etc}
 make install \
 	prefix=$RPM_BUILD_ROOT%{_prefix} \
 	infodir=$RPM_BUILD_ROOT%{_infodir} \
-	mandir=$RPM_BUILD_ROOT%{_mandir} \
+	mandir=$RPM_BUILD_ROOT%{_mandir} 
 
 mv $RPM_BUILD_ROOT%{_bindir}/bash	$RPM_BUILD_ROOT/bin
 install	-s bash.static	$RPM_BUILD_ROOT/bin
