@@ -24,6 +24,8 @@ Patch8:		%{name}-DESTDIR.patch
 Patch9:		%{name}-rlimit_locks.patch
 Patch10:	%{name}-sighup.patch
 Patch11:	%{name}-tmpfile.patch
+Patch13: 	%{name}-service_completion.patch
+
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
