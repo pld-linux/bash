@@ -158,7 +158,7 @@ Tools specification (IEEE Working Group 1003.2).
 
 %package static
 Summary:	Statically linked GNU Bourne Again Shell (bash)
-Summary(pl):	Statycznie zlinkowany GNU Bourne Again Shell (bash)
+Summary(pl):	Statycznie skonsolidowany GNU Bourne Again Shell (bash)
 Group:		Applications/Shells
 Requires:	%{name}
 Requires(post,preun):	grep
@@ -179,11 +179,11 @@ You'll probably end up using it. This package contains statically
 linked version of bash.
 
 %description static -l pl
-Bash jest zaawansowanym shellem, który wykonuje komendy czytane ze
+Bash jest zaawansowan± pow³ok±, która wykonuje komendy czytane ze
 standardowego wej¶cia (stdin) lub z pliku. Posiada w³a¶ciwo¶ci pow³ok
-Korn i C (ksh i csh). Bash ma równie¿ zaimplementowany IEEE Posix
+Korn i C (ksh i csh). Bash jest równie¿ zaimplementowany IEEE Posix
 Shell oraz jest zgodny ze specyfikacj± - IEEE Working Group 1003.2. W
-tym pakiecie jest statycznie zlinkowany bash.
+tym pakiecie jest wersja basha skonsolidowana statycznie.
 
 %prep
 %setup -q -a5
