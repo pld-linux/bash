@@ -221,6 +221,8 @@ done
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/{bin,etc/skel}
 
+%{?_with_bash_history:install -d $RPM_BUILD_ROOT/var/log/bash_hist}
+
 %{__make} install DESTDIR=$RPM_BUILD_ROOT
 
 mv -f $RPM_BUILD_ROOT%{_bindir}/bash $RPM_BUILD_ROOT/bin
@@ -298,6 +300,7 @@ fi
 %attr(755,root,root) /bin/rbash
 %attr(755,root,root) %{_bindir}/bashbug
 
+%{?_with_bash_history:%attr(750,root,root) %dir /var/log/bash_hist}
 %{_infodir}/bash.info.gz
 %{_mandir}/man1/*
 %lang(es) %{_mandir}/es/man1/*
@@ -307,6 +310,7 @@ fi
 %lang(ko) %{_mandir}/ko/man1/*
 %lang(nl) %{_mandir}/nl/man1/*
 %lang(pl) %{_mandir}/pl/man1/*
+
 
 %{?_without_static:#}%files static
 %{?_without_static:#}%defattr(644,root,root,755)
