@@ -140,16 +140,16 @@ LDFLAGS="-s"; export LDFLAGS
 	--enable-static-link \
 	--with-installed-readline
 
-make TERMCAP_LIB="-ltinfo"
+%{__make} TERMCAP_LIB="-ltinfo"
 mv bash bash.static
-make TERMCAP_LIB="-ltinfo" STATIC_LD=""
+%{__make} TERMCAP_LIB="-ltinfo" STATIC_LD=""
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_mandir},%{_infodir}} \
 	$RPM_BUILD_ROOT/{bin,etc/skel/{C,pl}}
 
-make install \
+%{__make} install \
 	bindir=$RPM_BUILD_ROOT%{_bindir} \
 	infodir=$RPM_BUILD_ROOT%{_infodir} \
 	mandir=$RPM_BUILD_ROOT%{_mandir} 
