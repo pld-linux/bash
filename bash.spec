@@ -5,7 +5,7 @@ Summary(pl):	GNU Bourne Again Shell (bash)
 Summary(tr):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.03
-Release:	10
+Release:	11
 Group:		Shells
 Group(pl):	Pow³oki
 Copyright:	GPL
@@ -28,6 +28,8 @@ Prereq:		/usr/sbin/fix-info-dir
 PreReq:		grep
 PreReq:		fileutils
 Buildroot:	/tmp/%{name}-%{version}-root
+Obsoletes:	bash2
+Obsoletes:	bash2-doc
 
 %description
 Bash is a GNU project sh-compatible shell or command language interpreter.
