@@ -194,8 +194,11 @@ rm -rf $RPM_BUILD_ROOT
 %doc {NEWS,README}.gz doc/{FAQ,INTRO}.gz
 
 /etc/bashrc
-/etc/skel/C/.*
-%lang(pl) /etc/skel/pl/.*
+
+/skel/C/.bash_logout
+/skel/C/.bash_profile
+/etc/skel/C/.bashrc
+%lang(pl) /etc/skel/pl/.bashrc
 
 %attr(755,root,root) /bin/bash
 %attr(755,root,root) /bin/rbash
