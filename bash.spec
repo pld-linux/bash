@@ -1,12 +1,27 @@
 Summary:	GNU Bourne Again Shell (bash)
 Summary(fr):	Le shell Bourne Again de GNU
+Summary(pl):	PowЁoka GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.05
-Release:	9
+Release:	10
 License:	GPL
 Group:		Applications/Shells
+Group(cs):	Aplikace/Shelly
+Group(da):	Programmer/Skaller
 Group(de):	Applikationen/Shells
+Group(es):	Aplicaciones/Shells
+Group(fr):	Applications/Shells
+Group(is):	Forrit/Skeljar
+Group(it):	Applicazioni/Shell
+Group(ja):	╔╒╔в╔Й╔╠║╪╔╥╔Г╔С/╔╥╔╖╔К
+Group(no):	Applikasjoner/Skall
 Group(pl):	Aplikacje/PowЁoki
+Group(pt):	AplicaГУes/Shells
+Group(pt_BR):	AplicaГУes/Shells
+Group(ru):	Приложения/Командные процессоры
+Group(sl):	Programi/Ukazne lupine
+Group(sv):	TillДmpningar/Skal
+Group(uk):	Прикладн╕ Програми/Командн╕ процесори
 Source0:	ftp://prep.ai.mit.edu/pub/gnu/bash/%{name}-%{version}.tar.gz
 Source1:	%{name}rc
 Source2:	%{name}-skel-.bash_logout
@@ -21,7 +36,7 @@ Patch4:		%{name}-profile.patch
 Patch5:		%{name}-requires.patch
 Patch6:		%{name}-compat.patch
 Patch7:		%{name}-shellfunc.patch
-Patch8:		http://www.t17.ds.pwr.wroc.pl/~misiek/ipv6/bash-2.05-ipv6-20010418.patch.gz
+Patch8:		http://www.t17.ds.pwr.wroc.pl/~misiek/ipv6/%{name}-2.05-ipv6-20010418.patch.gz
 Patch9:		%{name}-DESTDIR.patch
 Patch10:	%{name}-rlimit_locks.patch
 Patch11:	%{name}-sighup.patch
@@ -31,7 +46,7 @@ BuildRequires:	bison
 BuildRequires:	glibc-devel >= 2.2
 BuildRequires:	ncurses-devel >= 5.2
 BuildRequires:	readline-devel >= 4.2
-BuildRequires:  texinfo
+BuildRequires:	texinfo
 %if %{!?_without_static:1}%{?_without_static:0}
 # Require static library only for static build
 BuildRequires:	glibc-static >= 2.2
@@ -108,8 +123,22 @@ uyumlu bir uygulama olarak tasarlanmЩЧtЩr.
 Summary:	Statically linked GNU Bourne Again Shell (bash)
 Summary(pl):	Statycznie zlinkowany GNU Bourne Again Shell (bash)
 Group:		Applications/Shells
+Group(cs):	Aplikace/Shelly
+Group(da):	Programmer/Skaller
 Group(de):	Applikationen/Shells
+Group(es):	Aplicaciones/Shells
+Group(fr):	Applications/Shells
+Group(is):	Forrit/Skeljar
+Group(it):	Applicazioni/Shell
+Group(ja):	╔╒╔в╔Й╔╠║╪╔╥╔Г╔С/╔╥╔╖╔К
+Group(no):	Applikasjoner/Skall
 Group(pl):	Aplikacje/PowЁoki
+Group(pt):	AplicaГУes/Shells
+Group(pt_BR):	AplicaГУes/Shells
+Group(ru):	Приложения/Командные процессоры
+Group(sl):	Programi/Ukazne lupine
+Group(sv):	TillДmpningar/Skal
+Group(uk):	Прикладн╕ Програми/Командн╕ процесори
 Requires:	%{name}
 Prereq:		grep
 Prereq:		fileutils
