@@ -48,7 +48,7 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	ncurses-devel >= 5.2
-BuildRequires:	readline-devel >= 4.2
+BuildRequires:	readline-devel >= 4.3
 BuildRequires:	texinfo
 %if %{with static}
 # Require static library only for static build
