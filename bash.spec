@@ -100,9 +100,8 @@ echo .so bash.1 > $RPM_BUILD_ROOT/usr/man/man1/rbash.1
 
 ln -sf bash $RPM_BUILD_ROOT/bin/rbash
 
-gzip -9nf $RPM_BUILD_ROOT/usr/{info/bash.info,man/man1/*}
-
-bzip2 -9 NEWS README 
+gzip -9nf $RPM_BUILD_ROOT/usr/{info/bash.info,man/man1/*} \
+	NEWS README 
 
 %post
 mv /etc/shells /etc/shells.org
@@ -119,7 +118,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc NEWS.bz2 README.bz2 
+%doc {NEWS,README}.gz
 
 /etc/bashrc
 
