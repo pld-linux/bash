@@ -230,10 +230,10 @@ done
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/{bin,etc/skel}
-
 %{?_with_bash_history:install -d $RPM_BUILD_ROOT/var/log/bash_hist}
 
-%{__make} install DESTDIR=$RPM_BUILD_ROOT
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 
 mv -f $RPM_BUILD_ROOT%{_bindir}/bash $RPM_BUILD_ROOT/bin
 %{?_without_static:#}install	bash.static $RPM_BUILD_ROOT/bin
