@@ -140,7 +140,7 @@ fi
 - changed Buildroot to /tmp/%%{name}-%%{version}-root,
 - added using %%{name} and %%{version} in Source,
 - simplification in %install and %files,
-- added %attr and %defattr macros in %files (allow build package from
+- added %attr and %defattr macros in %files (allows build package from
   non-root account),
 - added pl translation (Wojtek ¦lusarczyk <wojtek@shadow.eu.org>),
 - added de, fr, tr translations from old 1.4.x bash spec.
