@@ -51,6 +51,7 @@ BuildRequires:	ncurses-static >= 5.2
 BuildRequires:	readline-static >= 4.3
 %endif
 Requires(post,preun):	grep
+Requires(preun):	fileutils
 Requires:	readline >= 4.3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	bash-doc
@@ -155,6 +156,7 @@ Summary(pl):	Statycznie zlinkowany GNU Bourne Again Shell (bash)
 Group:		Applications/Shells
 Requires:	%{name}
 Requires(post,preun):	grep
+Requires(preun):	fileutils
 
 %description static
 Bash is a GNU project sh-compatible shell or command language
@@ -251,8 +253,8 @@ install %{SOURCE4} $RPM_BUILD_ROOT/etc/skel/.bashrc
 rm -rf $RPM_BUILD_ROOT
 
 %post
+umask 022
 if [ ! -f /etc/shells ]; then
-	umask 022
 	echo "/bin/bash" > /etc/shells
 	echo "/bin/rbash" >> /etc/shells
 else
@@ -266,21 +268,21 @@ fi
 
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
-%post static
-if [ ! -f /etc/shells ]; then
-	umask 022
-	echo "/bin/bash.static" > /etc/shells
-else
-	if ! grep -q '^/bin/bash.static$' /etc/shells; then
-		echo "/bin/bash.static" >> /etc/shells
-	fi
-fi
-
 %preun
 if [ "$1" = "0" ]; then
 	umask 022
 	grep -v /bin/bash /etc/shells | grep -v /bin/rbash > /etc/shells.new
 	mv -f /etc/shells.new /etc/shells
+fi
+
+%post static
+umask 022
+if [ ! -f /etc/shells ]; then
+	echo "/bin/bash.static" > /etc/shells
+else
+	if ! grep -q '^/bin/bash.static$' /etc/shells; then
+		echo "/bin/bash.static" >> /etc/shells
+	fi
 fi
 
 %preun static
@@ -316,7 +318,6 @@ fi
 %lang(ko) %{_mandir}/ko/man1/*
 %lang(nl) %{_mandir}/nl/man1/*
 %lang(pl) %{_mandir}/pl/man1/*
-
 
 %{?_without_static:#}%files static
 %{?_without_static:#}%defattr(644,root,root,755)
