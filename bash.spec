@@ -4,8 +4,8 @@ Summary(fr):	Le shell Bourne Again de GNU
 Summary(pl):	GNU Bourne Again Shell (bash)
 Summary(tr):	GNU Bourne Again Shell (bash)
 Name:		bash
-Version:	2.03
-Release:	12
+Version:	2.04
+Release:	1
 Group:		Shells
 Group(pl):	Pow³oki
 License:	GPL
@@ -15,17 +15,14 @@ Source2:	bash-skel-.bash_logout
 Source3:	bash-skel-.bash_profile
 Source4:	bash-skel-.bashrc
 Source5:	bash-skel_pl-.bashrc
-Patch0:		bash-arm.patch
+Patch0:		bash-paths.patch
 Patch1:		bash-fixes.patch
-Patch2:		bash-paths.patch
-Patch3:		bash-security.patch
-Patch4:		bash-autoconf.patch
-Patch5:		bash-info.patch
-Patch6:		bash-requires.patch
-Patch7:		bash-profile.patch
-Patch8:		bash-rlvers.patch
+Patch2:		bash-security.patch
+Patch3:		bash-autoconf.patch
+Patch4:		bash-info.patch
+Patch5:		bash-profile.patch
 BuildRequires:	ncurses-static >= 5.0
-BuildRequires:	readline-static >= 4.0
+BuildRequires:	readline-static >= 4.1
 Prereq:		/usr/sbin/fix-info-dir
 PreReq:		grep
 PreReq:		fileutils
@@ -120,9 +117,6 @@ jest statycznie zlinkowany bash.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
 
 echo %{version} > _distribution
 echo %{release} > _patchlevel
