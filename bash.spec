@@ -5,7 +5,7 @@ Summary(pl):	GNU Bourne Again Shell (bash)
 Summary(tr):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.04
-Release:	13
+Release:	14
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
 Group(pl):	Aplikacje/Pow³oki
@@ -26,6 +26,7 @@ Patch6:		%{name}-requires.patch
 Patch7:		%{name}-compat.patch
 Patch8:		%{name}-shellfunc.patch
 Patch9:		%{name}-export.patch
+Patch10:	http://www.t17.ds.pwr.wroc.pl/~misiek/ipv6/bash-2.04-ipv6-20003011.patch.gz
 BuildRequires:	ncurses-static >= 5.0
 BuildRequires:	readline-static >= 4.1
 BuildRequires:	glibc-static >= 2.2
@@ -132,11 +133,13 @@ tym pakiecie jest statycznie zlinkowany bash.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p0
+%patch10 -p1
 
 echo %{version} > _distribution
 echo %{release} > _patchlevel
 
 %build
+autoconf
 %configure \
 	--enable-alias \
 	--enable-help-builtin \
