@@ -12,7 +12,7 @@ Summary(ru):	GNU Bourne Again Shell (bash)
 Summary(uk):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.05b
-Release:	9%{?_with_bash_history:inv}
+Release:	10%{?_with_bash_history:inv}
 License:	GPL
 Group:		Applications/Shells
 Source0:	ftp://ftp.gnu.org/pub/gnu/bash/%{name}-%{version}.tar.gz
@@ -39,7 +39,10 @@ Patch12:	ftp://ftp.gnu.org/pub/gnu/bash/bash-2.05b-patches/bash205b-001
 Patch13:	ftp://ftp.gnu.org/pub/gnu/bash/bash-2.05b-patches/bash205b-002
 Patch14:	ftp://ftp.gnu.org/pub/gnu/bash/bash-2.05b-patches/bash205b-003
 Patch15:	ftp://ftp.gnu.org/pub/gnu/bash/bash-2.05b-patches/bash205b-004
-Patch16:	%{name}-pmake.patch
+Patch16:	ftp://ftp.gnu.org/pub/gnu/bash/bash-2.05b-patches/bash205b-005
+Patch17:	ftp://ftp.gnu.org/pub/gnu/bash/bash-2.05b-patches/bash205b-006
+Patch18:	ftp://ftp.gnu.org/pub/gnu/bash/bash-2.05b-patches/bash205b-007
+Patch19:	%{name}-pmake.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
@@ -200,7 +203,10 @@ tym pakiecie jest statycznie zlinkowany bash.
 %patch13 -p0
 %patch14 -p0
 %patch15 -p0
-%patch16 -p1
+%patch16 -p0
+%patch17 -p0
+%patch18 -p0
+%patch19 -p1
 
 echo %{version} > _distribution
 echo %{release} > _patchlevel
