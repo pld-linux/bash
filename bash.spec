@@ -1,6 +1,7 @@
 #
 # Conditional build:
 # _without_static - don't build static version
+# _with_bash_history - build with additional history in /var/log/hist ;)
 
 Summary:	GNU Bourne Again Shell (bash)
 Summary(es):	GNU Bourne Again Shell (bash)
