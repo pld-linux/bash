@@ -5,7 +5,7 @@ Summary(pl):	GNU Bourne Again Shell (bash)
 Summary(tr):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.04
-Release:	12
+Release:	13
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
 Group(pl):	Aplikacje/Pow³oki
@@ -25,9 +25,10 @@ Patch5:		%{name}-profile.patch
 Patch6:		%{name}-requires.patch
 Patch7:		%{name}-compat.patch
 Patch8:		%{name}-shellfunc.patch
+Patch9:		%{name}-export.patch
 BuildRequires:	ncurses-static >= 5.0
 BuildRequires:	readline-static >= 4.1
-BuildRequires:	glibc-static
+BuildRequires:	glibc-static >= 2.2
 PreReq:		grep
 PreReq:		fileutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -130,6 +131,7 @@ tym pakiecie jest statycznie zlinkowany bash.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 
 echo %{version} > _distribution
 echo %{release} > _patchlevel
