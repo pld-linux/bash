@@ -109,7 +109,7 @@ Bash (Bourne Again SHell) jest projektem GNU pow³oki kompatybilnej z
 sh oraz interpretera jêzyka poleceñ. Posiada u¿yteczne w³a¶ciwo¶ci
 pow³ok Korn (ksh) i C (csh). Wiêkszo¶æ skryptów sh mo¿e byæ
 uruchamiana w bashu bez modyfikacji. Oferuje on kilka ulepszeñ w
-stusunku do sh, w³±czaj±c edycjê linii poleceñ, nieograniczony rozmiar
+stosunku do sh, w³±czaj±c edycjê linii poleceñ, nieograniczony rozmiar
 historii poleceñ, funkcje i aliasy, indeksowane tablice
 nieograniczonych rozmiarów oraz arytmetykê ca³kowitoliczbow± o
 dowolnej podstawie od 2 do 64. W zamierzeniu ostatecznie ma byæ zgodny
