@@ -5,7 +5,7 @@ Summary(pl):	GNU Bourne Again Shell (bash)
 Summary(tr):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.05
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
@@ -23,10 +23,11 @@ Patch4:		%{name}-profile.patch
 Patch5:		%{name}-requires.patch
 Patch6:		%{name}-compat.patch
 Patch7:		%{name}-shellfunc.patch
-Patch8:		http://www.t17.ds.pwr.wroc.pl/~misiek/ipv6/bash-2.04-ipv6-20003011.patch.gz
+Patch8:		http://www.t17.ds.pwr.wroc.pl/~misiek/ipv6/bash-2.05-ipv6-20010418.patch.gz
 BuildRequires:	ncurses-static >= 5.2
 BuildRequires:	readline-static >= 4.2
 BuildRequires:	glibc-static >= 2.2
+BuildRequires:	bison
 PreReq:		grep
 PreReq:		fileutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -128,13 +129,14 @@ tym pakiecie jest statycznie zlinkowany bash.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-#%patch8 -p1
+%patch8 -p1
 
 echo %{version} > _distribution
 echo %{release} > _patchlevel
 
 %build
 autoconf
+for mode in static shared; do
 %configure \
 	--enable-alias \
 	--enable-help-builtin \
@@ -145,22 +147,20 @@ autoconf
 	--with-curses \
 	--enable-extended-glob \
 	--enable-dparen-arithmetic \
-	--enable-static-link \
+	`[ "$mode" = "static" ] && echo "--enable-static-link"` \
 	--with-installed-readline
 
-%{__make} TERMCAP_LIB="-ltinfo"
-mv -f bash bash.static
-%{__make} TERMCAP_LIB="-ltinfo" STATIC_LD=""
+%{__make}
+
+[ "$mode" = "static" ] && mv -f bash bash.static || :
+done
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_mandir},%{_infodir}} \
 	$RPM_BUILD_ROOT/{bin,etc/skel}
 
-%{__make} install \
-	bindir=$RPM_BUILD_ROOT%{_bindir} \
-	infodir=$RPM_BUILD_ROOT%{_infodir} \
-	mandir=$RPM_BUILD_ROOT%{_mandir} 
+%{makeinstall}
 
 mv -f $RPM_BUILD_ROOT%{_bindir}/bash $RPM_BUILD_ROOT/bin
 install	bash.static $RPM_BUILD_ROOT/bin
