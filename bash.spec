@@ -150,7 +150,7 @@ echo %{version} > _distribution
 echo %{release} > _patchlevel
 
 %build
-autoconf
+%{__autoconf}
 for mode in %{!?_without_static:static} shared; do
 %configure \
 	--enable-alias \
@@ -167,38 +167,38 @@ for mode in %{!?_without_static:static} shared; do
 
 %{__make} DEFS="-DHAVE_CONFIG_H -D_GNU_SOURCE"
 
-[ "$mode" = "static" ] && mv -f bash bash.static || :
+[ "$mode" = "static" ] && %{__mv} -f bash bash.static || :
 done
 
 %install
-rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/{bin,etc/skel}
+%{__rm} -rf $RPM_BUILD_ROOT
+%{__install} -d $RPM_BUILD_ROOT/{bin,etc/skel}
 
 %{__make} install DESTDIR=$RPM_BUILD_ROOT
 
-mv -f $RPM_BUILD_ROOT%{_bindir}/bash $RPM_BUILD_ROOT/bin
+%{__mv} -f $RPM_BUILD_ROOT%{_bindir}/bash $RPM_BUILD_ROOT/bin
 %{?_without_static:#}install	bash.static $RPM_BUILD_ROOT/bin
 
-install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/bashrc
+%{__install} %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/bashrc
 echo .so bash.1 > $RPM_BUILD_ROOT%{_mandir}/man1/rbash.1
 
-ln -sf bash $RPM_BUILD_ROOT/bin/rbash
+%{__ln_s} -f bash $RPM_BUILD_ROOT/bin/rbash
 
-install %{SOURCE2} $RPM_BUILD_ROOT/etc/skel/.bash_logout
-install %{SOURCE3} $RPM_BUILD_ROOT/etc/skel/.bash_profile
-install %{SOURCE4} $RPM_BUILD_ROOT/etc/skel/.bashrc
+%{__install} %{SOURCE2} $RPM_BUILD_ROOT/etc/skel/.bash_logout
+%{__install} %{SOURCE3} $RPM_BUILD_ROOT/etc/skel/.bash_profile
+%{__install} %{SOURCE4} $RPM_BUILD_ROOT/etc/skel/.bashrc
 
-gzip -9nf NEWS README doc/{FAQ,INTRO}
+%{__gzip} -9nf NEWS README doc/{FAQ,INTRO}
 
 %post
 if [ ! -f /etc/shells ]; then
 	echo "/bin/bash" > /etc/shells
 	echo "/bin/rbash" >> /etc/shells
 else
-	if ! grep '^/bin/bash$' /etc/shells > /dev/null; then
+	if ! grep -q '^/bin/bash$' /etc/shells; then
 		echo "/bin/bash" >> /etc/shells
 	fi
-	if ! grep '^/bin/rbash$' /etc/shells > /dev/null; then
+	if ! grep -q '^/bin/rbash$' /etc/shells; then
 		echo "/bin/rbash" >> /etc/shells
 	fi
 fi
@@ -209,7 +209,7 @@ fi
 if [ ! -f /etc/shells ]; then
 	echo "/bin/bash.static" > /etc/shells
 else
-	if ! grep '^/bin/bash.static$' /etc/shells > /dev/null; then
+	if ! grep -q '^/bin/bash.static$' /etc/shells; then
 		echo "/bin/bash.static" >> /etc/shells
 	fi
 fi
@@ -230,17 +230,16 @@ fi
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+%{__rm} -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
 %doc {NEWS,README}.gz doc/{FAQ,INTRO}.gz
 
-%config %{_sysconfdir}/bashrc
-
-/etc/skel/.bash_logout
-/etc/skel/.bash_profile
-/etc/skel/.bashrc
+%config %verify(not md5 size mtime) %{_sysconfdir}/bashrc
+%config(noreplace,missingok) %verify(not md5 size mtime) /etc/skel/.bash_logout
+%config(noreplace,missingok) %verify(not md5 size mtime) /etc/skel/.bash_profile
+%config(noreplace,missingok) %verify(not md5 size mtime) /etc/skel/.bashrc
 
 %attr(755,root,root) /bin/bash
 %attr(755,root,root) /bin/rbash
