@@ -1,0 +1,14 @@
+diff -urN bash-2.03.orig/Makefile.in bash-2.03/Makefile.in
+--- bash-2.03.orig/Makefile.in	Thu Feb 18 18:07:38 1999
++++ bash-2.03/Makefile.in	Sun Mar  7 23:48:02 1999
+@@ -514,8 +514,8 @@
+ 	$(SHELL) ./config.status --recheck
+ 
+ # comment out for distribution
+-$(srcdir)/configure:	$(srcdir)/configure.in $(srcdir)/aclocal.m4 $(srcdir)/config.h.in
+-	cd $(srcdir) && autoconf
++#$(srcdir)/configure:	$(srcdir)/configure.in $(srcdir)/aclocal.m4 $(srcdir)/config.h.in
++#	cd $(srcdir) && autoconf
+ 
+ # for chet
+ reconfig: force
