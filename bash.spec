@@ -51,6 +51,7 @@ Patch33:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-013
 Patch34:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-014
 Patch35:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-015
 Patch36:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-016
+Patch37:	%{name}-WCONTINUED.patch
 URL:		http://www.gnu.org/software/bash/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -224,6 +225,7 @@ tym pakiecie jest wersja basha skonsolidowana statycznie.
 %patch34 -p0
 %patch35 -p0
 %patch36 -p0
+%patch37 -p1
 
 echo %{version} > _distribution
 echo %{release} > _patchlevel
