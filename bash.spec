@@ -150,7 +150,7 @@ echo %{version} > _distribution
 echo %{release} > _patchlevel
 
 %build
-%{__autoconf}
+autoconf
 for mode in %{!?_without_static:static} shared; do
 %configure \
 	--enable-alias \
@@ -167,28 +167,28 @@ for mode in %{!?_without_static:static} shared; do
 
 %{__make} DEFS="-DHAVE_CONFIG_H -D_GNU_SOURCE"
 
-[ "$mode" = "static" ] && %{__mv} -f bash bash.static || :
+[ "$mode" = "static" ] && mv -f bash bash.static || :
 done
 
 %install
-%{__rm} -rf $RPM_BUILD_ROOT
-%{__install} -d $RPM_BUILD_ROOT/{bin,etc/skel}
+rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT/{bin,etc/skel}
 
 %{__make} install DESTDIR=$RPM_BUILD_ROOT
 
-%{__mv} -f $RPM_BUILD_ROOT%{_bindir}/bash $RPM_BUILD_ROOT/bin
+mv -f $RPM_BUILD_ROOT%{_bindir}/bash $RPM_BUILD_ROOT/bin
 %{?_without_static:#}install	bash.static $RPM_BUILD_ROOT/bin
 
-%{__install} %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/bashrc
+install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/bashrc
 echo .so bash.1 > $RPM_BUILD_ROOT%{_mandir}/man1/rbash.1
 
-%{__ln_s} -f bash $RPM_BUILD_ROOT/bin/rbash
+ln -s -f bash $RPM_BUILD_ROOT/bin/rbash
 
-%{__install} %{SOURCE2} $RPM_BUILD_ROOT/etc/skel/.bash_logout
-%{__install} %{SOURCE3} $RPM_BUILD_ROOT/etc/skel/.bash_profile
-%{__install} %{SOURCE4} $RPM_BUILD_ROOT/etc/skel/.bashrc
+install %{SOURCE2} $RPM_BUILD_ROOT/etc/skel/.bash_logout
+install %{SOURCE3} $RPM_BUILD_ROOT/etc/skel/.bash_profile
+install %{SOURCE4} $RPM_BUILD_ROOT/etc/skel/.bashrc
 
-%{__gzip} -9nf NEWS README doc/{FAQ,INTRO}
+gzip -9nf NEWS README doc/{FAQ,INTRO}
 
 %post
 if [ ! -f /etc/shells ]; then
@@ -230,7 +230,7 @@ fi
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
 %clean
-%{__rm} -rf $RPM_BUILD_ROOT
+rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
