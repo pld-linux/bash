@@ -6,19 +6,16 @@ fi
 
 HISTSIZE=1000
 HISTFILESIZE=1000
-
-export HISTSIZE HISTFILESIZE
-
-mesg n
-
 TMP=~/tmp
 TMPDIR="$TMP"
-export TMP TMPDIR
 
 # setup LOCALE variables
 #LANG=
 #LC_ALL=
 #export LANG LC_ALL
 
+export HISTSIZE HISTFILESIZE TMP TMPDIR
+
 umask 077
 
+mesg n
