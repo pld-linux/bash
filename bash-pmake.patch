@@ -9,11 +9,3 @@
  bashbug: $(SUPPORT_SRC)bashbug.sh config.h Makefile $(VERSPROG)
  	@sed -e "s%!MACHINE!%$(Machine)%" -e "s%!OS!%$(OS)%" \
  	     -e "s%!CFLAGS!%$(CCFLAGS)%" -e "s%!CC!%$(CC)%" \
-@@ -578,6 +580,7 @@
- 	$(RM) $@
- 	./mksyntax -o $@
- 
-+$(BUILTINS_LIBRARY): version.h
- $(BUILTINS_LIBRARY): $(BUILTIN_DEFS) $(BUILTIN_C_SRC) config.h ${BASHINCDIR}/memalloc.h
- 	@(cd $(DEFDIR) && $(MAKE) $(MFLAGS) DEBUG=${DEBUG} libbuiltins.a ) || exit 1
- 
