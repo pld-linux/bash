@@ -11,7 +11,7 @@ Summary(ru):	GNU Bourne Again Shell (bash)
 Summary(uk):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.05a
-Release:	14
+Release:	14%{?_with_bash_history:inv}
 License:	GPL
 Group:		Applications/Shells
 Source0:	ftp://prep.ai.mit.edu/pub/gnu/bash/%{name}-%{version}.tar.gz
@@ -33,6 +33,7 @@ Patch9:		%{name}-rlimit_locks.patch
 Patch10:	%{name}-sighup.patch
 Patch11:	%{name}-tmpfile.patch
 Patch13:	%{name}-%{version}-service_completion.patch
+%{?_with_bash_history:Patch14:bash-backup_history.patch}
 
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -189,6 +190,7 @@ tym pakiecie jest statycznie zlinkowany bash.
 %patch9 -p1
 %patch10 -p1
 %patch13 -p1
+%{?_with_bash_history:%patch14 -p1}
 
 echo %{version} > _distribution
 echo %{release} > _patchlevel
