@@ -1,0 +1,86 @@
+--- bash-2.04.old/builtins/ulimit.def	Mon Jan 24 13:47:38 2000
++++ bash-2.04/builtins/ulimit.def	Mon Apr 16 17:39:19 2001
+@@ -24,7 +24,7 @@
+ $BUILTIN ulimit
+ $FUNCTION ulimit_builtin
+ $DEPENDS_ON !_MINIX
+-$SHORT_DOC ulimit [-SHacdflmnpstuv] [limit]
++$SHORT_DOC ulimit [-SHacdflmnpstuvL] [limit]
+ Ulimit provides control over the resources available to processes
+ started by the shell, on systems that allow such control.  If an
+ option is given, it is interpreted as follows:
+@@ -43,6 +43,7 @@
+     -t	the maximum amount of cpu time in seconds
+     -u	the maximum number of user processes
+     -v	the size of virtual memory 
++    -L	the maximum number of file locks (Kernel >= 2.4)
+ 
+ If LIMIT is given, it is the new value of the specified resource.
+ Otherwise, the current value of the specified resource is printed.
+@@ -202,6 +203,9 @@
+ #if defined (HAVE_RESOURCE)
+   { 'v',	RLIMIT_VIRTMEM, RLIMIT_VMBLKSZ, "virtual memory (kbytes)" },
+ #endif
++#ifdef RLIMIT_LOCKS
++  { 'L',	RLIMIT_LOCKS,	1, "max file locks" },
++#endif /* RLIMIT_LOCKS */
+   { -1, -1, -1, (char *)NULL }
+ };
+ #define NCMDS	(sizeof(limits) / sizeof(limits[0]))
+@@ -344,6 +348,7 @@
+      int mode, multiple;
+ {
+   int opt, limind, setting;
++  int dont_locks = 0;
+   long block_factor;
+   RLIMTYPE current_limit, real_limit, limit;
+ 
+@@ -354,8 +359,15 @@
+   opt = get_limit (limind, mode, &current_limit);
+   if (opt < 0)
+     {
+-      builtin_error ("cannot get limit: %s", strerror (errno));
+-      return (EXECUTION_FAILURE);
++      if ( ( errno == 22 ) &&
++	   ( limits[limind].parameter == RLIMIT_LOCKS )
++	 ) {
++	current_limit=RLIM_INFINITY;
++	dont_locks = 1;
++      } else {
++	      builtin_error ("cannot get limit: %s", strerror (errno));
++	      return (EXECUTION_FAILURE);
++      }
+     }
+ 
+   if (setting == 0)	/* print the value of the specified limit */
+@@ -363,6 +375,12 @@
+       printone (limind, current_limit, multiple);
+       return (EXECUTION_SUCCESS);
+     }
++
++  if (dont_locks)
++    {
++      builtin_error ("cannot set it on the current kernel");
++      return (EXECUTION_FAILURE);
++    }
+  
+   /* Setting the limit. */
+   if (STREQ (cmdarg, "unlimited"))
+@@ -617,8 +635,15 @@
+     {
+       if (get_limit (i, mode, &value) < 0)
+ 	{
+-	  fprintf (stderr, DESCFMT, limits[i].description);
+-	  builtin_error ("cannot get limit: %s", strerror (errno));
++      	  if ( ( errno == 22 ) &&
++               ( limits[i].parameter == RLIMIT_LOCKS )
++             ) {
++        	value=RLIM_INFINITY;
++		printone (i, value, 1);
++	  } else {
++	    fprintf (stderr, DESCFMT, limits[i].description);
++	    builtin_error ("cannot get limit: %s", strerror (errno));
++          }
+ 	}
+       else
+ 	printone (i, value, 1);     
