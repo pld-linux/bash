@@ -1,7 +1,7 @@
 #
 # Conditional build:
-%bcond_without static		# don't build static version
-%bcond_with bash_history	# build with additional history in /var/log/bash_hist ;)
+%bcond_without	static		# don't build static version
+%bcond_with	bash_history	# build with additional history in /var/log/bash_hist ;)
 ##
 Summary:	GNU Bourne Again Shell (bash)
 Summary(es):	GNU Bourne Again Shell (bash)
@@ -160,9 +160,9 @@ Tools specification (IEEE Working Group 1003.2).
 Summary:	Statically linked GNU Bourne Again Shell (bash)
 Summary(pl):	Statycznie skonsolidowany GNU Bourne Again Shell (bash)
 Group:		Applications/Shells
-Requires:	%{name}
 Requires(post,preun):	grep
 Requires(preun):	fileutils
+Requires:	%{name} = %{version}
 
 %description static
 Bash is a GNU project sh-compatible shell or command language
@@ -242,7 +242,7 @@ install -d $RPM_BUILD_ROOT/{bin,etc/skel}
 	DESTDIR=$RPM_BUILD_ROOT
 
 mv -f $RPM_BUILD_ROOT%{_bindir}/bash $RPM_BUILD_ROOT/bin
-%{!?with_static:#}install	bash.static $RPM_BUILD_ROOT/bin
+%{?with_static:install bash.static $RPM_BUILD_ROOT/bin}
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/bashrc
 echo .so bash.1 > $RPM_BUILD_ROOT%{_mandir}/man1/rbash.1
@@ -329,6 +329,8 @@ fi
 %lang(nl) %{_mandir}/nl/man1/*
 %lang(pl) %{_mandir}/pl/man1/*
 
-%{!?with_static:#}%files static
-%{!?with_static:#}%defattr(644,root,root,755)
-%{!?with_static:#}%attr(755,root,root) /bin/bash.static
+%if %{with static}
+%files static
+%defattr(644,root,root,755)
+%attr(755,root,root) /bin/bash.static
+%endif
