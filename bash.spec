@@ -163,7 +163,7 @@ Summary(pl):	Statycznie skonsolidowany GNU Bourne Again Shell (bash)
 Group:		Applications/Shells
 Requires(post,preun):	grep
 Requires(preun):	fileutils
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description static
 Bash is a GNU project sh-compatible shell or command language
@@ -215,7 +215,7 @@ echo %{release} > _patchlevel
 
 %build
 %{__autoconf}
-cp -f /usr/share/automake/config.* support/
+cp -f /usr/share/automake/config.* support
 for mode in %{?with_static:static} shared; do
 %configure \
 	--enable-alias \
@@ -230,7 +230,8 @@ for mode in %{?with_static:static} shared; do
 	`[ "$mode" = "static" ] && echo "--enable-static-link"` \
 	--with-installed-readline
 
-%{__make} DEFS="-DHAVE_CONFIG_H -D_GNU_SOURCE"
+%{__make} \
+	DEFS="-DHAVE_CONFIG_H -D_GNU_SOURCE"
 
 [ "$mode" = "static" ] && mv -f bash bash.static || :
 done
@@ -311,7 +312,7 @@ fi
 %defattr(644,root,root,755)
 %doc NEWS README doc/{FAQ,INTRO}
 
-%config %verify(not md5 size mtime) %{_sysconfdir}/bashrc
+%config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/bashrc
 %config(noreplace,missingok) %verify(not md5 size mtime) /etc/skel/.bash_logout
 %config(noreplace,missingok) %verify(not md5 size mtime) /etc/skel/.bash_profile
 %config(noreplace,missingok) %verify(not md5 size mtime) /etc/skel/.bashrc
