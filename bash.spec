@@ -3,7 +3,7 @@ Summary(fr):	Le shell Bourne Again de GNU
 Summary(pl):	Pow³oka GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.05a
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/Shells
 Group(cs):	Aplikace/Shelly
