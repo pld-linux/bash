@@ -2,7 +2,7 @@ Summary:	GNU Bourne Again Shell (bash)
 Summary(fr):	Le shell Bourne Again de GNU
 Name:		bash
 Version:	2.05
-Release:	8
+Release:	9
 License:	GPL
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
@@ -31,6 +31,7 @@ BuildRequires:	bison
 BuildRequires:	glibc-devel >= 2.2
 BuildRequires:	ncurses-devel >= 5.2
 BuildRequires:	readline-devel >= 4.2
+BiuldRequires:  texinfo
 %if %{!?_without_static:1}%{?_without_static:0}
 # Require static library only for static build
 BuildRequires:	glibc-static >= 2.2
