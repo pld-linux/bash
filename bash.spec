@@ -9,7 +9,7 @@ Release:	1
 Group:		Shells
 Group(pl):	Pow³oki
 Copyright:	GPL
-Source0:	ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
+Source0:	ftp://prep.ai.mit.edu/pub/gnu/bash/%{name}-%{version}.tar.gz
 Source1:	bashrc
 Patch0:		bash-arm.patch
 Patch1:		bash-fixes.patch
@@ -72,7 +72,7 @@ tasarlanmýþtýr.
 %patch3 -p1
 
 %build
-LDFLAGS="-s" CFLAGS="$RPM_OPT_FLAGS" \
+LDFLAGS="-s" CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
 ./configure \
 	--prefix=/usr \
 	--enable-alias \
@@ -132,7 +132,7 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Mon Feb 22 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [2.03-1]
-- removed /bin/sh link from bash (thi is now provided by pdksh),
+- removed /bin/sh link from bash (this is now provided by pdksh),
 - removed man group from man pages,
 - gzipping insterad bzipping2 man pages,
 - rewrited %post, %preun,
