@@ -53,8 +53,8 @@ BuildRequires:	glibc-static >= 2.2
 BuildRequires:	ncurses-static >= 5.2
 BuildRequires:	readline-static >= 4.2
 %endif
-Prereq:		grep
-Prereq:		fileutils
+Requires(post):	grep
+Requires(preun):	grep
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	bash-doc
 Obsoletes:	bash2
@@ -140,8 +140,8 @@ Group(sl):	Programi/Ukazne lupine
 Group(sv):	TillДmpningar/Skal
 Group(uk):	Прикладн╕ Програми/Командн╕ процесори
 Requires:	%{name}
-Prereq:		grep
-Prereq:		fileutils
+Requires(post):	grep
+Requires(preun):	grep
 
 %description static
 Bash is a GNU project sh-compatible shell or command language
