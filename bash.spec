@@ -10,12 +10,12 @@ Group:		Shells
 Copyright:	GPL
 Source0:	ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
 Source1:	bashrc
-Patch0:		%{name}.patch
-Patch1:		%{name}-fixes.patch
-Patch2:		%{name}-paths.patch
-Patch3:		%{name}-security.patch
+Patch0:		bash-arm.patch
+Patch1:		bash-fixes.patch
+Patch2:		bash-paths.patch
+Patch3:		bash-security.patch
 Prereq:		fileutils
-Prereq:		grep 
+Prereq:		grep
 Buildroot:	/tmp/%{name}-%{version}-root
 
 %description
@@ -96,24 +96,26 @@ rm -f $RPM_BUILD_ROOT/usr/bin/bash.old
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/bashrc
 
-echo .so bash.1 > $RPM_BUILD_ROOT/usr/man/man1/sh.1
 echo .so bash.1 > $RPM_BUILD_ROOT/usr/man/man1/rbash.1
 
-ln -sf bash $RPM_BUILD_ROOT/bin/sh
 ln -sf bash $RPM_BUILD_ROOT/bin/rbash
 
 gzip -9nf $RPM_BUILD_ROOT/usr/{info/bash.info,man/man1/*}
 
 bzip2 -9 NEWS README 
 
-%clean
-rm -rf $RPM_BUILD_ROOT
-
 %post
-(cat /etc/shells; echo "/bin/sh"; echo "/bin/bash"; echo "/bin/rbash") | sort -u > /etc/shells
+mv /etc/shells /etc/shells.org
+(cat /etc/shells.org; echo "/bin/bash"; echo "/bin/rbash" ) | sort -u > /etc/shells
+rm -f /etc/shells.org
 
 %preun
-cat /etc/shells | egrep -v "/bin/bash|/bin/bash|/bin/rbash" > /etc/shells
+mv /etc/shells /etc/shells.org
+cat /etc/shells.org | egrep -v "/bin/bash|/bin/rbash" > /etc/shells
+rm -f /etc/shells.org
+
+%clean
+rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
@@ -130,6 +132,7 @@ cat /etc/shells | egrep -v "/bin/bash|/bin/bash|/bin/rbash" > /etc/shells
 %changelog
 * Mon Feb 22 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [2.03-1]
+- removed /bin/sh link from bash (thi is now provided by pdksh),
 - removed man group from man pages,
 - gzipping insterad bzipping2 man pages,
 - rewrited %post, %preun,
@@ -138,7 +141,6 @@ cat /etc/shells | egrep -v "/bin/bash|/bin/bash|/bin/rbash" > /etc/shells
 
 * Sun Sep 05 1998 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
   [2.02.1-1d]
-- updated to 2.02.1,
 - fixed files permissions,
 - build with restricted shell support.
 
