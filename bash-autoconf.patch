@@ -1,11 +1,11 @@
---- bash-2.05a-new/aclocal.m4	Fri Feb  8 00:20:35 2002
-+++ bash-2.05a/aclocal.m4	Thu Feb  7 22:38:32 2002
+--- bash-2.05b-new/aclocal.m4	Fri Feb  8 00:20:35 2002
++++ bash-2.05b/aclocal.m4	Thu Feb  7 22:38:32 2002
 @@ -921,8 +921,8 @@
  _bash_needmsg=
  fi
  AC_CACHE_VAL(bash_cv_termcap_lib,
 -[AC_CHECK_LIB(termcap, tgetent, bash_cv_termcap_lib=libtermcap,
--    [AC_CHECK_LIB(tinfo, tgetent, bash_cv_termcal_lib=libtinfo,
+-    [AC_CHECK_LIB(tinfo, tgetent, bash_cv_termcap_lib=libtinfo,
 +[AC_CHECK_LIB(tinfo, tgetent, bash_cv_termcap_lib=libtinfo,
 +    [AC_CHECK_LIB(termcap, tgetent, bash_cv_termcap_lib=libtermcap,
          [AC_CHECK_LIB(curses, tgetent, bash_cv_termcap_lib=libcurses,

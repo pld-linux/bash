@@ -11,8 +11,8 @@ Summary(pt_BR):	GNU Bourne Again Shell (bash)
 Summary(ru):	GNU Bourne Again Shell (bash)
 Summary(uk):	GNU Bourne Again Shell (bash)
 Name:		bash
-Version:	2.05a
-Release:	14%{?_with_bash_history:inv}
+Version:	2.05b
+Release:	1%{?_with_bash_history:inv}
 License:	GPL
 Group:		Applications/Shells
 Source0:	ftp://prep.ai.mit.edu/pub/gnu/bash/%{name}-%{version}.tar.gz
@@ -32,10 +32,7 @@ Patch7:		%{name}-shellfunc.patch
 Patch8:		%{name}-DESTDIR.patch
 Patch9:		%{name}-rlimit_locks.patch
 Patch10:	%{name}-sighup.patch
-Patch11:	%{name}-tmpfile.patch
-Patch13:	%{name}-%{version}-service_completion.patch
-%{?_with_bash_history:Patch14:bash-backup_history.patch}
-
+%{?_with_bash_history:Patch11:bash-backup_history.patch}
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
@@ -190,8 +187,7 @@ tym pakiecie jest statycznie zlinkowany bash.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
-%patch13 -p1
-%{?_with_bash_history:%patch14 -p1}
+%{?_with_bash_history:%patch11 -p1}
 
 echo %{version} > _distribution
 echo %{release} > _patchlevel
@@ -244,8 +240,6 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/skel/.bash_logout
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/skel/.bash_profile
 install %{SOURCE4} $RPM_BUILD_ROOT/etc/skel/.bashrc
 
-gzip -9nf NEWS README doc/{FAQ,INTRO}
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -290,7 +284,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc {NEWS,README}.gz doc/{FAQ,INTRO}.gz
+%doc NEWS README doc/{FAQ,INTRO}
 
 %config %verify(not md5 size mtime) %{_sysconfdir}/bashrc
 %config(noreplace,missingok) %verify(not md5 size mtime) /etc/skel/.bash_logout

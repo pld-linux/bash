@@ -1,5 +1,5 @@
---- bash-2.04-beta5/builtins/mkbuiltins.c.requires	Thu Aug  5 12:42:54 1999
-+++ bash-2.04-beta5/builtins/mkbuiltins.c	Sun Mar 19 14:14:17 2000
+--- bash-2.05b/builtins/mkbuiltins.c.requires	Thu Aug  5 12:42:54 1999
++++ bash-2.05b/builtins/mkbuiltins.c	Sun Mar 19 14:14:17 2000
 @@ -51,8 +51,13 @@
  #define whitespace(c) (((c) == ' ') || ((c) == '\t'))
  
@@ -43,7 +43,7 @@
    building_builtin = 1;
 @@ -1164,10 +1179,11 @@
  		  else
- 		    fprintf (structfile, "(Function *)0x0, ");
+ 		    fprintf (structfile, "(sh_builtin_func_t *)0x0, ");
  
 -		  fprintf (structfile, "%s%s%s, %s_doc,\n",
 +		  fprintf (structfile, "%s%s%s%s, %s_doc,\n",
@@ -51,7 +51,7 @@
  		    (builtin->flags & BUILTIN_FLAG_SPECIAL) ? " | SPECIAL_BUILTIN" : "",
  		    (builtin->flags & BUILTIN_FLAG_ASSIGNMENT) ? " | ASSIGNMENT_BUILTIN" : "",
 +		    (builtin->flags & BUILTIN_FLAG_REQUIRES) ? " | REQUIRES_BUILTIN" : "",
- 		    builtin->docname ? builtin->docname : builtin->name);
+ 		    document_name (builtin));
  
  		  fprintf
 @@ -1401,6 +1417,13 @@

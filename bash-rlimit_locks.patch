@@ -39,8 +39,8 @@
    opt = get_limit (limind, &soft_limit, &hard_limit);
    if (opt < 0)
      {
--      builtin_error ("cannot get %s limit: %s", limits[limind].description,
--						strerror (errno));
+-      builtin_error ("%s: cannot get limit: %s", limits[limind].description,
+-						 strerror (errno));
 -      return (EXECUTION_FAILURE);
 +      if (( errno == 22) && (limits[limind].parameter == RLIMIT_LOCKS))
 +        {
@@ -52,7 +52,7 @@
 +        }
 +      else
 +        {
-+          builtin_error ("cannot get %s limit: %s", limits[limind].description,
++          builtin_error ("%s: cannot get limit: %s", limits[limind].description,
 +						strerror (errno));
 +          return (EXECUTION_FAILURE);
 +        }
@@ -72,11 +72,12 @@
   
    /* Setting the limit. 
    if (STREQ (cmdarg, "hard"))
-@@ -617,7 +635,17 @@
+@@ -617,8 +635,18 @@
    for (i = 0; limits[i].option > 0; i++)
      {
        if (get_limit (i, &softlim, &hardlim) < 0)
--	builtin_error ("cannot get %s limit: %s", limits[i].description, strerror (errno));
+-	builtin_error ("%s: cannot get limit: %s", limits[i].description,
+-						   strerror (errno));
 +        {
 +      	   if ((errno == 22) && (limits[i].parameter == RLIMIT_LOCKS))
 +            {
@@ -86,7 +87,8 @@
 +                hardlim = RLIM_INFINITY;
 +              printone (i, (mode & LIMIT_SOFT) ? softlim : hardlim, 1);
 +	         } else
-+	           builtin_error ("cannot get %s limit: %s", limits[i].description, strerror (errno));
++	           builtin_error ("%s: cannot get limit: %s", limits[i].description,
++							      strerror (errno));
 +        }
        else
  	printone (i, (mode & LIMIT_SOFT) ? softlim : hardlim, 1);
