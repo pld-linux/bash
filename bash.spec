@@ -5,7 +5,7 @@ Summary(pl):	GNU Bourne Again Shell (bash)
 Summary(tr):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.04
-Release:	6
+Release:	5
 Group:		Shells
 Group(pl):	Pow³oki
 License:	GPL
@@ -31,6 +31,7 @@ PreReq:		grep
 PreReq:		fileutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	bash2
+Obsoletes:	etcskel
 Obsoletes:	bash2-doc
 
 %description
@@ -201,13 +202,13 @@ else
 fi
 
 %preun
-if [ $1 = 0 ]; then
+if [ "$1" = "0" ]; then
 	grep -v /bin/bash /etc/shells | grep -v /bin/rbash > /etc/shells.new
 	mv -f /etc/shells.new /etc/shells
 fi
 
 %preun static
-if [ $1 = 0 ]; then
+if [ "$1" = "0" ]; then
 	grep -v /bin/bash.static /etc/shells > /etc/shells.new
 	mv -f /etc/shells.new /etc/shells
 fi
