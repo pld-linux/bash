@@ -159,7 +159,7 @@ mv -f bash bash.static
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_mandir},%{_infodir}} \
-	$RPM_BUILD_ROOT/{bin,etc/skel}}
+	$RPM_BUILD_ROOT/{bin,etc/skel}
 
 %{__make} install \
 	bindir=$RPM_BUILD_ROOT%{_bindir} \
