@@ -38,8 +38,9 @@ BuildRequires:	readline-static >= 4.2
 BuildRequires:	glibc-static >= 2.2
 %endif
 BuildRequires:	bison
-PreReq:		grep
-PreReq:		fileutils
+BuildRequires:	autoconf
+Prereq:		grep
+Prereq:		fileutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	bash-doc
 Obsoletes:	bash2
@@ -111,8 +112,8 @@ Group:		Applications/Shells
 Group(de):	Applikationen/Shells
 Group(pl):	Aplikacje/Pow³oki
 Requires:	%{name}
-PreReq:		grep
-PreReq:		fileutils
+Prereq:		grep
+Prereq:		fileutils
 
 %description static
 Bash is a GNU project sh-compatible shell or command language
@@ -187,13 +188,16 @@ mv -f $RPM_BUILD_ROOT%{_bindir}/bash $RPM_BUILD_ROOT/bin
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/bashrc
 echo .so bash.1 > $RPM_BUILD_ROOT%{_mandir}/man1/rbash.1
 
-ln -s -f bash $RPM_BUILD_ROOT/bin/rbash
+ln -sf bash $RPM_BUILD_ROOT/bin/rbash
 
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/skel/.bash_logout
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/skel/.bash_profile
 install %{SOURCE4} $RPM_BUILD_ROOT/etc/skel/.bashrc
 
 gzip -9nf NEWS README doc/{FAQ,INTRO}
+
+%clean
+rm -rf $RPM_BUILD_ROOT
 
 %post
 if [ ! -f /etc/shells ]; then
@@ -233,9 +237,6 @@ fi
 
 %postun
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
