@@ -3,7 +3,7 @@ Summary(fr):	Le shell Bourne Again de GNU
 Summary(pl):	Pow³oka GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.05a
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications/Shells
 Source0:	ftp://prep.ai.mit.edu/pub/gnu/bash/%{name}-%{version}.tar.gz
@@ -147,6 +147,7 @@ tym pakiecie jest statycznie zlinkowany bash.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch13 -p1
 
 echo %{version} > _distribution
 echo %{release} > _patchlevel
