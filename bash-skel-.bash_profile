@@ -18,4 +18,6 @@ export HISTSIZE HISTFILESIZE TMP TMPDIR
 
 umask 077
 
-mesg n
+if [ -x /usr/bin/mesg ]; then
+	mesg n
+fi
