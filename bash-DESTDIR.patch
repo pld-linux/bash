@@ -1,76 +1,26 @@
-diff -Nru bash-2.05/Makefile.in bash-2.05.new/Makefile.in
---- bash-2.05/Makefile.in	Thu Apr 19 03:00:07 2001
-+++ bash-2.05.new/Makefile.in	Thu Apr 19 03:03:43 2001
-@@ -593,14 +593,15 @@
- # Targets that actually do things not part of the build
- 
- installdirs:
--	@${SHELL} $(SUPPORT_SRC)mkdirs $(bindir)
--	@${SHELL} $(SUPPORT_SRC)mkdirs $(man1dir) $(man3dir)
--	@${SHELL} $(SUPPORT_SRC)mkdirs $(infodir)
-+	@${SHELL} $(SUPPORT_SRC)mkdirs $(DESTDIR)$(bindir)
-+	@${SHELL} $(SUPPORT_SRC)mkdirs $(DESTDIR)$(man1dir) $(DESTDIR)$(man3dir)
-+	@${SHELL} $(SUPPORT_SRC)mkdirs $(DESTDIR)$(infodir)
- 
- install:	.made installdirs
--	$(INSTALL_PROGRAM) $(INSTALLMODE) $(Program) $(bindir)/$(Program)
--	$(INSTALL_PROGRAM) $(INSTALLMODE2) bashbug $(bindir)/bashbug
-+	$(INSTALL_PROGRAM) $(INSTALLMODE) $(Program) $(DESTDIR)$(bindir)/$(Program)
-+	$(INSTALL_PROGRAM) $(INSTALLMODE2) bashbug $(DESTDIR)$(bindir)/bashbug
+--- bash-2.05a/Makefile.in	Tue Feb 12 22:55:14 2002
++++ bash-2.05a/Makefile.in.new	Tue Feb 12 23:40:24 2002
+@@ -630,6 +630,7 @@
+ 	$(INSTALL_PROGRAM) $(INSTALLMODE) $(Program) $(DESTDIR)$(bindir)/$(Program)
+ 	$(INSTALL_PROGRAM) $(INSTALLMODE2) bashbug $(DESTDIR)$(bindir)/bashbug
  	-( cd $(DOCDIR) ; $(MAKE) $(MFLAGS) \
 +		DESTDIR=$(DESTDIR) \
  		man1dir=$(man1dir) man1ext=$(man1ext) \
  		man3dir=$(man3dir) man3ext=$(man3ext) \
- 		infodir=$(infodir) htmldir=$(htmldir) $@ )
-diff -Nru bash-2.05/doc/Makefile.in bash-2.05.new/doc/Makefile.in
---- bash-2.05/doc/Makefile.in	Mon Mar 19 16:14:11 2001
-+++ bash-2.05.new/doc/Makefile.in	Thu Apr 19 03:07:22 2001
-@@ -209,34 +209,34 @@
+ 		infodir=$(infodir) htmldir=$(htmldir) DESTDIR=$(DESTDIR) $@ )
+--- bash-2.05a/doc/Makefile.in	Thu Feb  7 22:38:32 2002
++++ bash-2.05a/doc/Makefile.in.new	Tue Feb 12 23:39:40 2002
+@@ -184,10 +184,10 @@
  	$(RM) Makefile
  
  installdirs:
--	-test -d $(man1dir) || $(SHELL) ${MKDIRS} $(man1dir)
--	-test -d $(infodir) || $(SHELL) ${MKDIRS} $(infodir)
+-	-test -d $(man1dir) || $(SHELL) ${MKDIRS} $(DESTDIR)$(man1dir)
+-	-test -d $(infodir) || $(SHELL) ${MKDIRS} $(DESTDIR)$(infodir)
 +	-test -d $(DESTDIR)$(man1dir) || $(SHELL) ${MKDIRS} $(DESTDIR)$(man1dir)
 +	-test -d $(DESTDIR)$(infodir) || $(SHELL) ${MKDIRS} $(DESTDIR)$(infodir)
- 	-if [ -n "$(htmldir)" ]; then \
--		test -d $(htmldir) || $(SHELL) ${MKDIRS} $(htmldir) ; \
+ 	-if test -n "$(htmldir)" ; then \
+-		test -d $(htmldir) || $(SHELL) ${MKDIRS} $(DESTDIR)$(htmldir) ; \
 +		test -d $(DESTDIR)$(htmldir) || $(SHELL) ${MKDIRS} $(DESTDIR)$(htmldir) ; \
  	fi
  	
  install: info installdirs
--	-$(INSTALL_DATA) $(srcdir)/bash.1 $(man1dir)/bash.${man1ext}
--	-$(INSTALL_DATA) $(srcdir)/bashbug.1 $(man1dir)/bashbug.${man1ext}
-+	-$(INSTALL_DATA) $(srcdir)/bash.1 $(DESTDIR)$(man1dir)/bash.${man1ext}
-+	-$(INSTALL_DATA) $(srcdir)/bashbug.1 $(DESTDIR)$(man1dir)/bashbug.${man1ext}
- # uncomment the next line to install the builtins man page
- #	$(INSTALL_DATA) $(srcdir)/builtins.1 $(man1dir)/bash_builtins.${man1ext}
--	-$(INSTALL_DATA) $(srcdir)/bashref.info $(infodir)/bash.info
-+	-$(INSTALL_DATA) $(srcdir)/bashref.info $(DESTDIR)$(infodir)/bash.info
- # run install-info if it is present to update the info directory
- 	if $(SHELL) -c 'install-info --version' >/dev/null 2>&1; then \
--		install-info --dir-file=$(infodir)/dir $(infodir)/bash.info; \
-+		install-info --dir-file=$(DESTDIR)$(infodir)/dir $(DESTDIR)$(infodir)/bash.info; \
- 	else true; fi
- # if htmldir is set, install the html files into that directory
--	-if [ -n "${htmldir}" ]; then \
--		$(INSTALL_DATA) $(srcdir)/bash.html $(htmldir) ; \
--		$(INSTALL_DATA) $(srcdir)/bashref.html $(htmldir) ; \
-+	-if [ -n "$(DESTDIR)${htmldir}" ]; then \
-+		$(INSTALL_DATA) $(srcdir)/bash.html $(DESTDIR)$(htmldir) ; \
-+		$(INSTALL_DATA) $(srcdir)/bashref.html $(DESTDIR)$(htmldir) ; \
- 	fi
- 
- uninstall:
--	-$(RM) $(man1dir)/bash.${man1ext} $(man1dir)/bashbug.${man1ext}
--	$(RM) $(infodir)/bash.info
-+	-$(RM) $(DESTDIR)$(man1dir)/bash.${man1ext} $(DESTDIR)$(man1dir)/bashbug.${man1ext}
-+	$(RM) $(DESTDIR)$(infodir)/bash.info
- 	-if [ -n "$(htmldir)" ]; then \
--		$(RM) $(htmldir)/bash.html ; \
--		$(RM) $(htmldir)/bashref.html ; \
-+		$(RM) $(DESTDIR)$(htmldir)/bash.html ; \
-+		$(RM) $(DESTDIR)$(htmldir)/bashref.html ; \
- 	fi
- 
- # for use by chet

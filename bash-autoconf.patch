@@ -1,7 +1,19 @@
-diff -urN bash-2.05.org/Makefile.in bash-2.05/Makefile.in
---- bash-2.05.org/Makefile.in	Wed Apr 18 23:07:48 2001
-+++ bash-2.05/Makefile.in	Wed Apr 18 23:27:34 2001
-@@ -563,8 +563,8 @@
+--- bash-2.05a-new/aclocal.m4	Fri Feb  8 00:20:35 2002
++++ bash-2.05a/aclocal.m4	Thu Feb  7 22:38:32 2002
+@@ -921,8 +921,8 @@
+ _bash_needmsg=
+ fi
+ AC_CACHE_VAL(bash_cv_termcap_lib,
+-[AC_CHECK_LIB(termcap, tgetent, bash_cv_termcap_lib=libtermcap,
+-    [AC_CHECK_LIB(tinfo, tgetent, bash_cv_termcal_lib=libtinfo,
++[AC_CHECK_LIB(tinfo, tgetent, bash_cv_termcap_lib=libtinfo,
++    [AC_CHECK_LIB(termcap, tgetent, bash_cv_termcap_lib=libtermcap,
+         [AC_CHECK_LIB(curses, tgetent, bash_cv_termcap_lib=libcurses,
+ 	    [AC_CHECK_LIB(ncurses, tgetent, bash_cv_termcap_lib=libncurses,
+ 	        bash_cv_termcap_lib=gnutermcap)])])])])
+--- bash-2.05a-new/Makefile.in	Fri Feb  8 00:20:46 2002
++++ bash-2.05a/Makefile.in	Thu Feb  7 22:38:32 2002
+@@ -592,8 +592,8 @@
  	$(SHELL) ./config.status --recheck
  
  # comment out for distribution
@@ -12,30 +24,3 @@ diff -urN bash-2.05.org/Makefile.in bash-2.05/Makefile.in
  
  # for chet
  reconfig: force
-diff -urN bash-2.05.org/aclocal.m4 bash-2.05/aclocal.m4
---- bash-2.05.org/aclocal.m4	Wed Apr 18 23:07:48 2001
-+++ bash-2.05/aclocal.m4	Wed Apr 18 23:33:17 2001
-@@ -606,10 +606,11 @@
- _bash_needmsg=
- fi
- AC_CACHE_VAL(bash_cv_termcap_lib,
--[AC_CHECK_LIB(termcap, tgetent, bash_cv_termcap_lib=libtermcap,
-+[AC_CHECK_LIB(tinfo, tgetent, bash_cv_termcap_lib=libtinfo,
-+  [AC_CHECK_LIB(termcap, tgetent, bash_cv_termcap_lib=libtermcap,
-     [AC_CHECK_LIB(curses, tgetent, bash_cv_termcap_lib=libcurses,
- 	[AC_CHECK_LIB(ncurses, tgetent, bash_cv_termcap_lib=libncurses,
--	    bash_cv_termcap_lib=gnutermcap)])])])
-+	    bash_cv_termcap_lib=gnutermcap)])])])])
- if test "X$_bash_needmsg" = "Xyes"; then
- AC_MSG_CHECKING(which library has the termcap functions)
- fi
-@@ -620,6 +621,9 @@
- TERMCAP_DEP="./lib/termcap/libtermcap.a"
- elif test $bash_cv_termcap_lib = libtermcap && test -z "$prefer_curses"; then
- TERMCAP_LIB=-ltermcap
-+TERMCAP_DEP=
-+elif test $bash_cv_termcap_lib = libtinfo; then
-+TERMCAP_LIB=-ltinfo
- TERMCAP_DEP=
- elif test $bash_cv_termcap_lib = libncurses; then
- TERMCAP_LIB=-lncurses

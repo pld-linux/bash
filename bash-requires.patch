@@ -121,17 +121,16 @@
  
  #if defined (JOB_CONTROL)
  #include "jobs.h"
-@@ -49,7 +52,10 @@
+@@ -49,6 +52,9 @@
+ 
  extern int line_number, current_command_line_count;
- extern int disallow_filename_globbing;
  extern int last_command_exit_value;
 +extern int rpm_requires;
- 
 +char *alphabet_set = "abcdefghijklmnopqrstuvwxyz"
 +		     "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
  
- WORD_DESC *
- make_bare_word (string)
+ static COMMAND *make_for_or_select __P((enum command_type, WORD_DESC *, WORD_LIST *, COMMAND *));
+ #if defined (ARITH_FOR_COMMAND)
 @@ -696,6 +702,36 @@
    return (make_command (cm_subshell, (SIMPLE_COM *)temp));
  }
