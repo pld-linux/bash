@@ -5,7 +5,7 @@ Summary(pl):	GNU Bourne Again Shell (bash)
 Summary(tr):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.05
-Release:	7
+Release:	8
 License:	GPL
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
@@ -189,7 +189,7 @@ mv -f $RPM_BUILD_ROOT%{_bindir}/bash $RPM_BUILD_ROOT/bin
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/bashrc
 echo .so bash.1 > $RPM_BUILD_ROOT%{_mandir}/man1/rbash.1
 
-for d in fr it ja ko nl pl ; do
+for d in es fr it ja ko nl pl ; do
 	install -d $RPM_BUILD_ROOT%{_mandir}/$d/man1
 	install man/$d/* $RPM_BUILD_ROOT%{_mandir}/$d/man1
 	echo .so bash.1 > $RPM_BUILD_ROOT%{_mandir}/$d/man1/rbash.1
@@ -260,6 +260,7 @@ fi
 
 %{_infodir}/bash.info.gz
 %{_mandir}/man1/*
+%lang(es) %{_mandir}/es/man1/*
 %lang(fr) %{_mandir}/fr/man1/*
 %lang(it) %{_mandir}/it/man1/*
 %lang(ja) %{_mandir}/ja/man1/*
