@@ -1,0 +1,1 @@
+- fix: register correctly skel files (".*" is the same as ".").
