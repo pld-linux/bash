@@ -5,25 +5,26 @@ Summary(pl):	GNU Bourne Again Shell (bash)
 Summary(tr):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.04
-Release:	11
-Group:		Shells
-Group(pl):	Pow³oki
+Release:	12
+Group:		Applications/Shells
+Group(de):	Applikationen/Shells
+Group(pl):	Aplikacje/Pow³oki
 License:	GPL
 Source0:	ftp://prep.ai.mit.edu/pub/gnu/bash/%{name}-%{version}.tar.gz
-Source1:	bashrc
-Source2:	bash-skel-.bash_logout
-Source3:	bash-skel-.bash_profile
-Source4:	bash-skel-.bashrc
-Source5:	bash-skel_pl-.bashrc
-Patch0:		bash-paths.patch
-Patch1:		bash-fixes.patch
-Patch2:		bash-security.patch
-Patch3:		bash-autoconf.patch
-Patch4:		bash-info.patch
-Patch5:		bash-profile.patch
-Patch6:		bash-requires.patch
-Patch7:		bash-compat.patch
-Patch8:		bash-shellfunc.patch
+Source1:	%{name}rc
+Source2:	%{name}-skel-.bash_logout
+Source3:	%{name}-skel-.bash_profile
+Source4:	%{name}-skel-.bashrc
+Source5:	%{name}-skel_pl-.bashrc
+Patch0:		%{name}-paths.patch
+Patch1:		%{name}-fixes.patch
+Patch2:		%{name}-security.patch
+Patch3:		%{name}-autoconf.patch
+Patch4:		%{name}-info.patch
+Patch5:		%{name}-profile.patch
+Patch6:		%{name}-requires.patch
+Patch7:		%{name}-compat.patch
+Patch8:		%{name}-shellfunc.patch
 BuildRequires:	ncurses-static >= 5.0
 BuildRequires:	readline-static >= 4.1
 BuildRequires:	glibc-static
@@ -90,8 +91,9 @@ uyumlu bir uygulama olarak tasarlanmýþtýr.
 %package static
 Summary:	Staticly linked GNU Bourne Again Shell (bash)
 Summary(pl):	Statycznie zlinkowany GNU Bourne Again Shell (bash)
-Group:		Shells
-Group(pl):	Pow³oki
+Group:		Applications/Shells
+Group(de):	Applikationen/Shells
+Group(pl):	Aplikacje/Pow³oki
 Requires:	%{name}
 PreReq:		grep
 PreReq:		fileutils
@@ -133,7 +135,6 @@ echo %{version} > _distribution
 echo %{release} > _patchlevel
 
 %build
-LDFLAGS="-s"; export LDFLAGS
 %configure \
 	--enable-alias \
 	--enable-help-builtin \
@@ -161,8 +162,8 @@ install -d $RPM_BUILD_ROOT{%{_mandir},%{_infodir}} \
 	infodir=$RPM_BUILD_ROOT%{_infodir} \
 	mandir=$RPM_BUILD_ROOT%{_mandir} 
 
-mv $RPM_BUILD_ROOT%{_bindir}/bash	$RPM_BUILD_ROOT/bin
-install	-s bash.static	$RPM_BUILD_ROOT/bin
+mv -f $RPM_BUILD_ROOT%{_bindir}/bash $RPM_BUILD_ROOT/bin
+install	bash.static $RPM_BUILD_ROOT/bin
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/bashrc
 echo .so bash.1 > $RPM_BUILD_ROOT%{_mandir}/man1/rbash.1
@@ -174,8 +175,7 @@ install %{SOURCE3} $RPM_BUILD_ROOT/etc/skel/C/.bash_profile
 install %{SOURCE4} $RPM_BUILD_ROOT/etc/skel/C/.bashrc
 install %{SOURCE5} $RPM_BUILD_ROOT/etc/skel/pl/.bashrc
 
-gzip -9nf $RPM_BUILD_ROOT{%{_infodir}/bash.info,%{_mandir}/man1/*} \
-	NEWS README doc/{FAQ,INTRO}
+gzip -9nf NEWS README doc/{FAQ,INTRO}
 
 %post
 if [ ! -f /etc/shells ]; then
