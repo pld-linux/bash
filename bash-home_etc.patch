@@ -1,0 +1,42 @@
+diff -Nru bash-2.05b/builtins/evalfile.c bash-2.05b.new/builtins/evalfile.c
+--- bash-2.05b/builtins/evalfile.c	Thu Feb 21 20:08:52 2002
++++ bash-2.05b.new/builtins/evalfile.c	Sun Mar 23 14:59:23 2003
+@@ -208,6 +208,23 @@
+   return ((flags & FEVAL_BUILTIN) ? result : 1);
+ }
+ 
++static char *
++config_dir_tilde_expand (s, config_dir)
++     const char *s;
++     const char *config_dir;
++{
++  int old_immed, r;
++  char *ret;
++
++  if (*s == '~' && *(s+1) == '/')
++    {
++      ret = xmalloc(strlen(config_dir) + strlen(s) - 1);
++      sprintf(ret, "%s/%s", config_dir, s+3);
++    }
++  else return bash_tilde_expand(s, 0);
++  return (ret);
++}
++
+ int
+ maybe_execute_file (fname, force_noninteractive)
+      const char *fname;
+@@ -215,8 +232,12 @@
+ {
+   char *filename;
+   int result, flags;
+-
+-  filename = bash_tilde_expand (fname, 0);
++  char *config_dir = getenv("CONFIG_DIR");
++  
++  if (config_dir)
++    filename = config_dir_tilde_expand(fname, config_dir);
++  else
++    filename = bash_tilde_expand (fname, 0);
+   flags = FEVAL_ENOENTOK;
+   if (force_noninteractive)
+     flags |= FEVAL_NONINT;
