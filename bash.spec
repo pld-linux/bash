@@ -5,7 +5,7 @@ Summary(pl):	GNU Bourne Again Shell (bash)
 Summary(tr):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.05
-Release:	3
+Release:	5
 License:	GPL
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
@@ -27,6 +27,7 @@ Patch8:		http://www.t17.ds.pwr.wroc.pl/~misiek/ipv6/bash-2.05-ipv6-20010418.patc
 Patch9:		%{name}-DESTDIR.patch
 Patch10:	%{name}-rlimit_locks.patch
 Patch11:	%{name}-sighup.patch
+Patch12:	%{name}-tmpfile.patch
 BuildRequires:	ncurses-static >= 5.2
 BuildRequires:	readline-static >= 4.2
 BuildRequires:	glibc-static >= 2.2
@@ -34,9 +35,10 @@ BuildRequires:	bison
 PreReq:		grep
 PreReq:		fileutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+Obsoletes:	bash-doc
 Obsoletes:	bash2
-Obsoletes:	etcskel
 Obsoletes:	bash2-doc
+Obsoletes:	etcskel
 
 %description
 Bash is a GNU project sh-compatible shell or command language
@@ -136,6 +138,7 @@ tym pakiecie jest statycznie zlinkowany bash.
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 
 echo %{version} > _distribution
 echo %{release} > _patchlevel
