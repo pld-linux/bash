@@ -1,0 +1,37 @@
+Hi!
+
+Falls du auf bash 2.04 updaten willst, der folgende Patch ist dabei nötig:
+
+--- variables.c	2000/03/27 14:44:45	1.1
++++ variables.c	2000/03/27 14:44:45
+@@ -2477,22 +2477,8 @@
+     {
+       if (var->exportstr)
+         {
+-#if defined(__CYGWIN__) || defined (__CYGWIN32__)
+ 	  INVALIDATE_EXPORTSTR (var);
+ 	  value = value_cell (var);
+-#else
+-	  /* XXX -- this test can go away in the next release, to be replaced
+-	     by a simple `value = var->exportstr;', when the exportstr code
+-	     is better-tested.  Until then, don't do it for cygwin at all,
+-	     since that system has some weird environment variables. */
+-          if (valid_exportstr (var))
+-	    value = var->exportstr;
+-	  else
+-	    {
+-	      INVALIDATE_EXPORTSTR (var);
+-	      value = value_cell (var);
+-	    }
+-#endif
+         }
+       else if (function_p (var))
+ 	value = named_function_string ((char *)NULL, function_cell (var), 0);
+
+Andreas.
+
+-- 
+Andreas Schwab                                  "And now for something
+SuSE Labs                                        completely different."
+Andreas.Schwab@suse.de
+SuSE GmbH, Schanzäckerstr. 10, D-90443 Nürnberg
