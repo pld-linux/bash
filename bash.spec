@@ -5,7 +5,7 @@ Summary(pl):	GNU Bourne Again Shell (bash)
 Summary(tr):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.05
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
@@ -24,6 +24,9 @@ Patch5:		%{name}-requires.patch
 Patch6:		%{name}-compat.patch
 Patch7:		%{name}-shellfunc.patch
 Patch8:		http://www.t17.ds.pwr.wroc.pl/~misiek/ipv6/bash-2.05-ipv6-20010418.patch.gz
+Patch9:		%{name}-DESTDIR.patch
+Patch10:	%{name}-rlimit_locks.patch
+Patch11:	%{name}-sighup.patch
 BuildRequires:	ncurses-static >= 5.2
 BuildRequires:	readline-static >= 4.2
 BuildRequires:	glibc-static >= 2.2
@@ -130,6 +133,9 @@ tym pakiecie jest statycznie zlinkowany bash.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
+%patch10 -p1
+%patch11 -p1
 
 echo %{version} > _distribution
 echo %{release} > _patchlevel
@@ -150,17 +156,16 @@ for mode in static shared; do
 	`[ "$mode" = "static" ] && echo "--enable-static-link"` \
 	--with-installed-readline
 
-%{__make}
+%{__make} DEFS="-DHAVE_CONFIG_H -D_GNU_SOURCE"
 
 [ "$mode" = "static" ] && mv -f bash bash.static || :
 done
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_mandir},%{_infodir}} \
-	$RPM_BUILD_ROOT/{bin,etc/skel}
+install -d $RPM_BUILD_ROOT/{bin,etc/skel}
 
-%{makeinstall}
+%{__make} install DESTDIR=$RPM_BUILD_ROOT
 
 mv -f $RPM_BUILD_ROOT%{_bindir}/bash $RPM_BUILD_ROOT/bin
 install	bash.static $RPM_BUILD_ROOT/bin
