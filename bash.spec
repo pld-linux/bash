@@ -5,15 +5,16 @@ Summary(pl): GNU Bourne Again Shell (bash)
 Summary(tr): GNU Bourne Again Shell (bash)
 Name:        bash
 Version:     2.02.1
-Release:     2
+Release:     4
 Group:       Shells
 Copyright:   GPL
 Source0:     ftp://ftp.gnu.org/pub/gnu/bash-%{PACKAGE_VERSION}.tar.gz
 Source1:     bashrc
 Source2:     rbash.1
-Patch0:      bash-2.02-paths.patch
-Patch1:      bash-2.02-security.patch
+Patch0:      bash-paths.patch
+Patch1:      bash-security.patch
 Patch2:      bash-fixes.patch
+Patch3:      bash-arm.patch
 Prereq:      fileutils, grep 
 BuildRoot:   /tmp/%{name}-%{version}-root
 
@@ -62,9 +63,11 @@ tasarlanmýþtýr.
 %patch0 -p1 -b .paths
 %patch1 -p1 -b .security
 %patch2 -p1 -b .fixes
+%patch3 -p1 -b .arm
 
 %build
-CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" ./configure \
+CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
+./configure \
 	--prefix=/usr \
 	--with-curses \
 	--enable-readline \
@@ -87,32 +90,24 @@ ln -sf bash $RPM_BUILD_ROOT/bin/sh
 
 install %{SOURCE2} $RPM_BUILD_ROOT/usr/man/man1
 
+gzip -9nf $RPM_BUILD_ROOT/usr/man/man1/*
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 # ***** bash doesn't use install-info. It's always listed in /usr/info/dir
 # to prevent prereq loops
 %post
-if [ ! -f /etc/shells ]; then
-	echo "/bin/bash" > /etc/shells
-	echo "/bin/sh" >> /etc/shells
-	echo "/bin/rbash" >> /etc/shells
-else
-	if ! grep '^/bin/bash$' /etc/shells > /dev/null; then
-		echo "/bin/bash" >> /etc/shells
-	fi
-	if ! grep '^/bin/sh$' /etc/shells > /dev/null; then
-		echo "/bin/sh" >> /etc/shells
-	fi
-	if ! grep '^/bin/rbash$' /etc/shells > /dev/null; then
-		echo "/bin/rbash" >> /etc/shells
-	fi
-fi
+echo "/bin/bash" >> /etc/shells
+echo "/bin/sh" >> /etc/shells
+echo "/bin/rbash" >> /etc/shells
+sort /etc/shells | uniq > /etc/shells.tmp
+mv /etc/shells.tmp /etc/shells
 
 %postun
 if [ "$1" = "0" ]; then
-	grep -v /bin/bash /etc/shells | grep -v /bin/sh | grep -v /bin/rbash> /etc/shells.new
-	mv /etc/shells.new /etc/shells
+	grep -v /bin/bash /etc/shells | grep -v /bin/sh | grep -v /bin/rbash > /etc/shells.tmp
+	mv /etc/shells.tmp /etc/shells
 fi
 
 %files
@@ -126,6 +121,12 @@ fi
 %attr(644, root,  man) /usr/man/man1/*
 
 %changelog
+* Sat Dec 19 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
+  [2.02.1-4]
+- added gzipping man pages,
+- simplifications in %post
+- added arm patch from rawhide.
+
 * Tue Oct  6 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [2.02.1-2]
 - removed doc subpackage,
