@@ -1,0 +1,3 @@
+- added %verify flags for %{_sysconfdir}/bashrc file,
+- set %config for /etc/skel/*,
+- added using %{__*} macros.
