@@ -1,6 +1,5 @@
-diff -ur bash-2.05a.orig/bashhist.c bash-2.05a/bashhist.c
---- bash-2.05a.orig/bashhist.c	Tue May 14 00:42:50 2002
-+++ bash-2.05a/bashhist.c	Tue May 14 00:45:20 2002
+--- bash-2.05b/bashhist.c	Tue Mar 12 16:29:56 2002
++++ bash-2.05b/bashhist.c.org	Sun Jul 28 17:26:23 2002
 @@ -22,6 +22,8 @@
  
  #if defined (HISTORY)
@@ -10,7 +9,7 @@ diff -ur bash-2.05a.orig/bashhist.c bash-2.05a/bashhist.c
  #if defined (HAVE_UNISTD_H)
  #  ifdef _MINIX
  #    include <sys/types.h>
-@@ -166,6 +168,8 @@
+@@ -175,6 +177,8 @@
  static HIST_ENTRY *last_history_entry __P((void));
  static char *expand_histignore_pattern __P((char *));
  static int history_should_ignore __P((char *));
@@ -19,16 +18,18 @@ diff -ur bash-2.05a.orig/bashhist.c bash-2.05a/bashhist.c
  
  /* Is the history expansion starting at string[i] one that should not
     be expanded? */
-@@ -501,6 +505,8 @@
-   static int first_line_saved = 0;
+@@ -511,6 +515,10 @@
    HIST_ENTRY *temp;
+   int r;
  
-+  backup_add_history(line);
 +
-   hist_last_line_added = 0;
- 
-   /* Don't use the value of history_control to affect the second
-@@ -723,4 +729,34 @@
++ backup_add_history(line);
++ 
++ 
+   switch (history_control)
+     {
+     case 0:			/* nothing */
+@@ -766,4 +774,34 @@
  
    return match;
  }
