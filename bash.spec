@@ -12,7 +12,7 @@ Summary(ru):	GNU Bourne Again Shell (bash)
 Summary(uk):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	3.0
-Release:	1%{?with_bash_history:inv}
+Release:	2%{?with_bash_history:inv}
 License:	GPL
 Group:		Applications/Shells
 Source0:	ftp://ftp.gnu.org/pub/gnu/bash/%{name}-%{version}.tar.gz
@@ -34,6 +34,7 @@ Patch7:		%{name}-rlimit_locks.patch
 Patch8:		%{name}-sighup.patch
 Patch9:		%{name}-backup_history.patch
 Patch10:	%{name}-pmake.patch
+Patch11:	%{name}-act_like_sh.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
@@ -189,6 +190,7 @@ tym pakiecie jest wersja basha skonsolidowana statycznie.
 %patch8 -p1
 %{?with_bash_history:%patch9 -p1}
 #%patch10 -p1	-- no longer needed?
+%patch11 -p1
 
 echo %{version} > _distribution
 echo %{release} > _patchlevel
