@@ -1,0 +1,11 @@
+--- bash-2.05/support/bashbug.sh.sec	Fri May 11 22:20:00 2001
++++ bash-2.05/support/bashbug.sh	Fri May 11 22:20:18 2001
+@@ -23,7 +23,7 @@
+ 
+ # If the OS supplies a program to make temp files with semi-random names,
+ # use it.
+-TEMP=/tmp/bbug.$$
++TEMP=`mktemp /tmp/bashbugXXXXXX`
+ for d in /bin /usr/bin /usr/local/bin ; do
+ 	if [ -x $d/mktemp ]; then
+ 		TEMP=`$d/mktemp -t bbug ` ; break;
