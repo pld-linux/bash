@@ -12,7 +12,7 @@ Summary(ru):	GNU Bourne Again Shell (bash)
 Summary(uk):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	3.0
-Release:	3%{?with_bash_history:inv}
+Release:	4%{?with_bash_history:inv}
 License:	GPL
 Group:		Applications/Shells
 Source0:	ftp://ftp.gnu.org/pub/gnu/bash/%{name}-%{version}.tar.gz
@@ -35,6 +35,22 @@ Patch8:		%{name}-sighup.patch
 Patch9:		%{name}-backup_history.patch
 Patch10:	%{name}-pmake.patch
 Patch11:	%{name}-act_like_sh.patch
+Patch21:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-001
+Patch22:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-002
+Patch23:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-003
+Patch24:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-004
+Patch25:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-005
+Patch26:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-006
+Patch27:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-007
+Patch28:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-008
+Patch29:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-009
+Patch30:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-010
+Patch31:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-011
+Patch32:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-012
+Patch33:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-013
+Patch34:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-014
+Patch35:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-015
+Patch36:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-016
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
@@ -191,6 +207,22 @@ tym pakiecie jest wersja basha skonsolidowana statycznie.
 %{?with_bash_history:%patch9 -p1}
 #%patch10 -p1	-- no longer needed?
 %patch11 -p1
+%patch21 -p0
+%patch22 -p0
+%patch23 -p0
+%patch24 -p0
+%patch25 -p0
+%patch26 -p0
+%patch27 -p0
+%patch28 -p0
+%patch29 -p0
+%patch30 -p0
+%patch31 -p0
+%patch32 -p0
+%patch33 -p0
+%patch34 -p0
+%patch35 -p0
+%patch36 -p0
 
 echo %{version} > _distribution
 echo %{release} > _patchlevel
