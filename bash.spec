@@ -21,7 +21,7 @@ Patch2:		bash-paths.patch
 Patch3:		bash-security.patch
 Patch4:		bash-autoconf.patch
 Patch5:		bash-info.patch
-BuildPrereq:	ncurses-devel
+BuildRequires:	ncurses-devel
 PreReq:		/sbin/install-info
 PreReq:		grep
 PreReq:		fileutils
