@@ -217,7 +217,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc {NEWS,README}.gz doc/{FAQ,INTRO}.gz
 
-/etc/bashrc
+%config /etc/bashrc
 
 /etc/skel/C/.bash_logout
 /etc/skel/C/.bash_profile
