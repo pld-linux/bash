@@ -5,7 +5,7 @@ Summary(pl):	GNU Bourne Again Shell (bash)
 Summary(tr):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.03
-Release:	9
+Release:	10
 Group:		Shells
 Group(pl):	Pow³oki
 Copyright:	GPL
@@ -23,7 +23,7 @@ Patch4:		bash-autoconf.patch
 Patch5:		bash-info.patch
 Patch6:		bash-requires.patch
 Patch7:		bash-profile.patch
-BuildRequires:	ncurses-static
+BuildRequires:	ncurses-static >= 5.0
 Prereq:		/usr/sbin/fix-info-dir
 PreReq:		grep
 PreReq:		fileutils
