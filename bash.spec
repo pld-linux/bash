@@ -6,22 +6,6 @@ Version:	2.05a
 Release:	2
 License:	GPL
 Group:		Applications/Shells
-Group(cs):	Aplikace/Shelly
-Group(da):	Programmer/Skaller
-Group(de):	Applikationen/Shells
-Group(es):	Aplicaciones/Shells
-Group(fr):	Applications/Shells
-Group(is):	Forrit/Skeljar
-Group(it):	Applicazioni/Shell
-Group(ja):	╔╒╔в╔Й╔╠║╪╔╥╔Г╔С/╔╥╔╖╔К
-Group(no):	Applikasjoner/Skall
-Group(pl):	Aplikacje/PowЁoki
-Group(pt):	AplicaГУes/Shells
-Group(pt_BR):	AplicaГУes/Shells
-Group(ru):	Приложения/Командные процессоры
-Group(sl):	Programi/Ukazne lupine
-Group(sv):	TillДmpningar/Skal
-Group(uk):	Прикладн╕ Програми/Командн╕ процесори
 Source0:	ftp://prep.ai.mit.edu/pub/gnu/bash/%{name}-%{version}.tar.gz
 Source1:	%{name}rc
 Source2:	%{name}-skel-.bash_logout
@@ -123,22 +107,6 @@ uyumlu bir uygulama olarak tasarlanmЩЧtЩr.
 Summary:	Statically linked GNU Bourne Again Shell (bash)
 Summary(pl):	Statycznie zlinkowany GNU Bourne Again Shell (bash)
 Group:		Applications/Shells
-Group(cs):	Aplikace/Shelly
-Group(da):	Programmer/Skaller
-Group(de):	Applikationen/Shells
-Group(es):	Aplicaciones/Shells
-Group(fr):	Applications/Shells
-Group(is):	Forrit/Skeljar
-Group(it):	Applicazioni/Shell
-Group(ja):	╔╒╔в╔Й╔╠║╪╔╥╔Г╔С/╔╥╔╖╔К
-Group(no):	Applikasjoner/Skall
-Group(pl):	Aplikacje/PowЁoki
-Group(pt):	AplicaГУes/Shells
-Group(pt_BR):	AplicaГУes/Shells
-Group(ru):	Приложения/Командные процессоры
-Group(sl):	Programi/Ukazne lupine
-Group(sv):	TillДmpningar/Skal
-Group(uk):	Прикладн╕ Програми/Командн╕ процесори
 Requires:	%{name}
 Requires(post):	grep
 Requires(preun):	grep
