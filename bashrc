@@ -10,7 +10,8 @@ PS1="[\u@\h \W]\\$ "
 
 alias which="type -p"
 
-for i in /etc/shrc.d/*.sh ; do
+# SYSTEM WIDE ALIASES ETC.
+for i in `find /etc/shrc.d -name '*.sh'` ; do
 	. $i
 done
 unset i
