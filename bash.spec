@@ -5,11 +5,11 @@ Summary(pl):	GNU Bourne Again Shell (bash)
 Summary(tr):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.04
-Release:	15
+Release:	16
+License:	GPL
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
 Group(pl):	Aplikacje/Pow³oki
-License:	GPL
 Source0:	ftp://prep.ai.mit.edu/pub/gnu/bash/%{name}-%{version}.tar.gz
 Source1:	%{name}rc
 Source2:	%{name}-skel-.bash_logout
@@ -26,8 +26,8 @@ Patch7:		%{name}-compat.patch
 Patch8:		%{name}-shellfunc.patch
 Patch9:		%{name}-export.patch
 Patch10:	http://www.t17.ds.pwr.wroc.pl/~misiek/ipv6/bash-2.04-ipv6-20003011.patch.gz
-BuildRequires:	ncurses-static >= 5.0
-BuildRequires:	readline-static >= 4.1
+BuildRequires:	ncurses-static >= 5.2
+BuildRequires:	readline-static >= 4.2
 BuildRequires:	glibc-static >= 2.2
 PreReq:		grep
 PreReq:		fileutils
