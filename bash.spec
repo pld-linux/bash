@@ -31,7 +31,7 @@ BuildRequires:	bison
 BuildRequires:	glibc-devel >= 2.2
 BuildRequires:	ncurses-devel >= 5.2
 BuildRequires:	readline-devel >= 4.2
-BiuldRequires:  texinfo
+BuildRequires:  texinfo
 %if %{!?_without_static:1}%{?_without_static:0}
 # Require static library only for static build
 BuildRequires:	glibc-static >= 2.2
