@@ -195,8 +195,8 @@ rm -rf $RPM_BUILD_ROOT
 
 /etc/bashrc
 
-/skel/C/.bash_logout
-/skel/C/.bash_profile
+/etc/skel/C/.bash_logout
+/etc/skel/C/.bash_profile
 /etc/skel/C/.bashrc
 %lang(pl) /etc/skel/pl/.bashrc
 
