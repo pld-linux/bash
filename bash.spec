@@ -11,7 +11,10 @@ Group(pl):	Pow³oki
 Copyright:	GPL
 Source0:	ftp://prep.ai.mit.edu/pub/gnu/bash/%{name}-%{version}.tar.gz
 Source1:	bashrc
-Source2:	bash-extra.tar.bz2
+Source2:	bash-skel-.bash_logout
+Source3:	bash-skel-.bash_profile
+Source4:	bash-skel-.bashrc
+Source5:	bash-skel_pl-.bashrc
 Patch0:		bash-arm.patch
 Patch1:		bash-fixes.patch
 Patch2:		bash-paths.patch
@@ -94,7 +97,7 @@ specyfikacj± - IEEE Working Group 1003.2.
 W tym pakiecie jest statycznie zlinkowany bash.
 
 %prep
-%setup	-q -a2
+%setup	-q
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -122,9 +125,8 @@ make TERMCAP_LIB="-lncurses" STATIC_LD=""
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
-install -d $RPM_BUILD_ROOT{%{_mandir},%{_infodir}}
-install -d $RPM_BUILD_ROOT/{bin,etc}
+install -d $RPM_BUILD_ROOT{%{_mandir},%{_infodir}} \
+	$RPM_BUILD_ROOT/{bin,etc/skel/{C,pl}}
 
 make install \
 	bindir=$RPM_BUILD_ROOT%{_bindir} \
@@ -135,9 +137,13 @@ mv $RPM_BUILD_ROOT%{_bindir}/bash	$RPM_BUILD_ROOT/bin
 install	-s bash.static	$RPM_BUILD_ROOT/bin
 
 install	%{SOURCE1}	$RPM_BUILD_ROOT/etc/bashrc
-cp -a	skel		$RPM_BUILD_ROOT/etc
 echo	.so bash.1 >	$RPM_BUILD_ROOT%{_mandir}/man1/rbash.1
 ln -sf	bash		$RPM_BUILD_ROOT/bin/rbash
+
+install %{SOURCE2} $RPM_BUILD_ROOT/etc/skel/C/.bash_logout
+install %{SOURCE3} $RPM_BUILD_ROOT/etc/skel/C/.bash_profile
+install %{SOURCE4} $RPM_BUILD_ROOT/etc/skel/C/.bashrc
+install %{SOURCE5} $RPM_BUILD_ROOT/etc/skel/pl/.bashrc
 
 gzip -9nf $RPM_BUILD_ROOT{%{_infodir}/bash.info,%{_mandir}/man1/*} \
 	NEWS README doc/{FAQ,INTRO}
@@ -188,7 +194,8 @@ rm -rf $RPM_BUILD_ROOT
 %doc {NEWS,README}.gz doc/{FAQ,INTRO}.gz
 
 /etc/bashrc
-/etc/skel/*
+/etc/skel/C/.*
+%lang(pl) /etc/skel/pl/.*
 
 %attr(755,root,root) /bin/bash
 %attr(755,root,root) /bin/rbash
