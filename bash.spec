@@ -5,7 +5,7 @@ Summary(pl):	GNU Bourne Again Shell (bash)
 Summary(tr):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.05
-Release:	5
+Release:	6
 License:	GPL
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
