@@ -15,6 +15,7 @@ Patch0:		bash-arm.patch
 Patch1:		bash-fixes.patch
 Patch2:		bash-paths.patch
 Patch3:		bash-security.patch
+Patch4:		bash-autoconf.patch
 Prereq:		fileutils
 Prereq:		grep
 Buildroot:	/tmp/%{name}-%{version}-root
@@ -70,6 +71,7 @@ tasarlanmýþtýr.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 LDFLAGS="-s" CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
@@ -82,7 +84,7 @@ LDFLAGS="-s" CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
 	--enable-restricted \
 	--enable-readline \
 	--enable-static-link
-make 
+make TERMCAP_LIB="-lncurses"
 
 %install
 rm -rf $RPM_BUILD_ROOT
