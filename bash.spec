@@ -197,7 +197,7 @@ echo %{version} > _distribution
 echo %{release} > _patchlevel
 
 %build
-autoconf
+%{__autoconf}
 cp -f /usr/share/automake/config.* support/
 for mode in %{!?_without_static:static} shared; do
 %configure \
