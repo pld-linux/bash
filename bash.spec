@@ -12,7 +12,7 @@ Summary(ru):	GNU Bourne Again Shell (bash)
 Summary(uk):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.05b
-Release:	1%{?_with_bash_history:inv}
+Release:	2%{?_with_bash_history:inv}
 License:	GPL
 Group:		Applications/Shells
 Source0:	ftp://prep.ai.mit.edu/pub/gnu/bash/%{name}-%{version}.tar.gz
@@ -44,10 +44,11 @@ BuildRequires:	texinfo
 # Require static library only for static build
 BuildRequires:	glibc-static >= 2.2
 BuildRequires:	ncurses-static >= 5.2
-BuildRequires:	readline-static >= 4.2
+BuildRequires:	readline-static >= 4.3
 %endif
 Requires(post):	grep
 Requires(preun):	grep
+Requires:	readline >= 4.3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	bash-doc
 Obsoletes:	bash2
