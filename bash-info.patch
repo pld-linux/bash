@@ -1,0 +1,15 @@
+diff -Nru bash-2.03/doc/bashref.texi bash-2.03.new/doc/bashref.texi
+--- bash-2.03/doc/bashref.texi	Wed Jan 20 22:47:01 1999
++++ bash-2.03.new/doc/bashref.texi	Mon May  3 19:19:23 1999
+@@ -23,9 +23,9 @@
+ @set BashFeatures
+ 
+ @ifinfo
+-@dircategory Utilities
++@dircategory Miscellaneous:
+ @direntry
+-     * Bash: (bash).                     The GNU Bourne-Again SHell.
++* Bash: (bash)				The GNU Bourne-Again SHell
+ @end direntry
+ 
+ @format
