@@ -5,21 +5,19 @@ Summary(fr):	GNU Bourne Again Shell (bash)
 Summary(tr):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.03
-Release:	5
+Release:	6
 Group:		Shells
 Group(pl):	Pow³oki
 Copyright:	GPL
 Source0:	ftp://prep.ai.mit.edu/pub/gnu/bash/%{name}-%{version}.tar.gz
 Source1:	bashrc
+Source2:	bash-extra.tar.bz2
 Patch0:		bash-arm.patch
 Patch1:		bash-fixes.patch
 Patch2:		bash-paths.patch
 Patch3:		bash-security.patch
 Patch4:		bash-autoconf.patch
 Patch5:		bash-info.patch
-Prereq:		fileutils
-Prereq:		grep
-Prereq:		/sbin/install-info
 BuildPrereq:	ncurses-devel
 Buildroot:	/tmp/%{name}-%{version}-root
 
@@ -69,7 +67,7 @@ ayrýntýlarýna (IEEE Working Group 1003.2) uyumlu bir uygulama olarak
 tasarlanmýþtýr.
 
 %prep
-%setup	-q
+%setup	-q -a2
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -78,7 +76,7 @@ tasarlanmýþtýr.
 %patch5 -p1
 
 %build
-LDFLAGS="-s" CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
+CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
 ./configure \
 	--prefix=%{_prefix} \
 	--enable-alias \
@@ -89,58 +87,72 @@ LDFLAGS="-s" CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
 	--enable-readline \
 	--with-curses \
 	--enable-extended-glob \
-	--infodir=%{_infodir} %{_target_platform}
+	--enable-dparen-arithmetic \
+	--enable-static-link \
+	--infodir=%{_infodir} \
+	%{_target_platform}
 
-make
+make TERMCAP_LIB="-lncurses"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT/{usr/share/{man,info},bin,etc}
+install -d $RPM_BUILD_ROOT%{_datadir}/{man,info}
+install -d $RPM_BUILD_ROOT/{bin,etc}
 
 make install \
 	prefix=$RPM_BUILD_ROOT%{_prefix} \
 	infodir=$RPM_BUILD_ROOT%{_infodir} \
 	mandir=$RPM_BUILD_ROOT%{_mandir} \
 
-mv $RPM_BUILD_ROOT%{_bindir}/bash	$RPM_BUILD_ROOT/bin/bash
+mv $RPM_BUILD_ROOT%{_bindir}/bash	$RPM_BUILD_ROOT/bin
 
-rm -f $RPM_BUILD_ROOT%{_bindir}/{installed-bash,bash.old}
+install	%{SOURCE1}	$RPM_BUILD_ROOT/etc/bashrc
+cp -a	skel		$RPM_BUILD_ROOT/etc
+echo	.so bash.1 >	$RPM_BUILD_ROOT%{_mandir}/man1/rbash.1
+ln -sf	bash		$RPM_BUILD_ROOT/bin/rbash
 
-install %{SOURCE1} $RPM_BUILD_ROOT/etc/bashrc
-
-echo .so bash.1 > $RPM_BUILD_ROOT%{_mandir}/man1/rbash.1
-
-ln -sf bash $RPM_BUILD_ROOT/bin/rbash
-
-gzip -9nf $RPM_BUILD_ROOT{%{_infodir}/bash.info,%{_mandir}/man1/*} \
-	NEWS README
+gzip -9nf	$RPM_BUILD_ROOT{%{_infodir}/bash.info,%{_mandir}/man1/*} \
+		NEWS README doc/{FAQ,INTRO}
 
 %post
-mv /etc/shells /etc/shells.org
-(cat /etc/shells.org; echo "/bin/bash"; echo "/bin/rbash" ) | sort -u > /etc/shells
-rm -f /etc/shells.org
+if [ ! -f /etc/shells ]; then
+	echo "/bin/bash" > /etc/shells
+	echo "/bin/rbash" >> /etc/shells
+else
+	if ! grep '^/bin/bash$' /etc/shells > /dev/null; then
+		echo "/bin/bash" >> /etc/shells
+	fi
+	if ! grep '^/bin/rbash$' /etc/shells > /dev/null; then
+		echo "/bin/rbash" >> /etc/shells
+	fi
+
+fi
+
 /sbin/install-info %{_infodir}/bash.info.gz /etc/info-dir
 
 %preun
-if [ "$1" = "0" ]; then
-	mv /etc/shells /etc/shells.org
-	cat /etc/shells.org | egrep -v "/bin/bash|/bin/rbash" > /etc/shells
-	rm -f /etc/shells.org
-	/sbin/install-info --delete %{_infodir}/bash.info.gz /etc/info-dir
+if [ $1 = 0 ]; then
+	grep -v /bin/bash /etc/shells | grep -v /bin/rbash > /etc/shells.new
+	mv /etc/shells.new /etc/shells
 fi
+
+/sbin/install-info --delete %{_infodir}/bash.info.gz /etc/info-dir
+
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc {NEWS,README}.gz
+%doc {NEWS,README}.gz doc/{FAQ,INTRO}.gz
 
 /etc/bashrc
+/etc/skel
 
-%attr(755,root,root) /bin/*
-%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) /bin/bash
+%attr(755,root,root) /bin/rbash
+%attr(755,root,root) %{_bindir}/bashbug
 
 %{_infodir}/bash.info.gz
 %{_mandir}/man1/*
