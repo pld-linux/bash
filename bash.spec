@@ -11,18 +11,18 @@ Summary(pt_BR):	GNU Bourne Again Shell (bash)
 Summary(ru):	GNU Bourne Again Shell (bash)
 Summary(uk):	GNU Bourne Again Shell (bash)
 Name:		bash
-Version:	2.05b
-Release:	14%{?with_bash_history:inv}
+Version:	3.0
+Release:	1%{?with_bash_history:inv}
 License:	GPL
 Group:		Applications/Shells
 Source0:	ftp://ftp.gnu.org/pub/gnu/bash/%{name}-%{version}.tar.gz
-# Source0-md5: 5238251b4926d778dfe162f6ce729733
+# Source0-md5:	26c4d642e29b3533d8d754995bc277b3
 Source1:	%{name}rc
 Source2:	%{name}-skel-.%{name}_logout
 Source3:	%{name}-skel-.%{name}_profile
 Source4:	%{name}-skel-.%{name}rc
 Source5:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
-# Source5-md5: d2aacf89c4a444c5da648da69afdb01a
+# Source5-md5:	d2aacf89c4a444c5da648da69afdb01a
 Patch0:		%{name}-paths.patch
 Patch1:		%{name}-security.patch
 Patch2:		%{name}-autoconf.patch
@@ -30,41 +30,31 @@ Patch3:		%{name}-info.patch
 Patch4:		%{name}-profile.patch
 Patch5:		%{name}-requires.patch
 Patch6:		%{name}-compat.patch
-Patch7:		%{name}-shellfunc.patch
-Patch8:		%{name}-DESTDIR.patch
-Patch9:		%{name}-rlimit_locks.patch
-Patch10:	%{name}-sighup.patch
-Patch11:	%{name}-backup_history.patch
-Patch12:	ftp://ftp.gnu.org/pub/gnu/bash/bash-2.05b-patches/bash205b-001
-Patch13:	ftp://ftp.gnu.org/pub/gnu/bash/bash-2.05b-patches/bash205b-002
-Patch14:	ftp://ftp.gnu.org/pub/gnu/bash/bash-2.05b-patches/bash205b-003
-Patch15:	ftp://ftp.gnu.org/pub/gnu/bash/bash-2.05b-patches/bash205b-004
-Patch16:	ftp://ftp.gnu.org/pub/gnu/bash/bash-2.05b-patches/bash205b-005
-Patch17:	ftp://ftp.gnu.org/pub/gnu/bash/bash-2.05b-patches/bash205b-006
-Patch18:	ftp://ftp.gnu.org/pub/gnu/bash/bash-2.05b-patches/bash205b-007
-Patch19:	%{name}-pmake.patch
-Patch20:	%{name}-gcc34.patch
+Patch7:		%{name}-rlimit_locks.patch
+Patch8:		%{name}-sighup.patch
+Patch9:		%{name}-backup_history.patch
+Patch10:	%{name}-pmake.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	ncurses-devel >= 5.2
-BuildRequires:	readline-devel >= 4.3
+BuildRequires:	readline-devel >= 5.0
 BuildRequires:	texinfo
 %if %{with static}
 # Require static library only for static build
 BuildRequires:	glibc-static >= 2.2
 BuildRequires:	ncurses-static >= 5.2
-BuildRequires:	readline-static >= 4.3
+BuildRequires:	readline-static >= 5.0
 %endif
 PreReq:		grep
 Requires(preun):	fileutils
 Requires:	setup >= 2.4.6-2
-Requires:	readline >= 4.3
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+Requires:	readline >= 5.0
 Obsoletes:	bash-doc
 Obsoletes:	bash2
 Obsoletes:	bash2-doc
 Obsoletes:	etcskel
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Bash is a GNU project sh-compatible shell or command language
@@ -197,18 +187,8 @@ tym pakiecie jest wersja basha skonsolidowana statycznie.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%{?with_bash_history:%patch11 -p1}
-%patch12 -p0
-%patch13 -p0
-%patch14 -p0
-%patch15 -p0
-%patch16 -p0
-%patch17 -p0
-%patch18 -p0
-%patch19 -p1
-%patch20 -p1
+%{?with_bash_history:%patch9 -p1}
+#%patch10 -p1	-- no longer needed?
 
 echo %{version} > _distribution
 echo %{release} > _patchlevel
@@ -262,6 +242,8 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/skel/.bash_logout
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/skel/.bash_profile
 install %{SOURCE4} $RPM_BUILD_ROOT/etc/skel/.bashrc
 
+%find_lang %{name}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -308,9 +290,9 @@ fi
 %postun
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
-%files
+%files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc NEWS README doc/{FAQ,INTRO}
+%doc CHANGES NEWS README doc/{FAQ,INTRO}
 
 %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/bashrc
 %config(noreplace,missingok) %verify(not md5 size mtime) /etc/skel/.bash_logout
