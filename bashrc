@@ -11,7 +11,5 @@ PS1="[\u@\h \W]\\$ "
 alias which="type -p"
 
 for i in /etc/shrc.d/*.sh ; do
-	if [ -x $i ]; then
-		. $i
-	fi
+	. $i
 done
