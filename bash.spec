@@ -45,6 +45,7 @@ Obsoletes:	bash-doc
 Obsoletes:	bash2
 Obsoletes:	bash2-doc
 Obsoletes:	etcskel
+Provides:	which
 
 %description
 Bash is a GNU project sh-compatible shell or command language
