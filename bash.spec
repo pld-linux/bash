@@ -5,7 +5,7 @@ Summary(pl):	GNU Bourne Again Shell (bash)
 Summary(tr):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.03
-Release:	8
+Release:	9
 Group:		Shells
 Group(pl):	Pow³oki
 Copyright:	GPL
@@ -212,13 +212,14 @@ if [ $1 = 0 ]; then
 	mv /etc/shells.new /etc/shells
 fi
 
-/usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
-
 %preun static
 if [ $1 = 0 ]; then
 	grep -v /bin/bash.static /etc/shells > /etc/shells.new
 	mv /etc/shells.new /etc/shells
 fi
+
+%postun
+/usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
 %clean
 rm -rf $RPM_BUILD_ROOT
