@@ -87,10 +87,15 @@ l'installer du fait de sa puissance et de sa popularité. Vous finirez
 probablement par l'utiliser.
 
 %description -l pl
-Bash jest zaawansowanym shellem, który wykonuje komendy czytane ze
-standardowego wej¶cia (stdin) lub z pliku. Posiada w³a¶ciwo¶ci shelli
-Korn i C (ksh i csh). Bash ma równie¿ zaimplementowany IEEE Posix
-Shell oraz jest zgodny ze specyfikacj± - IEEE Working Group 1003.2.
+Bash (Bourne Again SHell) jest projektem GNU pow³oki kompatybilnej z
+sh oraz interpretera jêzyka poleceñ. Posiada u¿yteczne w³a¶ciwo¶ci
+pow³ok Korn (ksh) i C (csh). Wiêkszo¶æ skryptów sh mo¿e byæ
+uruchamiana w bashu bez modyfikacji. Oferuje on kilka ulepszeñ w
+stusunku do sh, w³±czaj±c edycjê linii poleceñ, nieograniczony rozmiar
+historii poleceñ, funkcje i aliasy, indeksowane tablice
+nieograniczonych rozmiarów oraz arytmetykê ca³kowitoliczbow± o
+dowolnej podstawie od 2 do 64. W zamierzeniu ostatecznie ma byæ zgodny
+ze standardem IEEE POSIX P1003.2/ISO 9945.2 Shell and Tools.
 
 %description -l tr
 Bash standart giriþten ya da bir dosyadan komut okuyup çalýþtýran sh
@@ -125,7 +130,7 @@ version of bash.
 
 %description static -l pl
 Bash jest zaawansowanym shellem, który wykonuje komendy czytane ze
-standardowego wej¶cia (stdin) lub z pliku. Posiada w³a¶ciwo¶ci shelli
+standardowego wej¶cia (stdin) lub z pliku. Posiada w³a¶ciwo¶ci pow³ok
 Korn i C (ksh i csh). Bash ma równie¿ zaimplementowany IEEE Posix
 Shell oraz jest zgodny ze specyfikacj± - IEEE Working Group 1003.2. W
 tym pakiecie jest statycznie zlinkowany bash.
