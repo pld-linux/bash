@@ -125,7 +125,7 @@ unlimited size and integer arithmetic in any base from two to 64. Bash
 is ultimately intended to conform to the IEEE POSIX P1003.2/ISO 9945.2
 Shell and Tools standard. Bash is the default shell for Linux
 Mandrake. You should install bash because of its popularity and power.
-You'll probably end up using it. This packege contains statically
+You'll probably end up using it. This package contains statically
 linked version of bash.
 
 %description static -l pl
