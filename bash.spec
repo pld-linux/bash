@@ -1,8 +1,5 @@
 Summary:	GNU Bourne Again Shell (bash)
-Summary(de):	GNU Bourne Again Shell (bash)
 Summary(fr):	Le shell Bourne Again de GNU
-Summary(pl):	GNU Bourne Again Shell (bash)
-Summary(tr):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.05
 Release:	8
@@ -29,17 +26,17 @@ Patch9:		%{name}-DESTDIR.patch
 Patch10:	%{name}-rlimit_locks.patch
 Patch11:	%{name}-sighup.patch
 Patch12:	%{name}-tmpfile.patch
+BuildRequires:	autoconf
+BuildRequires:	bison
+BuildRequires:	glibc-devel >= 2.2
 BuildRequires:	ncurses-devel >= 5.2
 BuildRequires:	readline-devel >= 4.2
-BuildRequires:	glibc-devel >= 2.2
 %if %{!?_without_static:1}%{?_without_static:0}
 # Require static library only for static build
+BuildRequires:	glibc-static >= 2.2
 BuildRequires:	ncurses-static >= 5.2
 BuildRequires:	readline-static >= 4.2
-BuildRequires:	glibc-static >= 2.2
 %endif
-BuildRequires:	bison
-BuildRequires:	autoconf
 Prereq:		grep
 Prereq:		fileutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
