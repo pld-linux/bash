@@ -9,7 +9,7 @@ diff -Nru bash-2.03/doc/bashref.texi bash-2.03.new/doc/bashref.texi
 +@dircategory Miscellaneous:
  @direntry
 -     * Bash: (bash).                     The GNU Bourne-Again SHell.
-+* Bash: (bash)				The GNU Bourne-Again SHell
++* Bash: (bash).				The GNU Bourne-Again SHell
  @end direntry
  
  @format
