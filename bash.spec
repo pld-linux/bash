@@ -5,7 +5,7 @@ Summary(pl):	GNU Bourne Again Shell (bash)
 Summary(tr):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.04
-Release:	14
+Release:	15
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
 Group(pl):	Aplikacje/Pow³oki
@@ -15,7 +15,6 @@ Source1:	%{name}rc
 Source2:	%{name}-skel-.bash_logout
 Source3:	%{name}-skel-.bash_profile
 Source4:	%{name}-skel-.bashrc
-Source5:	%{name}-skel_pl-.bashrc
 Patch0:		%{name}-paths.patch
 Patch1:		%{name}-fixes.patch
 Patch2:		%{name}-security.patch
@@ -160,7 +159,7 @@ mv -f bash bash.static
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_mandir},%{_infodir}} \
-	$RPM_BUILD_ROOT/{bin,etc/skel/{C,pl}}
+	$RPM_BUILD_ROOT/{bin,etc/skel}}
 
 %{__make} install \
 	bindir=$RPM_BUILD_ROOT%{_bindir} \
@@ -175,10 +174,9 @@ echo .so bash.1 > $RPM_BUILD_ROOT%{_mandir}/man1/rbash.1
 
 ln -sf bash $RPM_BUILD_ROOT/bin/rbash
 
-install %{SOURCE2} $RPM_BUILD_ROOT/etc/skel/C/.bash_logout
-install %{SOURCE3} $RPM_BUILD_ROOT/etc/skel/C/.bash_profile
-install %{SOURCE4} $RPM_BUILD_ROOT/etc/skel/C/.bashrc
-install %{SOURCE5} $RPM_BUILD_ROOT/etc/skel/pl/.bashrc
+install %{SOURCE2} $RPM_BUILD_ROOT/etc/skel/.bash_logout
+install %{SOURCE3} $RPM_BUILD_ROOT/etc/skel/.bash_profile
+install %{SOURCE4} $RPM_BUILD_ROOT/etc/skel/.bashrc
 
 gzip -9nf NEWS README doc/{FAQ,INTRO}
 
@@ -230,10 +228,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %config %{_sysconfdir}/bashrc
 
-/etc/skel/C/.bash_logout
-/etc/skel/C/.bash_profile
-/etc/skel/C/.bashrc
-%lang(pl) /etc/skel/pl/.bashrc
+/etc/skel/.bash_logout
+/etc/skel/.bash_profile
+/etc/skel/.bashrc
 
 %attr(755,root,root) /bin/bash
 %attr(755,root,root) /bin/rbash
