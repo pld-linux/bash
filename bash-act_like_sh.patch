@@ -17,7 +17,7 @@
     It has been reported to work on Linux.  It will make your system
     vulnerable to bogus system(3) calls in setuid executables.
 
---- ../bash-2.0.orig/shell.c    Wed Dec 18 14:16:30 1996
+--- bash-2.0.orig/shell.c    Wed Dec 18 14:16:30 1996
 +++ shell.c     Fri Mar  7 13:12:03 1997
 @@ -347,7 +347,7 @@
    if (posixly_correct)
