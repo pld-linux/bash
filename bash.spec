@@ -2,8 +2,8 @@ Summary:	GNU Bourne Again Shell (bash)
 Summary(fr):	Le shell Bourne Again de GNU
 Summary(pl):	Pow³oka GNU Bourne Again Shell (bash)
 Name:		bash
-Version:	2.05
-Release:	10
+Version:	2.05a
+Release:	1
 License:	GPL
 Group:		Applications/Shells
 Group(cs):	Aplikace/Shelly
@@ -36,12 +36,12 @@ Patch4:		%{name}-profile.patch
 Patch5:		%{name}-requires.patch
 Patch6:		%{name}-compat.patch
 Patch7:		%{name}-shellfunc.patch
-Patch8:		http://www.t17.ds.pwr.wroc.pl/~misiek/ipv6/%{name}-2.05-ipv6-20010418.patch.gz
-Patch9:		%{name}-DESTDIR.patch
-Patch10:	%{name}-rlimit_locks.patch
-Patch11:	%{name}-sighup.patch
-Patch12:	%{name}-tmpfile.patch
+Patch8:		%{name}-DESTDIR.patch
+Patch9:		%{name}-rlimit_locks.patch
+Patch10:	%{name}-sighup.patch
+Patch11:	%{name}-tmpfile.patch
 BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	glibc-devel >= 2.2
 BuildRequires:	ncurses-devel >= 5.2
@@ -177,14 +177,13 @@ tym pakiecie jest statycznie zlinkowany bash.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
-%patch11 -p1
-%patch12 -p1
 
 echo %{version} > _distribution
 echo %{release} > _patchlevel
 
 %build
 autoconf
+cp -f /usr/share/automake/config.* support/
 for mode in %{!?_without_static:static} shared; do
 %configure \
 	--enable-alias \
