@@ -105,7 +105,7 @@ IEEE Posix Kabuk ve Araç ayrýntýlarýna (IEEE Working Group 1003.2)
 uyumlu bir uygulama olarak tasarlanmýþtýr.
 
 %package static
-Summary:	Staticly linked GNU Bourne Again Shell (bash)
+Summary:	Statically linked GNU Bourne Again Shell (bash)
 Summary(pl):	Statycznie zlinkowany GNU Bourne Again Shell (bash)
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
