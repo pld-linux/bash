@@ -12,7 +12,7 @@ Summary(ru):	GNU Bourne Again Shell (bash)
 Summary(uk):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.05b
-Release:	15%{?with_bash_history:inv}
+Release:	16%{?with_bash_history:inv}
 License:	GPL
 Group:		Applications/Shells
 Source0:	ftp://ftp.gnu.org/pub/gnu/bash/%{name}-%{version}.tar.gz
@@ -44,6 +44,7 @@ Patch17:	ftp://ftp.gnu.org/pub/gnu/bash/bash-2.05b-patches/bash205b-006
 Patch18:	ftp://ftp.gnu.org/pub/gnu/bash/bash-2.05b-patches/bash205b-007
 Patch19:	%{name}-pmake.patch
 Patch20:	%{name}-gcc34.patch
+Patch21:	%{name}-act_like_sh.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
@@ -209,6 +210,7 @@ tym pakiecie jest wersja basha skonsolidowana statycznie.
 %patch18 -p0
 %patch19 -p1
 %patch20 -p1
+%patch21 -p1
 
 echo %{version} > _distribution
 echo %{release} > _patchlevel
