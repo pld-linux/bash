@@ -5,7 +5,7 @@ Summary(pl):	GNU Bourne Again Shell (bash)
 Summary(tr):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.04
-Release:	1
+Release:	2
 Group:		Shells
 Group(pl):	Pow³oki
 License:	GPL
@@ -23,6 +23,7 @@ Patch4:		bash-info.patch
 Patch5:		bash-profile.patch
 BuildRequires:	ncurses-static >= 5.0
 BuildRequires:	readline-static >= 4.1
+BuildRequires:	glibc-static
 Prereq:		/usr/sbin/fix-info-dir
 PreReq:		grep
 PreReq:		fileutils
