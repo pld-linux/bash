@@ -37,6 +37,7 @@ Patch12:	ftp://ftp.gnu.org/pub/gnu/bash/bash-2.05b-patches/bash205b-001
 Patch13:	ftp://ftp.gnu.org/pub/gnu/bash/bash-2.05b-patches/bash205b-002
 Patch14:	ftp://ftp.gnu.org/pub/gnu/bash/bash-2.05b-patches/bash205b-003
 Patch15:	ftp://ftp.gnu.org/pub/gnu/bash/bash-2.05b-patches/bash205b-004
+Patch16:	%{name}-pmake.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
@@ -197,6 +198,7 @@ tym pakiecie jest statycznie zlinkowany bash.
 %patch13 -p0
 %patch14 -p0
 %patch15 -p0
+%patch16 -p1
 
 echo %{version} > _distribution
 echo %{release} > _patchlevel
