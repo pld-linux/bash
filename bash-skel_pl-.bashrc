@@ -9,7 +9,6 @@ TMPDIR="$TEMP"
 export TEMP TMPDIR
 
 LANG=pl_PL
-LC_ALL=pl
-export LANG LC_ALL
+export LANG
 
 umask 077
