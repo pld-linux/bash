@@ -8,4 +8,4 @@
 # Putting PS1 here ensures that it gets loaded every time.
 PS1="[\u@\h \W]\\$ "
 
-alias which="type -path"
+alias which="type -p"
