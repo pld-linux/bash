@@ -1,0 +1,3 @@
+- removed Prereq: /usr/sbin/fix-info-dir
+- fix-info-dir in %pre/%post is executed only when info is already
+  installed
