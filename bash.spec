@@ -1,7 +1,7 @@
 #
 # Conditional build:
-# _without_static - don't build static version
-# _with_bash_history - build with additional history in /var/log/hist ;)
+# _without_static	- don't build static version
+# _with_bash_history	- build with additional history in /var/log/hist ;)
 #
 Summary:	GNU Bourne Again Shell (bash)
 Summary(es):	GNU Bourne Again Shell (bash)
@@ -34,7 +34,7 @@ Patch7:		%{name}-shellfunc.patch
 Patch8:		%{name}-DESTDIR.patch
 Patch9:		%{name}-rlimit_locks.patch
 Patch10:	%{name}-sighup.patch
-%{?_with_bash_history:Patch11:bash-backup_history.patch}
+Patch11:	%{name}-backup_history.patch
 Patch12:	ftp://ftp.gnu.org/pub/gnu/bash/bash-2.05b-patches/bash205b-001
 Patch13:	ftp://ftp.gnu.org/pub/gnu/bash/bash-2.05b-patches/bash205b-002
 Patch14:	ftp://ftp.gnu.org/pub/gnu/bash/bash-2.05b-patches/bash205b-003
