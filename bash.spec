@@ -12,7 +12,7 @@ Source1:	%{name}rc
 Source2:	%{name}-skel-.bash_logout
 Source3:	%{name}-skel-.bash_profile
 Source4:	%{name}-skel-.bashrc
-Source5:	%{name}-non-english-man-pages.tar.bz2
+Source5:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 Patch0:		%{name}-paths.patch
 Patch1:		%{name}-security.patch
 Patch2:		%{name}-autoconf.patch
