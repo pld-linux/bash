@@ -12,7 +12,7 @@ Summary(ru):	GNU Bourne Again Shell (bash)
 Summary(uk):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	3.0
-Release:	5%{?with_bash_history:inv}
+Release:	6%{?with_bash_history:inv}
 License:	GPL
 Group:		Applications/Shells
 Source0:	ftp://ftp.gnu.org/pub/gnu/bash/%{name}-%{version}.tar.gz
@@ -244,6 +244,7 @@ for mode in %{?with_static:static} shared; do
 	--with-curses \
 	--enable-extended-glob \
 	--enable-dparen-arithmetic \
+	--without-bash-malloc \
 	`[ "$mode" = "static" ] && echo "--enable-static-link"` \
 	--with-installed-readline
 
