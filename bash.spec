@@ -28,9 +28,15 @@ Patch9:		%{name}-DESTDIR.patch
 Patch10:	%{name}-rlimit_locks.patch
 Patch11:	%{name}-sighup.patch
 Patch12:	%{name}-tmpfile.patch
+BuildRequires:	ncurses-devel >= 5.2
+BuildRequires:	readline-devel >= 4.2
+BuildRequires:	glibc-devel >= 2.2
+%if %{!?_without_static:1}%{?_without_static:0}
+# Require static library only for static build
 BuildRequires:	ncurses-static >= 5.2
 BuildRequires:	readline-static >= 4.2
 BuildRequires:	glibc-static >= 2.2
+%endif
 BuildRequires:	bison
 PreReq:		grep
 PreReq:		fileutils
@@ -145,7 +151,7 @@ echo %{release} > _patchlevel
 
 %build
 autoconf
-for mode in static shared; do
+for mode in %{!?_without_static:static} shared; do
 %configure \
 	--enable-alias \
 	--enable-help-builtin \
@@ -171,7 +177,7 @@ install -d $RPM_BUILD_ROOT/{bin,etc/skel}
 %{__make} install DESTDIR=$RPM_BUILD_ROOT
 
 mv -f $RPM_BUILD_ROOT%{_bindir}/bash $RPM_BUILD_ROOT/bin
-install	bash.static $RPM_BUILD_ROOT/bin
+%{?_without_static:#}install	bash.static $RPM_BUILD_ROOT/bin
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/bashrc
 echo .so bash.1 > $RPM_BUILD_ROOT%{_mandir}/man1/rbash.1
@@ -243,6 +249,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/bash.info.gz
 %{_mandir}/man1/*
 
-%files static
-%defattr(644,root,root,755)
-%attr(755,root,root) /bin/bash.static
+%{?_without_static:#}%files static
+%{?_without_static:#}%defattr(644,root,root,755)
+%{?_without_static:#}%attr(755,root,root) /bin/bash.static
