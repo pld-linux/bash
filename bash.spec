@@ -153,9 +153,9 @@ LDFLAGS="-s"; export LDFLAGS
 	--enable-dparen-arithmetic \
 	--enable-static-link
 
-make TERMCAP_LIB="-lncurses"
+make TERMCAP_LIB="-ltinfo"
 mv bash bash.static
-make TERMCAP_LIB="-lncurses" STATIC_LD=""
+make TERMCAP_LIB="-ltinfo" STATIC_LD=""
 
 %install
 rm -rf $RPM_BUILD_ROOT
