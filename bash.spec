@@ -12,7 +12,7 @@ Summary(ru):	GNU Bourne Again Shell (bash)
 Summary(uk):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.05b
-Release:	2%{?_with_bash_history:inv}
+Release:	8%{?_with_bash_history:inv}
 License:	GPL
 Group:		Applications/Shells
 Source0:	ftp://prep.ai.mit.edu/pub/gnu/bash/%{name}-%{version}.tar.gz
@@ -33,6 +33,10 @@ Patch8:		%{name}-DESTDIR.patch
 Patch9:		%{name}-rlimit_locks.patch
 Patch10:	%{name}-sighup.patch
 %{?_with_bash_history:Patch11:bash-backup_history.patch}
+Patch12:	ftp://ftp.gnu.org/pub/gnu/bash/bash-2.05b-patches/bash205b-001
+Patch13:	ftp://ftp.gnu.org/pub/gnu/bash/bash-2.05b-patches/bash205b-002
+Patch14:	ftp://ftp.gnu.org/pub/gnu/bash/bash-2.05b-patches/bash205b-003
+Patch15:	ftp://ftp.gnu.org/pub/gnu/bash/bash-2.05b-patches/bash205b-004
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
@@ -189,6 +193,10 @@ tym pakiecie jest statycznie zlinkowany bash.
 %patch9 -p1
 %patch10 -p1
 %{?_with_bash_history:%patch11 -p1}
+%patch12 -p0
+%patch13 -p0
+%patch14 -p0
+%patch15 -p0
 
 echo %{version} > _distribution
 echo %{release} > _patchlevel
