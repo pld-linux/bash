@@ -1,7 +1,7 @@
 #
 # Conditional build:
-# _without_static	- don't build static version
-# _with_bash_history	- build with additional history in /var/log/bash_hist ;)
+%bcond_without static		# don't build static version
+%bcond_with bash_history	# build with additional history in /var/log/bash_hist ;)
 ##
 Summary:	GNU Bourne Again Shell (bash)
 Summary(es):	GNU Bourne Again Shell (bash)
@@ -12,7 +12,7 @@ Summary(ru):	GNU Bourne Again Shell (bash)
 Summary(uk):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.05b
-Release:	11%{?_with_bash_history:inv}
+Release:	11%{?with_bash_history:inv}
 License:	GPL
 Group:		Applications/Shells
 Source0:	ftp://ftp.gnu.org/pub/gnu/bash/%{name}-%{version}.tar.gz
@@ -50,7 +50,7 @@ BuildRequires:	glibc-devel >= 2.2
 BuildRequires:	ncurses-devel >= 5.2
 BuildRequires:	readline-devel >= 4.2
 BuildRequires:	texinfo
-%if %{!?_without_static:1}%{?_without_static:0}
+%if %{with static}
 # Require static library only for static build
 BuildRequires:	glibc-static >= 2.2
 BuildRequires:	ncurses-static >= 5.2
@@ -198,7 +198,7 @@ tym pakiecie jest wersja basha skonsolidowana statycznie.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
-%{?_with_bash_history:%patch11 -p1}
+%{?with_bash_history:%patch11 -p1}
 %patch12 -p0
 %patch13 -p0
 %patch14 -p0
@@ -214,7 +214,7 @@ echo %{release} > _patchlevel
 %build
 %{__autoconf}
 cp -f /usr/share/automake/config.* support/
-for mode in %{!?_without_static:static} shared; do
+for mode in %{?with_static:static} shared; do
 %configure \
 	--enable-alias \
 	--enable-help-builtin \
@@ -236,13 +236,13 @@ done
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/{bin,etc/skel}
-%{?_with_bash_history:install -d $RPM_BUILD_ROOT/var/log/bash_hist}
+%{?with_bash_history:install -d $RPM_BUILD_ROOT/var/log/bash_hist}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 mv -f $RPM_BUILD_ROOT%{_bindir}/bash $RPM_BUILD_ROOT/bin
-%{?_without_static:#}install	bash.static $RPM_BUILD_ROOT/bin
+%{!?with_static:#}install	bash.static $RPM_BUILD_ROOT/bin
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/bashrc
 echo .so bash.1 > $RPM_BUILD_ROOT%{_mandir}/man1/rbash.1
@@ -318,7 +318,7 @@ fi
 %attr(755,root,root) /bin/rbash
 %attr(755,root,root) %{_bindir}/bashbug
 
-%{?_with_bash_history:%attr(751,root,root) %dir /var/log/bash_hist}
+%{?with_bash_history:%attr(751,root,root) %dir /var/log/bash_hist}
 %{_infodir}/bash.info*
 %{_mandir}/man1/*
 %lang(es) %{_mandir}/es/man1/*
@@ -329,6 +329,6 @@ fi
 %lang(nl) %{_mandir}/nl/man1/*
 %lang(pl) %{_mandir}/pl/man1/*
 
-%{?_without_static:#}%files static
-%{?_without_static:#}%defattr(644,root,root,755)
-%{?_without_static:#}%attr(755,root,root) /bin/bash.static
+%{!?with_static:#}%files static
+%{!?with_static:#}%defattr(644,root,root,755)
+%{!?with_static:#}%attr(755,root,root) /bin/bash.static
