@@ -1,0 +1,229 @@
+
+Here it is.  If you like it let me know and I will send the patches to 
+the bash maintainer.  Let me know what you think.
+
+Ken
+
+
+
+diff -r -u bash-2.03.orig/builtins/mkbuiltins.c bash-2.03.new/builtins/mkbuiltins.c
+--- bash-2.03.orig/builtins/mkbuiltins.c	Tue Sep 15 12:57:16 1998
++++ bash-2.03.new/builtins/mkbuiltins.c	Fri Jul 16 10:45:54 1999
+@@ -51,8 +51,13 @@
+ #define whitespace(c) (((c) == ' ') || ((c) == '\t'))
+ 
+ /* Flag values that builtins can have. */
++/*  These flags are for the C code generator, 
++    the C which is produced (./builtin.c)
++    includes the flags definitions found 
++    in ../builtins.h */
+ #define BUILTIN_FLAG_SPECIAL	0x01
+ #define BUILTIN_FLAG_ASSIGNMENT 0x02
++#define BUILTIN_FLAG_REQUIRES	0x04
+ 
+ /* If this stream descriptor is non-zero, then write
+    texinfo documentation to it. */
+@@ -126,9 +131,17 @@
+   (char *)NULL
+ };
+ 
++/* The builtin commands that cause requirements on other files. */
++char *requires_builtins[] =
++{
++  ".", "command", "exec", "source", "inlib",
++  (char *)NULL
++};
++
+ /* Forward declarations. */
+ static int is_special_builtin ();
+ static int is_assignment_builtin ();
++static int is_requires_builtin ();
+ 
+ #if !defined (HAVE_RENAME)
+ static int rename ();
+@@ -759,6 +772,8 @@
+     new->flags |= BUILTIN_FLAG_SPECIAL;
+   if (is_assignment_builtin (name))
+     new->flags |= BUILTIN_FLAG_ASSIGNMENT;
++  if (is_requires_builtin (name))
++    new->flags |= BUILTIN_FLAG_REQUIRES;
+ 
+   array_add ((char *)new, defs->builtins);
+   building_builtin = 1;
+@@ -1164,10 +1179,11 @@
+ 		  else
+ 		    fprintf (structfile, "(Function *)0x0, ");
+ 
+-		  fprintf (structfile, "%s%s%s, %s_doc,\n",
++		  fprintf (structfile, "%s%s%s%s, %s_doc,\n",
+ 		    "BUILTIN_ENABLED | STATIC_BUILTIN",
+ 		    (builtin->flags & BUILTIN_FLAG_SPECIAL) ? " | SPECIAL_BUILTIN" : "",
+ 		    (builtin->flags & BUILTIN_FLAG_ASSIGNMENT) ? " | ASSIGNMENT_BUILTIN" : "",
++		    (builtin->flags & BUILTIN_FLAG_REQUIRES) ? " | REQUIRES_BUILTIN" : "",
+ 		    builtin->docname ? builtin->docname : builtin->name);
+ 
+ 		  fprintf
+@@ -1401,6 +1417,13 @@
+      char *name;
+ {
+   return (_find_in_table (name, assignment_builtins));
++}
++
++static int
++is_requires_builtin (name)
++     char *name;
++{
++  return (_find_in_table (name, requires_builtins));
+ }
+ 
+ #if !defined (HAVE_RENAME)
+diff -r -u bash-2.03.orig/builtins.h bash-2.03.new/builtins.h
+--- bash-2.03.orig/builtins.h	Fri Jul 18 16:46:36 1997
++++ bash-2.03.new/builtins.h	Thu Jul 15 16:59:03 1999
+@@ -40,6 +40,7 @@
+ #define STATIC_BUILTIN  0x4	/* This builtin is not dynamically loaded. */
+ #define SPECIAL_BUILTIN 0x8	/* This is a Posix `special' builtin. */
+ #define ASSIGNMENT_BUILTIN 0x10	/* This builtin takes assignment statements. */
++#define REQUIRES_BUILTIN 0x20	/* This builtin requires other files. */
+ 
+ /* The thing that we build the array of builtins out of. */
+ struct builtin {
+diff -r -u bash-2.03.orig/doc/bash.1 bash-2.03.new/doc/bash.1
+--- bash-2.03.orig/doc/bash.1	Wed Jan 20 16:48:04 1999
++++ bash-2.03.new/doc/bash.1	Fri Jul 16 11:20:00 1999
+@@ -195,6 +195,12 @@
+ .B "RESTRICTED SHELL"
+ below).
+ .TP
++.B \-\-rpm-requires
++Produce the list of files that are required for the 
++shell script to run.  This implies '-n' and is subject
++to the same limitations as compile time error checking checking;
++Backticks, [] tests,  and evals are not parsed so some 
++dependencies may be missed.
+ .B \-\-verbose
+ Equivalent to  \fB\-v\fP.
+ .TP
+diff -r -u bash-2.03.orig/doc/bashref.texi bash-2.03.new/doc/bashref.texi
+--- bash-2.03.orig/doc/bashref.texi	Wed Jan 20 16:47:01 1999
++++ bash-2.03.new/doc/bashref.texi	Fri Jul 16 11:21:30 1999
+@@ -3178,6 +3178,13 @@
+ @item --restricted
+ Make the shell a restricted shell (@pxref{The Restricted Shell}).
+ 
++@item --rpm-requires
++Produce the list of files that are required for the 
++shell script to run.  This implies '-n' and is subject
++to the same limitations as compile time error checking checking;
++Backticks, [] tests,  and evals are not parsed so some 
++dependencies may be missed.
++
+ @item --verbose
+ Equivalent to @samp{-v}.
+ 
+diff -r -u bash-2.03.orig/make_cmd.c bash-2.03.new/make_cmd.c
+--- bash-2.03.orig/make_cmd.c	Tue Jan 12 12:45:36 1999
++++ bash-2.03.new/make_cmd.c	Fri Jul 16 11:48:18 1999
+@@ -41,6 +41,7 @@
+ #include "subst.h"
+ #include "input.h"
+ #include "externs.h"
++#include "builtins.h"
+ 
+ #if defined (JOB_CONTROL)
+ #include "jobs.h"
+@@ -48,6 +49,7 @@
+ 
+ extern int line_number, current_command_line_count;
+ extern int disallow_filename_globbing;
++extern int rpm_requires;
+ 
+ WORD_DESC *
+ make_bare_word (string)
+@@ -588,6 +590,24 @@
+   return (make_command (cm_function_def, (SIMPLE_COM *)temp));
+ }
+ 
++void
++output_requirement (file)
++char *file;
++{
++  if (file[0] != '/') {
++    /* if we are not given a full path name we require the basename
++       otherwise we require the full path.  This does not work in the
++       Win/Dos world but I don't know what to do there.*/
++    char *basename;
++    basename = strrchr(file, '/');
++    if (basename) {    
++      basename++;
++      file=basename;
++    }
++  }  
++  printf ("bash(%s)\n", file);
++}
++
+ /* Reverse the word list and redirection list in the simple command
+    has just been parsed.  It seems simpler to do this here the one
+    time then by any other method that I can think of. */
+@@ -604,6 +624,25 @@
+       command->value.Simple->redirects =
+ 	REVERSE_LIST (command->value.Simple->redirects, REDIRECT *);
+     }
++
++  if (rpm_requires)
++    {
++      char *cmd0;
++      char *cmd1;
++      struct builtin *b;
++
++      cmd0 = command->value.Simple->words->word->word;
++      b = builtin_address_internal (cmd0, 0);
++      if (b) {
++	if (b->flags & REQUIRES_BUILTIN){
++	  cmd1 = command->value.Simple->words->next->word->word;
++	  output_requirement(cmd1);
++	}
++      } else {
++	if (!assignment(cmd0))
++	  output_requirement(cmd0);
++      }
++    } /*rpm_requires*/
+ 
+   return (command);
+ }
+diff -r -u bash-2.03.orig/shell.c bash-2.03.new/shell.c
+--- bash-2.03.orig/shell.c	Thu Feb 18 11:42:27 1999
++++ bash-2.03.new/shell.c	Fri Jul 16 11:30:57 1999
+@@ -170,6 +170,9 @@
+ /* The name of the .(shell)rc file. */
+ static char *bashrc_file = "~/.bashrc";
+ 
++/* Non-zero if we are finding the scripts requirements. */
++int rpm_requires;
++
+ /* Non-zero means to act more like the Bourne shell on startup. */
+ static int act_like_sh;
+ 
+@@ -215,6 +218,7 @@
+   { "norc", Int, &no_rc, (char **)0x0 },
+   { "posix", Int, &posixly_correct, (char **)0x0 },
+   { "rcfile", Charp, (int *)0x0, &bashrc_file },
++  { "rpm-requires", Int, &rpm_requires, (char **)0x0 },
+ #if defined (RESTRICTED_SHELL)
+   { "restricted", Int, &restricted, (char **)0x0 },
+ #endif
+@@ -398,6 +402,12 @@
+ 
+   if (dump_translatable_strings)
+     read_but_dont_execute = 1;
++
++  if (rpm_requires)
++    {
++      read_but_dont_execute = 1;
++      initialize_shell_builtins ();
++    }
+ 
+   if (running_setuid && privileged_mode == 0)
+     disable_priv_mode ();
+
+
