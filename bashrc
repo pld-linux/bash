@@ -13,3 +13,4 @@ alias which="type -p"
 for i in /etc/shrc.d/*.sh ; do
 	. $i
 done
+unset i
