@@ -296,7 +296,7 @@ fi
 %attr(755,root,root) /bin/rbash
 %attr(755,root,root) %{_bindir}/bashbug
 
-%{?_with_bash_history:%attr(750,root,root) %dir /var/log/bash_hist}
+%{?_with_bash_history:%attr(751,root,root) %dir /var/log/bash_hist}
 %{_infodir}/bash.info.gz
 %{_mandir}/man1/*
 %lang(es) %{_mandir}/es/man1/*
