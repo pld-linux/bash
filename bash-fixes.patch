@@ -1,16 +1,3 @@
---- bash-2.02.1/builtins/echo.def	Tue Feb 11 19:00:21 1997
-+++ bash-2.02.1.new/builtins/echo.def	Tue Oct  6 04:15:29 1998
-@@ -163,5 +163,10 @@
-   if (display_return)
-     putchar ('\n');
-   fflush (stdout);
-+  if (ferror(stdout))
-+    {
-+      clearerr(stdout);
-+      return (EXECUTION_FAILURE);
-+    }
-   return (EXECUTION_SUCCESS);
- }
 diff -Nru bash-2.02.1/builtins/fc.def bash-2.02.1.new/builtins/fc.def
 --- bash-2.02.1/builtins/fc.def	Thu Jul 17 15:42:44 1997
 +++ bash-2.02.1.new/builtins/fc.def	Tue Oct  6 04:15:29 1998
@@ -83,32 +70,6 @@ diff -Nru bash-2.02.1/builtins/fc.def bash-2.02.1.new/builtins/fc.def
    return (retval);
  }
  
-diff -Nru bash-2.02.1/doc/bash.1 bash-2.02.1.new/doc/bash.1
---- bash-2.02.1/doc/bash.1	Wed Apr  1 19:25:56 1998
-+++ bash-2.02.1.new/doc/bash.1	Tue Oct  6 04:15:29 1998
-@@ -7214,6 +7214,8 @@
- .\" bash_builtins
- .if \n(zZ=1 .ig zZ
- .SH "RESTRICTED SHELL"
-+.\" start of rbash man
-+.zY
- .PP
- If
- .B bash
-@@ -7281,6 +7283,8 @@
- .B rbash
- turns off any restrictions in the shell spawned to execute the
- script.
-+.\" end of rbash man
-+.if \n(zY=1 .ig zY
- .SH "SEE ALSO"
- .PD 0
- .TP
-@@ -7395,3 +7399,4 @@
- .PP
- Array variables may not (yet) be exported.
- .zZ
-+.zY
 diff -Nru bash-2.02.1/general.h bash-2.02.1.new/general.h
 --- bash-2.02.1/general.h	Tue Feb 24 21:51:04 1998
 +++ bash-2.02.1.new/general.h	Tue Oct  6 04:15:29 1998
