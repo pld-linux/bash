@@ -3,18 +3,22 @@
 # _without_static - don't build static version
 
 Summary:	GNU Bourne Again Shell (bash)
+Summary(es):	GNU Bourne Again Shell (bash)
 Summary(fr):	Le shell Bourne Again de GNU
 Summary(pl):	PowЁoka GNU Bourne Again Shell (bash)
+Summary(pt_BR):	GNU Bourne Again Shell (bash)
+Summary(ru):	GNU Bourne Again Shell (bash)
+Summary(uk):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.05a
-Release:	3
+Release:	14
 License:	GPL
 Group:		Applications/Shells
 Source0:	ftp://prep.ai.mit.edu/pub/gnu/bash/%{name}-%{version}.tar.gz
 Source1:	%{name}rc
-Source2:	%{name}-skel-.bash_logout
-Source3:	%{name}-skel-.bash_profile
-Source4:	%{name}-skel-.bashrc
+Source2:	%{name}-skel-.%{name}_logout
+Source3:	%{name}-skel-.%{name}_profile
+Source4:	%{name}-skel-.%{name}rc
 Source5:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 Patch0:		%{name}-paths.patch
 Patch1:		%{name}-security.patch
@@ -28,7 +32,7 @@ Patch8:		%{name}-DESTDIR.patch
 Patch9:		%{name}-rlimit_locks.patch
 Patch10:	%{name}-sighup.patch
 Patch11:	%{name}-tmpfile.patch
-Patch13: 	%{name}-%{version}-service_completion.patch
+Patch13:	%{name}-%{version}-service_completion.patch
 
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -63,6 +67,14 @@ is ultimately intended to conform to the IEEE POSIX P1003.2/ISO 9945.2
 Shell and Tools standard. Bash is the default shell for Linux
 Mandrake. You should install bash because of its popularity and power.
 You'll probably end up using it.
+
+%description -l es
+Bash es un interpretador de comandos compatible con sh, que ejecuta
+comandos leМdos de la entrada padrСn o de un archivo. Bash tambiИn
+incorpora caracterМsticas Зtiles de las shells Korn y C (ksh y csh).
+Bash ha sido desarrollado para ser una adiciСn compatible con la
+especificaciСn IEEE Posix para shells y herramientas (IEEE Working
+Group 1003.2).
 
 %description -l de
 Bash ist eine sh-kompatible Shell und Kommandosprache aus dem
@@ -102,12 +114,37 @@ nieograniczonych rozmiarСw oraz arytmetykЙ caЁkowitoliczbow╠ o
 dowolnej podstawie od 2 do 64. W zamierzeniu ostatecznie ma byФ zgodny
 ze standardem IEEE POSIX P1003.2/ISO 9945.2 Shell and Tools.
 
+%description -l pt_BR
+Bash И um interpretador de comandos compatМvel com sh, que executa
+comandos lidos da entrada padrЦo ou de um arquivo. Bash tambИm
+incorpora caracterМsticas Зteis das shells Korn e C (ksh e csh). Bash
+tem sido desenvolvido para ser uma implementaГЦo compatМvel com a
+especificaГЦo IEEE Posix para shells e ferramentas (IEEE Working Group
+1003.2).
+
+%description -l ru
+Bash - это sh-совместимый интерпретатор командного языка (shell),
+исполняющий команды, поступающие со стандартного ввода или из файла.
+Bash включает полезные расширения из интерпретаторов Korn и C shell
+(ksh и csh).
+
+Bash разрабатывается как реализация, отвечающая IEEE Posix Shell and
+Tools specification (IEEE Working Group 1003.2).
+
 %description -l tr
 Bash standart giriЧten ya da bir dosyadan komut okuyup ГalЩЧtЩran sh
 uyumlu bir komut dili yorumlayЩcЩsЩdЩr. AynЩ zamanda Korn ve C
 kabuklarЩnЩn (ksh ve csh) kullanЩЧlЩ Жzelliklerini de kapsar. Bash,
 IEEE Posix Kabuk ve AraГ ayrЩntЩlarЩna (IEEE Working Group 1003.2)
 uyumlu bir uygulama olarak tasarlanmЩЧtЩr.
+
+%description -l uk
+Bash - це sh-сум╕стний ╕нтерпретатор командно╖ мови (shell),
+виконуючий команди з╕ стандартного вводу або з файла. Bash м╕стить
+користн╕ розширення з ╕нтерпретатор╕в Korn та C shell (ksh та csh).
+
+Bash розроблявся як реал╕зац╕я, що в╕дпов╕да╓ IEEE Posix Shell and
+Tools specification (IEEE Working Group 1003.2).
 
 %package static
 Summary:	Statically linked GNU Bourne Again Shell (bash)
