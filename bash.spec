@@ -5,7 +5,7 @@ Summary(pl):	GNU Bourne Again Shell (bash)
 Summary(tr):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.05
-Release:	6
+Release:	7
 License:	GPL
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
@@ -15,6 +15,7 @@ Source1:	%{name}rc
 Source2:	%{name}-skel-.bash_logout
 Source3:	%{name}-skel-.bash_profile
 Source4:	%{name}-skel-.bashrc
+Source5:	%{name}-non-english-man-pages.tar.bz2
 Patch0:		%{name}-paths.patch
 Patch1:		%{name}-security.patch
 Patch2:		%{name}-autoconf.patch
@@ -137,7 +138,7 @@ Shell oraz jest zgodny ze specyfikacj± - IEEE Working Group 1003.2. W
 tym pakiecie jest statycznie zlinkowany bash.
 
 %prep
-%setup	-q
+%setup -q -a5
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -187,6 +188,12 @@ mv -f $RPM_BUILD_ROOT%{_bindir}/bash $RPM_BUILD_ROOT/bin
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/bashrc
 echo .so bash.1 > $RPM_BUILD_ROOT%{_mandir}/man1/rbash.1
+
+for d in fr it ja ko nl pl ; do
+	install -d $RPM_BUILD_ROOT%{_mandir}/$d/man1
+	install man/$d/* $RPM_BUILD_ROOT%{_mandir}/$d/man1
+	echo .so bash.1 > $RPM_BUILD_ROOT%{_mandir}/$d/man1/rbash.1
+done
 
 ln -sf bash $RPM_BUILD_ROOT/bin/rbash
 
@@ -253,6 +260,12 @@ fi
 
 %{_infodir}/bash.info.gz
 %{_mandir}/man1/*
+%lang(fr) %{_mandir}/fr/man1/*
+%lang(it) %{_mandir}/it/man1/*
+%lang(ja) %{_mandir}/ja/man1/*
+%lang(ko) %{_mandir}/ko/man1/*
+%lang(nl) %{_mandir}/nl/man1/*
+%lang(pl) %{_mandir}/pl/man1/*
 
 %{?_without_static:#}%files static
 %{?_without_static:#}%defattr(644,root,root,755)
