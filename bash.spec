@@ -131,7 +131,7 @@ tym pakiecie jest statycznie zlinkowany bash.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
-%patch9 -p1
+%patch9 -p0
 
 echo %{version} > _distribution
 echo %{release} > _patchlevel
