@@ -19,6 +19,9 @@ Patch3:		bash-security.patch
 Patch4:		bash-autoconf.patch
 Patch5:		bash-info.patch
 BuildPrereq:	ncurses-devel
+PreRequires:	/sbin/install-info
+PreRequires:	grep
+PreRequires:	/bin/mv
 Buildroot:	/tmp/%{name}-%{version}-root
 
 %description
