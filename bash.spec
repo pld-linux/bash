@@ -59,6 +59,7 @@ BuildRequires:	readline-static >= 4.3
 %endif
 Requires(post,preun):	grep
 Requires(preun):	fileutils
+Requires:	setup >= 2.4.6-2
 Requires:	readline >= 4.3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	bash-doc
