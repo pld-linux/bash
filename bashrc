@@ -15,3 +15,5 @@ for i in `find /etc/shrc.d -name '*.sh'` ; do
 	. $i
 done
 unset i
+
+stty erase `tput kbs`
