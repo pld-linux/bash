@@ -105,7 +105,7 @@ rm -f $RPM_BUILD_ROOT/usr/bin/bash.old
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/bashrc
 
-echo .so bash.1 > $RPM_BUILD_ROOT/usr/man/man1/rbash.1
+echo .so bash.1 > $RPM_BUILD_ROOT%{_mandir}/man1/rbash.1
 
 ln -sf bash $RPM_BUILD_ROOT/bin/rbash
 
@@ -116,14 +116,14 @@ gzip -9nf $RPM_BUILD_ROOT/usr/{info/bash.info,man/man1/*} \
 mv /etc/shells /etc/shells.org
 (cat /etc/shells.org; echo "/bin/bash"; echo "/bin/rbash" ) | sort -u > /etc/shells
 rm -f /etc/shells.org
-/sbin/install-info /usr/info/bash.info.gz /etc/info-dir
+/sbin/install-info %{_infodir}/bash.info.gz /etc/info-dir
 
 %preun
 if [ "$1" = "0" ]; then
 	mv /etc/shells /etc/shells.org
 	cat /etc/shells.org | egrep -v "/bin/bash|/bin/rbash" > /etc/shells
 	rm -f /etc/shells.org
-	/sbin/install-info --delete /usr/info/bash.info.gz /etc/info-dir
+	/sbin/install-info --delete %{_infodir}/bash.info.gz /etc/info-dir
 fi
 
 %clean
@@ -138,8 +138,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /bin/*
 %attr(755,root,root) /usr/bin/*
 
-/usr/info/bash.info.gz
-/usr/man/man1/*
+%{_infodir}/bash.info.gz
+%{_mandir}/man1/*
 
 %changelog
 * Mon May  3 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
