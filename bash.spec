@@ -221,16 +221,17 @@ cp -f /usr/share/automake/config.* support
 for mode in %{?with_static:static} shared; do
 %configure \
 	--enable-alias \
+	--enable-dparen-arithmetic \
+	--enable-extended-glob \
 	--enable-help-builtin \
 	--enable-history \
 	--enable-job-control \
 	--enable-restricted \
 	--enable-readline \
-	--with-curses \
-	--enable-extended-glob \
-	--enable-dparen-arithmetic \
 	`[ "$mode" = "static" ] && echo "--enable-static-link"` \
-	--with-installed-readline
+	--with-curses \
+	--with-installed-readline \
+	--without-bash-malloc
 
 %{__make} \
 	DEFS="-DHAVE_CONFIG_H -D_GNU_SOURCE"
