@@ -80,7 +80,7 @@ tasarlanmýþtýr.
 
 %build
 LDFLAGS="-s" CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
-./configure \
+./configure %{_target} \
 	--prefix=/usr \
 	--enable-alias \
 	--enable-help-builtin \
