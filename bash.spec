@@ -128,7 +128,7 @@ make TERMCAP_LIB="-lncurses" STATIC_LD=""
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT%{_datadir}/{man,info}
+install -d $RPM_BUILD_ROOT{%{_mandir},%{_infodir}}
 install -d $RPM_BUILD_ROOT/{bin,etc}
 
 make install \
