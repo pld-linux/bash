@@ -79,7 +79,7 @@ tasarlanmýþtýr.
 
 %build
 LDFLAGS="-s" CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
-    ./configure \
+./configure \
 	--prefix=%{_prefix} \
 	--enable-alias \
 	--enable-help-builtin \
@@ -98,11 +98,10 @@ rm -rf $RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT/{usr/share/{man,info},bin,etc}
 
-make \
-    prefix=$RPM_BUILD_ROOT%{_prefix} \
-    infodir=$RPM_BUILD_ROOT%{_infodir} \
-    mandir=$RPM_BUILD_ROOT%{_mandir} \
-    install
+make install \
+	prefix=$RPM_BUILD_ROOT%{_prefix} \
+	infodir=$RPM_BUILD_ROOT%{_infodir} \
+	mandir=$RPM_BUILD_ROOT%{_mandir} \
 
 mv $RPM_BUILD_ROOT%{_bindir}/bash	$RPM_BUILD_ROOT/bin/bash
 
@@ -114,8 +113,8 @@ echo .so bash.1 > $RPM_BUILD_ROOT%{_mandir}/man1/rbash.1
 
 ln -sf bash $RPM_BUILD_ROOT/bin/rbash
 
-gzip -9nf $RPM_BUILD_ROOT%{_datadir}/{info/bash.info,man/man1/*} \
-	NEWS README 
+gzip -9nf $RPM_BUILD_ROOT{%{_infodir/bash.info,%{_mandir}/man1/*} \
+	NEWS README
 
 %post
 mv /etc/shells /etc/shells.org
