@@ -1,0 +1,136 @@
+--- bash-2.02.1/builtins/echo.def	Tue Feb 11 19:00:21 1997
++++ bash-2.02.1.new/builtins/echo.def	Tue Oct  6 04:15:29 1998
+@@ -163,5 +163,10 @@
+   if (display_return)
+     putchar ('\n');
+   fflush (stdout);
++  if (ferror(stdout))
++    {
++      clearerr(stdout);
++      return (EXECUTION_FAILURE);
++    }
+   return (EXECUTION_SUCCESS);
+ }
+diff -Nru bash-2.02.1/builtins/fc.def bash-2.02.1.new/builtins/fc.def
+--- bash-2.02.1/builtins/fc.def	Thu Jul 17 15:42:44 1997
++++ bash-2.02.1.new/builtins/fc.def	Tue Oct  6 04:15:29 1998
+@@ -161,7 +161,7 @@
+   REPL *rlist, *rl;
+   char *ename, *command, *newcom, *line;
+   HIST_ENTRY **hlist;
+-  char fn[64];
++  char *fn = 0;
+ 
+   numbering = 1;
+   reverse = listing = execute = 0;
+@@ -326,15 +326,29 @@
+     stream = stdout;
+   else
+     {
++      int fd;
+       numbering = 0;
+-      /* XXX - this is raceable */
+-      sprintf (fn, "/tmp/bash%d", (int)time ((time_t *) 0) + (int)getpid ());
++      fn = tempnam(0, "bash");
++      if (!fn)
++	{
++	  builtin_error ("unable to generate a unique filename");
++	  return (EXECUTION_FAILURE);
++	}
++      
++      fd = open (fn, O_CREAT | O_EXCL | O_WRONLY, 0600);
++      if (fd < 0)
++	{
++	  builtin_error ("cannot open temp file %s", fn);
++	  free (fn);
++	  return (EXECUTION_FAILURE);
++	}
+ 
+-      stream = fopen (fn, "w");
++      stream = fdopen (fd, "w");
+ 
+       if (stream == 0)
+ 	{
+ 	  builtin_error ("cannot open temp file %s", fn);
++	  free (fn);
+ 	  return (EXECUTION_FAILURE);
+ 	}
+     }
+@@ -350,7 +364,10 @@
+     }
+ 
+   if (listing)
++    {
++    free (fn);
+     return (EXECUTION_SUCCESS);
++    }
+ 
+   fclose (stream);
+ 
+@@ -369,6 +386,7 @@
+   if (retval != EXECUTION_SUCCESS)
+     {
+       unlink (fn);
++      free (fn);
+       return (EXECUTION_FAILURE);
+     }
+ 
+@@ -442,6 +461,7 @@
+ 
+   run_unwind_frame ("fc builtin");
+ 
++  free (fn);
+   return (retval);
+ }
+ 
+diff -Nru bash-2.02.1/doc/bash.1 bash-2.02.1.new/doc/bash.1
+--- bash-2.02.1/doc/bash.1	Wed Apr  1 19:25:56 1998
++++ bash-2.02.1.new/doc/bash.1	Tue Oct  6 04:15:29 1998
+@@ -7214,6 +7214,8 @@
+ .\" bash_builtins
+ .if \n(zZ=1 .ig zZ
+ .SH "RESTRICTED SHELL"
++.\" start of rbash man
++.zY
+ .PP
+ If
+ .B bash
+@@ -7281,6 +7283,8 @@
+ .B rbash
+ turns off any restrictions in the shell spawned to execute the
+ script.
++.\" end of rbash man
++.if \n(zY=1 .ig zY
+ .SH "SEE ALSO"
+ .PD 0
+ .TP
+@@ -7395,3 +7399,4 @@
+ .PP
+ Array variables may not (yet) be exported.
+ .zZ
++.zY
+diff -Nru bash-2.02.1/general.h bash-2.02.1.new/general.h
+--- bash-2.02.1/general.h	Tue Feb 24 21:51:04 1998
++++ bash-2.02.1.new/general.h	Tue Oct  6 04:15:29 1998
+@@ -21,6 +21,7 @@
+ #if !defined (_GENERAL_H_)
+ #define _GENERAL_H_
+ 
++#include <sys/types.h>
+ #include "stdc.h"
+ 
+ #include "bashtypes.h"
+diff -Nru bash-2.02.1/subst.c bash-2.02.1.new/subst.c
+--- bash-2.02.1/subst.c	Tue Jun 30 18:09:45 1998
++++ bash-2.02.1.new/subst.c	Tue Oct  6 04:15:29 1998
+@@ -2749,8 +2749,8 @@
+ {
+   char *tname;
+ 
+-  tname = mktemp (savestring ("/tmp/sh-np-XXXXXX"));
+-  if (mkfifo (tname, 0600) < 0)
++  tname = tempnam(0, "sh-np");
++  if (!tname || mkfifo (tname, 0600) < 0)
+     {
+       free (tname);
+       return ((char *)NULL);
