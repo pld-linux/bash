@@ -1,3 +1,7 @@
+#
+# Conditional build:
+# _without_static - don't build static version
+
 Summary:	GNU Bourne Again Shell (bash)
 Summary(fr):	Le shell Bourne Again de GNU
 Summary(pl):	Pow³oka GNU Bourne Again Shell (bash)
