@@ -147,7 +147,7 @@ LDFLAGS="-s"; export LDFLAGS
 	--with-installed-readline
 
 %{__make} TERMCAP_LIB="-ltinfo"
-mv bash bash.static
+mv -f bash bash.static
 %{__make} TERMCAP_LIB="-ltinfo" STATIC_LD=""
 
 %install
@@ -203,13 +203,13 @@ fi
 %preun
 if [ $1 = 0 ]; then
 	grep -v /bin/bash /etc/shells | grep -v /bin/rbash > /etc/shells.new
-	mv /etc/shells.new /etc/shells
+	mv -f /etc/shells.new /etc/shells
 fi
 
 %preun static
 if [ $1 = 0 ]; then
 	grep -v /bin/bash.static /etc/shells > /etc/shells.new
-	mv /etc/shells.new /etc/shells
+	mv -f /etc/shells.new /etc/shells
 fi
 
 %postun
