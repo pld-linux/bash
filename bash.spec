@@ -5,7 +5,7 @@ Summary(fr):	GNU Bourne Again Shell (bash)
 Summary(tr):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.03
-Release:	4
+Release:	5
 Group:		Shells
 Group(pl):	Pow³oki
 Copyright:	GPL
@@ -22,7 +22,6 @@ Prereq:		grep
 Prereq:		/sbin/install-info
 BuildPrereq:	ncurses-devel
 Buildroot:	/tmp/%{name}-%{version}-root
-Obsoletes:	bash2
 
 %description
 Bash is an sh-compatible command language interpreter that
@@ -70,7 +69,7 @@ ayrýntýlarýna (IEEE Working Group 1003.2) uyumlu bir uygulama olarak
 tasarlanmýþtýr.
 
 %prep
-%setup -q
+%setup	-q
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -80,28 +79,34 @@ tasarlanmýþtýr.
 
 %build
 LDFLAGS="-s" CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
-./configure %{_target} \
-	--prefix=/usr \
+    ./configure \
+	--prefix=%{_prefix} \
 	--enable-alias \
 	--enable-help-builtin \
 	--enable-history \
 	--enable-job-control \
 	--enable-restricted \
 	--enable-readline \
-	--with-curses
+	--with-curses \
+	--enable-extended-glob \
+	--infodir=%{_infodir} %{_target_platform}
 
 make
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT/{usr,bin,etc}
-make prefix=$RPM_BUILD_ROOT/usr install
+install -d $RPM_BUILD_ROOT/{usr/share/{man,info},bin,etc}
 
-mv $RPM_BUILD_ROOT%{_bindir}/bash $RPM_BUILD_ROOT/bin/bash
-rm -f $RPM_BUILD_ROOT%{_bindir}/installed-bash
+make \
+    prefix=$RPM_BUILD_ROOT%{_prefix} \
+    infodir=$RPM_BUILD_ROOT%{_infodir} \
+    mandir=$RPM_BUILD_ROOT%{_mandir} \
+    install
 
-rm -f $RPM_BUILD_ROOT%{_bindir}/bash.old
+mv $RPM_BUILD_ROOT%{_bindir}/bash	$RPM_BUILD_ROOT/bin/bash
+
+rm -f $RPM_BUILD_ROOT%{_bindir}/{installed-bash,bash.old}
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/bashrc
 
@@ -109,7 +114,7 @@ echo .so bash.1 > $RPM_BUILD_ROOT%{_mandir}/man1/rbash.1
 
 ln -sf bash $RPM_BUILD_ROOT/bin/rbash
 
-gzip -9nf $RPM_BUILD_ROOT/usr/{info/bash.info,man/man1/*} \
+gzip -9nf $RPM_BUILD_ROOT%{_datadir}/{info/bash.info,man/man1/*} \
 	NEWS README 
 
 %post
@@ -142,6 +147,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/*
 
 %changelog
+* Wed May 19 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
+  [2.03-5]
+- more macros,
+- FHS 2.0.
+
 * Mon May  3 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [2.03-4]
 - added {un}registering info page for bash (added bash-info.patch).
@@ -150,7 +160,7 @@ rm -rf $RPM_BUILD_ROOT
   [2.03-1]
 - removed /bin/sh link from bash (this is now provided by pdksh),
 - removed man group from man pages,
-- gzipping insterad bzipping2 man pages,
+- gzipping instead bzipping2 man pages,
 - rewrited %post, %preun,
 - removed %config and %verify rules from /etc/bashrc (all extensions can be
   added by adding /etc/profile.d/*.sh scripts).
@@ -165,25 +175,5 @@ rm -rf $RPM_BUILD_ROOT
 - build against glibc-2.1,
 - translation modified for pl,
 - added %defattr support,
-- build from non root's account.
-
-* Mon Apr 27 1998 Prospector System <bugs@redhat.com>
-- translations modified for de, fr, tr
-
-* Fri Nov 07 1997 Donnie Barnes <djb@redhat.com>
-- added signal handling patch from Dean Gaudet <dgaudet@arctic.org> that
-  is based on a change made in bash 2.0.  Should fix some early exit
-  problems with suspends and fg.
-
-* Mon Oct 20 1997 Donnie Barnes <djb@redhat.com>
-- added %clean
-
-* Mon Oct 20 1997 Erik Troan <ewt@redhat.com>
-- added comment explaining why install-info isn't used
-- added mips patch 
-
-* Fri Oct 17 1997 Donnie Barnes <djb@redhat.com>
-- added BuildRoot
-
-* Tue Jun 03 1997 Erik Troan <ewt@redhat.com>
-- built against glibc
+- build from non root's account,
+- start at RH spec.
