@@ -10,3 +10,15 @@ HISTFILESIZE=1000
 export HISTSIZE HISTFILESIZE
 
 mesg n
+
+TMP=~/tmp
+TMPDIR="$TMP"
+export TMP TMPDIR
+
+# setup LOCALE variables
+#LANG=
+#LC_ALL=
+#export LANG LC_ALL
+
+umask 077
+
