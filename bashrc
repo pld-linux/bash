@@ -10,8 +10,8 @@ PS1="[\u@\h \W]\\$ "
 
 alias which="type -p"
 
-for I in /etc/profile.d/*.sh ; do
-	if [ "`grep alias $I`" != "" ]; then
-		. $I
+for i in /etc/shrc.d/*.sh ; do
+	if [ -x $i ]; then
+		. $i
 	fi
 done
