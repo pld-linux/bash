@@ -4,8 +4,8 @@ Summary(fr):	Le shell Bourne Again de GNU
 Summary(pl):	GNU Bourne Again Shell (bash)
 Summary(tr):	GNU Bourne Again Shell (bash)
 Name:		bash
-Version:	2.04
-Release:	16
+Version:	2.05
+Release:	1
 License:	GPL
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
@@ -16,16 +16,14 @@ Source2:	%{name}-skel-.bash_logout
 Source3:	%{name}-skel-.bash_profile
 Source4:	%{name}-skel-.bashrc
 Patch0:		%{name}-paths.patch
-Patch1:		%{name}-fixes.patch
-Patch2:		%{name}-security.patch
-Patch3:		%{name}-autoconf.patch
-Patch4:		%{name}-info.patch
-Patch5:		%{name}-profile.patch
-Patch6:		%{name}-requires.patch
-Patch7:		%{name}-compat.patch
-Patch8:		%{name}-shellfunc.patch
-Patch9:		%{name}-export.patch
-Patch10:	http://www.t17.ds.pwr.wroc.pl/~misiek/ipv6/bash-2.04-ipv6-20003011.patch.gz
+Patch1:		%{name}-security.patch
+Patch2:		%{name}-autoconf.patch
+Patch3:		%{name}-info.patch
+Patch4:		%{name}-profile.patch
+Patch5:		%{name}-requires.patch
+Patch6:		%{name}-compat.patch
+Patch7:		%{name}-shellfunc.patch
+Patch8:		http://www.t17.ds.pwr.wroc.pl/~misiek/ipv6/bash-2.04-ipv6-20003011.patch.gz
 BuildRequires:	ncurses-static >= 5.2
 BuildRequires:	readline-static >= 4.2
 BuildRequires:	glibc-static >= 2.2
@@ -130,9 +128,7 @@ tym pakiecie jest statycznie zlinkowany bash.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch8 -p1
-%patch9 -p0
-%patch10 -p1
+#%patch8 -p1
 
 echo %{version} > _distribution
 echo %{release} > _patchlevel
