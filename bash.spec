@@ -5,7 +5,7 @@ Summary(pl):	GNU Bourne Again Shell (bash)
 Summary(tr):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.04
-Release:	3
+Release:	4
 Group:		Shells
 Group(pl):	Pow³oki
 License:	GPL
@@ -21,6 +21,9 @@ Patch2:		bash-security.patch
 Patch3:		bash-autoconf.patch
 Patch4:		bash-info.patch
 Patch5:		bash-profile.patch
+Patch6:		bash-requires.patch
+Patch7:		bash-compat.patch
+Patch8:		bash-shellfunc.patch
 BuildRequires:	ncurses-static >= 5.0
 BuildRequires:	readline-static >= 4.1
 BuildRequires:	glibc-static
@@ -121,6 +124,9 @@ tym pakiecie jest statycznie zlinkowany bash.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
 
 echo %{version} > _distribution
 echo %{release} > _patchlevel
