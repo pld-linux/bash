@@ -24,7 +24,7 @@ Patch5:		bash-info.patch
 Patch6:		bash-requires.patch
 Patch7:		bash-profile.patch
 BuildRequires:	ncurses-devel
-PreReq:		/sbin/install-info
+Prereq:		/usr/sbin/fix-info-dir
 PreReq:		grep
 PreReq:		fileutils
 Buildroot:	/tmp/%{name}-%{version}-root
@@ -195,7 +195,7 @@ else
 	fi
 fi
 
-/sbin/install-info %{_infodir}/bash.info.gz /etc/info-dir
+/usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
 %post static
 if [ ! -f /etc/shells ]; then
@@ -212,7 +212,7 @@ if [ $1 = 0 ]; then
 	mv /etc/shells.new /etc/shells
 fi
 
-/sbin/install-info --delete %{_infodir}/bash.info.gz /etc/info-dir
+/usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
 %preun static
 if [ $1 = 0 ]; then
