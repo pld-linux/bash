@@ -24,7 +24,6 @@ Patch5:		bash-profile.patch
 BuildRequires:	ncurses-static >= 5.0
 BuildRequires:	readline-static >= 4.1
 BuildRequires:	glibc-static
-Prereq:		/usr/sbin/fix-info-dir
 PreReq:		grep
 PreReq:		fileutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -179,7 +178,7 @@ else
 	fi
 fi
 
-/usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
+[ -x /usr/sbin/fix-info-dir ] && /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
 %post static
 if [ ! -f /etc/shells ]; then
@@ -203,7 +202,7 @@ if [ $1 = 0 ]; then
 fi
 
 %postun
-/usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
+[ -x /usr/sbin/fix-info-dir ] && /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
 %clean
 rm -rf $RPM_BUILD_ROOT
