@@ -5,7 +5,7 @@ Summary(fr):	GNU Bourne Again Shell (bash)
 Summary(tr):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.03
-Release:	1
+Release:	4
 Group:		Shells
 Group(pl):	Pow³oki
 Copyright:	GPL
@@ -16,9 +16,13 @@ Patch1:		bash-fixes.patch
 Patch2:		bash-paths.patch
 Patch3:		bash-security.patch
 Patch4:		bash-autoconf.patch
+Patch5:		bash-info.patch
 Prereq:		fileutils
 Prereq:		grep
+Prereq:		/sbin/install-info
+BuildPrereq:	ncurese-devel
 Buildroot:	/tmp/%{name}-%{version}-root
+Obsoletes:	bash2
 
 %description
 Bash is an sh-compatible command language interpreter that
@@ -72,6 +76,7 @@ tasarlanmýþtýr.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 LDFLAGS="-s" CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
@@ -110,11 +115,15 @@ gzip -9nf $RPM_BUILD_ROOT/usr/{info/bash.info,man/man1/*} \
 mv /etc/shells /etc/shells.org
 (cat /etc/shells.org; echo "/bin/bash"; echo "/bin/rbash" ) | sort -u > /etc/shells
 rm -f /etc/shells.org
+/sbin/install-info /usr/info/bash.info.gz /etc/info-dir
 
 %preun
-mv /etc/shells /etc/shells.org
-cat /etc/shells.org | egrep -v "/bin/bash|/bin/rbash" > /etc/shells
-rm -f /etc/shells.org
+if [ "$1" = "0" ]; then
+	mv /etc/shells /etc/shells.org
+	cat /etc/shells.org | egrep -v "/bin/bash|/bin/rbash" > /etc/shells
+	rm -f /etc/shells.org
+	/sbin/install-info --delete /usr/info/bash.info.gz /etc/info-dir
+fi
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -132,6 +141,10 @@ rm -rf $RPM_BUILD_ROOT
 /usr/man/man1/*
 
 %changelog
+* Mon May  3 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
+  [2.03-4]
+- added {un}registering info page for bash (added bash-info.patch).
+
 * Mon Feb 22 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [2.03-1]
 - removed /bin/sh link from bash (this is now provided by pdksh),
