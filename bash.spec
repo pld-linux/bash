@@ -7,6 +7,7 @@ Name:		bash
 Version:	2.03
 Release:	1
 Group:		Shells
+Group(pl):	Pow³oki
 Copyright:	GPL
 Source0:	ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
 Source1:	bashrc
