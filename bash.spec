@@ -20,7 +20,7 @@ Patch5:		bash-info.patch
 Prereq:		fileutils
 Prereq:		grep
 Prereq:		/sbin/install-info
-BuildPrereq:	ncurese-devel
+BuildPrereq:	ncurses-devel
 Buildroot:	/tmp/%{name}-%{version}-root
 Obsoletes:	bash2
 
@@ -88,8 +88,9 @@ LDFLAGS="-s" CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
 	--enable-job-control \
 	--enable-restricted \
 	--enable-readline \
-	--enable-static-link
-make TERMCAP_LIB="-lncurses"
+	--with-curses
+
+make
 
 %install
 rm -rf $RPM_BUILD_ROOT
