@@ -98,10 +98,10 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/{usr,bin,etc}
 make prefix=$RPM_BUILD_ROOT/usr install
 
-mv $RPM_BUILD_ROOT/usr/bin/bash $RPM_BUILD_ROOT/bin/bash
-rm -f $RPM_BUILD_ROOT/usr/bin/installed-bash
+mv $RPM_BUILD_ROOT%{_bindir}/bash $RPM_BUILD_ROOT/bin/bash
+rm -f $RPM_BUILD_ROOT%{_bindir}/installed-bash
 
-rm -f $RPM_BUILD_ROOT/usr/bin/bash.old
+rm -f $RPM_BUILD_ROOT%{_bindir}/bash.old
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/bashrc
 
@@ -136,7 +136,7 @@ rm -rf $RPM_BUILD_ROOT
 /etc/bashrc
 
 %attr(755,root,root) /bin/*
-%attr(755,root,root) /usr/bin/*
+%attr(755,root,root) %{_bindir}/*
 
 %{_infodir}/bash.info.gz
 %{_mandir}/man1/*
