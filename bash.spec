@@ -113,7 +113,7 @@ echo .so bash.1 > $RPM_BUILD_ROOT%{_mandir}/man1/rbash.1
 
 ln -sf bash $RPM_BUILD_ROOT/bin/rbash
 
-gzip -9nf $RPM_BUILD_ROOT{%{_infodir/bash.info,%{_mandir}/man1/*} \
+gzip -9nf $RPM_BUILD_ROOT{%{_infodir}/bash.info,%{_mandir}/man1/*} \
 	NEWS README
 
 %post
