@@ -203,7 +203,7 @@ else
 	fi
 fi
 
-%fix_info_dir
+[ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
 %post static
 if [ ! -f /etc/shells ]; then
@@ -227,7 +227,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %postun
-%fix_info_dir
+[ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
 %clean
 rm -rf $RPM_BUILD_ROOT
