@@ -5,10 +5,10 @@ Summary(pl):	GNU Bourne Again Shell (bash)
 Summary(tr):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.03
-Release:	11
+Release:	12
 Group:		Shells
 Group(pl):	Pow³oki
-Copyright:	GPL
+License:	GPL
 Source0:	ftp://prep.ai.mit.edu/pub/gnu/bash/%{name}-%{version}.tar.gz
 Source1:	bashrc
 Source2:	bash-skel-.bash_logout
@@ -23,7 +23,9 @@ Patch4:		bash-autoconf.patch
 Patch5:		bash-info.patch
 Patch6:		bash-requires.patch
 Patch7:		bash-profile.patch
+Patch8:		bash-rlvers.patch
 BuildRequires:	ncurses-static >= 5.0
+BuildRequires:	readline-static >= 4.0
 Prereq:		/usr/sbin/fix-info-dir
 PreReq:		grep
 PreReq:		fileutils
@@ -137,6 +139,7 @@ W tym pakiecie jest statycznie zlinkowany bash.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 echo %{version} > _distribution
 echo %{release} > _patchlevel
@@ -153,7 +156,8 @@ LDFLAGS="-s"; export LDFLAGS
 	--with-curses \
 	--enable-extended-glob \
 	--enable-dparen-arithmetic \
-	--enable-static-link
+	--enable-static-link \
+	--with-installed-readline
 
 make TERMCAP_LIB="-ltinfo"
 mv bash bash.static
