@@ -1,14 +1,24 @@
 
-Here it is.  If you like it let me know and I will send the patches to 
-the bash maintainer.  Let me know what you think.
+Jeff Johnson writes:
+> For background, Ken Estes has a hack to bash2 that will print out the
+> commands that will be executed by a shell script. The hack is included
+> in the distributed Red Hat 6.x bash2 package if you are interested.
+
+
+Here is the latest patch file.
+
+Notice that I changed the output from "bash()" to "executable()"
+Since the dependencies work for both bash and sh and really we depend
+on their being an executable not that this executable is in anyway
+related to bash.
 
 Ken
 
 
 
-diff -r -u bash-2.03.orig/builtins/mkbuiltins.c bash-2.03.new/builtins/mkbuiltins.c
+diff -u -r bash-2.03.orig/builtins/mkbuiltins.c bash-2.03/builtins/mkbuiltins.c
 --- bash-2.03.orig/builtins/mkbuiltins.c	Tue Sep 15 12:57:16 1998
-+++ bash-2.03.new/builtins/mkbuiltins.c	Fri Jul 16 10:45:54 1999
++++ bash-2.03/builtins/mkbuiltins.c	Fri Jul 16 10:45:54 1999
 @@ -51,8 +51,13 @@
  #define whitespace(c) (((c) == ' ') || ((c) == '\t'))
  
@@ -77,9 +87,9 @@ diff -r -u bash-2.03.orig/builtins/mkbuiltins.c bash-2.03.new/builtins/mkbuiltin
  }
  
  #if !defined (HAVE_RENAME)
-diff -r -u bash-2.03.orig/builtins.h bash-2.03.new/builtins.h
+diff -u -r bash-2.03.orig/builtins.h bash-2.03/builtins.h
 --- bash-2.03.orig/builtins.h	Fri Jul 18 16:46:36 1997
-+++ bash-2.03.new/builtins.h	Thu Jul 15 16:59:03 1999
++++ bash-2.03/builtins.h	Thu Jul 15 16:59:03 1999
 @@ -40,6 +40,7 @@
  #define STATIC_BUILTIN  0x4	/* This builtin is not dynamically loaded. */
  #define SPECIAL_BUILTIN 0x8	/* This is a Posix `special' builtin. */
@@ -88,9 +98,9 @@ diff -r -u bash-2.03.orig/builtins.h bash-2.03.new/builtins.h
  
  /* The thing that we build the array of builtins out of. */
  struct builtin {
-diff -r -u bash-2.03.orig/doc/bash.1 bash-2.03.new/doc/bash.1
+diff -u -r bash-2.03.orig/doc/bash.1 bash-2.03/doc/bash.1
 --- bash-2.03.orig/doc/bash.1	Wed Jan 20 16:48:04 1999
-+++ bash-2.03.new/doc/bash.1	Fri Jul 16 11:20:00 1999
++++ bash-2.03/doc/bash.1	Fri Jul 16 11:20:00 1999
 @@ -195,6 +195,12 @@
  .B "RESTRICTED SHELL"
  below).
@@ -104,9 +114,9 @@ diff -r -u bash-2.03.orig/doc/bash.1 bash-2.03.new/doc/bash.1
  .B \-\-verbose
  Equivalent to  \fB\-v\fP.
  .TP
-diff -r -u bash-2.03.orig/doc/bashref.texi bash-2.03.new/doc/bashref.texi
+diff -u -r bash-2.03.orig/doc/bashref.texi bash-2.03/doc/bashref.texi
 --- bash-2.03.orig/doc/bashref.texi	Wed Jan 20 16:47:01 1999
-+++ bash-2.03.new/doc/bashref.texi	Fri Jul 16 11:21:30 1999
++++ bash-2.03/doc/bashref.texi	Fri Jul 16 11:21:30 1999
 @@ -3178,6 +3178,13 @@
  @item --restricted
  Make the shell a restricted shell (@pxref{The Restricted Shell}).
@@ -121,26 +131,31 @@ diff -r -u bash-2.03.orig/doc/bashref.texi bash-2.03.new/doc/bashref.texi
  @item --verbose
  Equivalent to @samp{-v}.
  
-diff -r -u bash-2.03.orig/make_cmd.c bash-2.03.new/make_cmd.c
+diff -u -r bash-2.03.orig/make_cmd.c bash-2.03/make_cmd.c
 --- bash-2.03.orig/make_cmd.c	Tue Jan 12 12:45:36 1999
-+++ bash-2.03.new/make_cmd.c	Fri Jul 16 11:48:18 1999
-@@ -41,6 +41,7 @@
++++ bash-2.03/make_cmd.c	Thu Dec  2 16:08:19 1999
+@@ -41,6 +41,9 @@
  #include "subst.h"
  #include "input.h"
  #include "externs.h"
 +#include "builtins.h"
++
++#include "builtins/common.h"
  
  #if defined (JOB_CONTROL)
  #include "jobs.h"
-@@ -48,6 +49,7 @@
+@@ -48,6 +51,10 @@
  
  extern int line_number, current_command_line_count;
  extern int disallow_filename_globbing;
 +extern int rpm_requires;
++
++char *alphabet_set = "abcdefghijklmnopqrstuvwxyz"
++                     "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
  
  WORD_DESC *
  make_bare_word (string)
-@@ -588,6 +590,24 @@
+@@ -588,6 +595,36 @@
    return (make_command (cm_function_def, (SIMPLE_COM *)temp));
  }
  
@@ -148,7 +163,7 @@ diff -r -u bash-2.03.orig/make_cmd.c bash-2.03.new/make_cmd.c
 +output_requirement (file)
 +char *file;
 +{
-+  if (file[0] != '/') {
++  if ( (file[0] != '/') || strchr(file, '$')) {
 +    /* if we are not given a full path name we require the basename
 +       otherwise we require the full path.  This does not work in the
 +       Win/Dos world but I don't know what to do there.*/
@@ -159,18 +174,30 @@ diff -r -u bash-2.03.orig/make_cmd.c bash-2.03.new/make_cmd.c
 +      file=basename;
 +    }
 +  }  
-+  printf ("bash(%s)\n", file);
++
++    /* 
++       if the executable is called via variable substitution we can
++       not dermine what it is at compile time.  
++
++       if the executable consists only of characters not in the
++       alphabet we do not consider it a dependency just an artifact of
++       shell parsing (ex "exec < ${infile}").
++    */
++
++  if ( !strchr(file, '$') && strpbrk(file, alphabet_set) ) {
++    printf ("executable(%s)\n", file);
++  }
 +}
 +
  /* Reverse the word list and redirection list in the simple command
     has just been parsed.  It seems simpler to do this here the one
     time then by any other method that I can think of. */
-@@ -604,6 +624,25 @@
+@@ -604,6 +641,35 @@
        command->value.Simple->redirects =
  	REVERSE_LIST (command->value.Simple->redirects, REDIRECT *);
      }
 +
-+  if (rpm_requires)
++  if (rpm_requires && command->value.Simple->words)
 +    {
 +      char *cmd0;
 +      char *cmd1;
@@ -178,22 +205,32 @@ diff -r -u bash-2.03.orig/make_cmd.c bash-2.03.new/make_cmd.c
 +
 +      cmd0 = command->value.Simple->words->word->word;
 +      b = builtin_address_internal (cmd0, 0);
++      cmd1 = 0;
++      if (command->value.Simple->words->next) {
++	cmd1 = command->value.Simple->words->next->word->word;
++      }
 +      if (b) {
-+	if (b->flags & REQUIRES_BUILTIN){
-+	  cmd1 = command->value.Simple->words->next->word->word;
++	if ( (b->flags & REQUIRES_BUILTIN) && cmd1){
 +	  output_requirement(cmd1);
 +	}
 +      } else {
-+	if (!assignment(cmd0))
++	if (!assignment(cmd0)) {
 +	  output_requirement(cmd0);
++	} else {
++
++	  /* This will not work, the subshell that this runs in does
++             not get the "requires" commandline argument. */
++
++	  execute_command(command);
++	}
 +      }
 +    } /*rpm_requires*/
  
    return (command);
  }
-diff -r -u bash-2.03.orig/shell.c bash-2.03.new/shell.c
+diff -u -r bash-2.03.orig/shell.c bash-2.03/shell.c
 --- bash-2.03.orig/shell.c	Thu Feb 18 11:42:27 1999
-+++ bash-2.03.new/shell.c	Fri Jul 16 11:30:57 1999
++++ bash-2.03/shell.c	Fri Jul 16 11:30:57 1999
 @@ -170,6 +170,9 @@
  /* The name of the .(shell)rc file. */
  static char *bashrc_file = "~/.bashrc";
@@ -226,4 +263,6 @@ diff -r -u bash-2.03.orig/shell.c bash-2.03.new/shell.c
    if (running_setuid && privileged_mode == 0)
      disable_priv_mode ();
 
+-- 
+To unsubscribe: mail -s unsubscribe rpm-list-request@redhat.com < /dev/null
 
