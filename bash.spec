@@ -5,7 +5,7 @@ Summary(pl):	GNU Bourne Again Shell (bash)
 Summary(tr):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.03
-Release:	7
+Release:	8
 Group:		Shells
 Group(pl):	Pow³oki
 Copyright:	GPL
