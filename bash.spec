@@ -51,6 +51,7 @@ Patch33:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-013
 Patch34:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-014
 Patch35:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-015
 Patch36:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-016
+URL:		http://www.gnu.org/software/bash/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
