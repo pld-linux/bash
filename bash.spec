@@ -23,7 +23,7 @@ Patch4:		bash-autoconf.patch
 Patch5:		bash-info.patch
 Patch6:		bash-requires.patch
 Patch7:		bash-profile.patch
-BuildRequires:	ncurses-devel
+BuildRequires:	ncurses-static
 Prereq:		/usr/sbin/fix-info-dir
 PreReq:		grep
 PreReq:		fileutils
