@@ -176,6 +176,7 @@ install %{SOURCE4} $RPM_BUILD_ROOT/etc/skel/C/.bashrc
 install %{SOURCE5} $RPM_BUILD_ROOT/etc/skel/pl/.bashrc
 
 gzip -9nf NEWS README doc/{FAQ,INTRO}
+gzip -9nf $RPM_BUILD_ROOT%{_infodir}/bash.info
 
 %post
 if [ ! -f /etc/shells ]; then
