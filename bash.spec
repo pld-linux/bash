@@ -5,7 +5,7 @@ Summary(fr):	GNU Bourne Again Shell (bash)
 Summary(tr):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.03
-Release:	6
+Release:	7
 Group:		Shells
 Group(pl):	Pow³oki
 Copyright:	GPL
@@ -66,6 +66,35 @@ csh) kullanýþlý özelliklerini de kapsar. Bash, IEEE Posix Kabuk ve Araç
 ayrýntýlarýna (IEEE Working Group 1003.2) uyumlu bir uygulama olarak
 tasarlanmýþtýr.
 
+%package static
+Summary:	Staticly linked GNU Bourne Again Shell (bash)
+Summary(pl):	Statycznie zlinkowany GNU Bourne Again Shell (bash)
+Group:		Shells
+Group(pl):	Pow³oki
+Requires:	%{name}
+
+%description static
+Bash is an sh-compatible command language interpreter that
+executes commands read from the standard input or from a
+file.  Bash also incorporates useful features from the
+Korn and C shells (ksh and csh).
+
+Bash is ultimately intended to be a conformant implementation
+of the IEEE Posix Shell and Tools specification (IEEE
+Working Group 1003.2).
+
+This packege contains staticly linked version of bash.
+
+%description static -l pl
+Bash jest zaawansowanym shellem, który wykonuje komendy czytane ze
+standardowego wej¶cia (stdin) lub z pliku. Posiada w³a¶ciwo¶ci 
+shelli Korn i C (ksh i csh). 
+
+Bash ma równie¿ zaimplementowany IEEE Posix Shell oraz jest zgodny ze 
+specyfikacj± - IEEE Working Group 1003.2.
+
+W tym pakiecie jest statycznie zlinkowany bash.
+
 %prep
 %setup	-q -a2
 %patch0 -p1
@@ -93,6 +122,8 @@ CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
 	%{_target_platform}
 
 make TERMCAP_LIB="-lncurses"
+mv bash bash.static
+make TERMCAP_LIB="-lncurses" STATIC_LD=""
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -106,6 +137,7 @@ make install \
 	mandir=$RPM_BUILD_ROOT%{_mandir} \
 
 mv $RPM_BUILD_ROOT%{_bindir}/bash	$RPM_BUILD_ROOT/bin
+install	-s bash.static	$RPM_BUILD_ROOT/bin
 
 install	%{SOURCE1}	$RPM_BUILD_ROOT/etc/bashrc
 cp -a	skel		$RPM_BUILD_ROOT/etc
@@ -131,6 +163,15 @@ fi
 
 /sbin/install-info %{_infodir}/bash.info.gz /etc/info-dir
 
+%post static
+if [ ! -f /etc/shells ]; then
+	echo "/bin/bash.static" > /etc/shells
+else
+	if ! grep '^/bin/bash.static$' /etc/shells > /dev/null; then
+		echo "/bin/bash.static" >> /etc/shells
+	fi
+fi
+
 %preun
 if [ $1 = 0 ]; then
 	grep -v /bin/bash /etc/shells | grep -v /bin/rbash > /etc/shells.new
@@ -138,6 +179,12 @@ if [ $1 = 0 ]; then
 fi
 
 /sbin/install-info --delete %{_infodir}/bash.info.gz /etc/info-dir
+
+%preun static
+if [ $1 = 0 ]; then
+	grep -v /bin/bash.static /etc/shells > /etc/shells.new
+	mv /etc/shells.new /etc/shells
+fi
 
 
 %clean
@@ -157,7 +204,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/bash.info.gz
 %{_mandir}/man1/*
 
+%files static
+%defattr(644,root,root,755)
+%attr(755,root,root) /bin/bash
+
 %changelog
+* Sat Jun  5 1999 Jan Rêkorajski <baggins@pld.org.pl>
+  [2.03-7]
+- added static subpackage
+
 * Wed May 19 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
   [2.03-5]
 - more macros,
