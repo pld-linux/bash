@@ -190,7 +190,7 @@
 +	  output_requirement(cmd1);
 +	}
 +      } else {
-+	if (!assignment(cmd0)) {
++	if (!assignment(cmd0, 0)) {
 +	  output_requirement(cmd0);
 +	} else {
 +

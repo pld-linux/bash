@@ -39,7 +39,7 @@
    opt = get_limit (limind, &soft_limit, &hard_limit);
    if (opt < 0)
      {
--      builtin_error ("%s: cannot get limit: %s", limits[limind].description,
+-      builtin_error (_("%s: cannot get limit: %s"), limits[limind].description,
 -						 strerror (errno));
 -      return (EXECUTION_FAILURE);
 +      if (( errno == 22) && (limits[limind].parameter == RLIMIT_LOCKS))
@@ -52,7 +52,7 @@
 +        }
 +      else
 +        {
-+          builtin_error ("%s: cannot get limit: %s", limits[limind].description,
++          builtin_error (_("%s: cannot get limit: %s"), limits[limind].description,
 +						strerror (errno));
 +          return (EXECUTION_FAILURE);
 +        }
@@ -66,7 +66,7 @@
 +
 +  if (dont_locks)
 +    {
-+      builtin_error ("cannot set it on the current kernel");
++      builtin_error (_("cannot set it on the current kernel"));
 +      return (EXECUTION_FAILURE);
 +    }
   

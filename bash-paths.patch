@@ -10,14 +10,13 @@ diff -uNr bash-2.02-orig/config.h.in bash-2.02/config.h.in
  
  /* Define if you have the bcopy function.  */
  #undef HAVE_BCOPY
-diff -uNr bash-2.03-orig/config-top.h bash-2.03/config-top.h
---- bash-2.03-orig/config-top.h	Thu Mar  6 17:38:39 1997
-+++ bash-2.03/config-top.h	Sun Apr 19 16:56:20 1998
-@@ -34,14 +34,14 @@
+--- bash-3.0/config-top.h.orig	2003-08-05 16:36:12.000000000 +0200
++++ bash-3.0/config-top.h	2004-08-06 08:36:33.117941904 +0200
+@@ -52,14 +52,14 @@
  /* The default value of the PATH variable. */
  #ifndef DEFAULT_PATH_VALUE
  #define DEFAULT_PATH_VALUE \
--  "/usr/gnu/bin:/usr/local/bin:/usr/ucb:/bin:/usr/bin:."
+-  "/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:."
 +  "/usr/local/bin:/bin:/usr/bin"
  #endif
  
@@ -25,8 +24,8 @@ diff -uNr bash-2.03-orig/config-top.h bash-2.03/config-top.h
     the Posix.2 confstr () function, or CS_PATH define are not present. */
  #ifndef STANDARD_UTILS_PATH
  #define STANDARD_UTILS_PATH \
--  "/bin:/usr/bin:/usr/ucb:/sbin:/usr/sbin:/etc:/usr/etc"
-+  "/bin:/usr/bin:/usr/sbin:/sbin"
+-  "/bin:/usr/bin:/sbin:/usr/sbin:/etc:/usr/etc"
++  "/bin:/usr/bin:/sbin:/usr/sbin"
  #endif
  
  /* Default primary and secondary prompt strings. */
