@@ -2,7 +2,7 @@
 # Conditional build:
 # _without_static - don't build static version
 # _with_bash_history - build with additional history in /var/log/hist ;)
-
+#
 Summary:	GNU Bourne Again Shell (bash)
 Summary(es):	GNU Bourne Again Shell (bash)
 Summary(fr):	Le shell Bourne Again de GNU
@@ -50,8 +50,7 @@ BuildRequires:	glibc-static >= 2.2
 BuildRequires:	ncurses-static >= 5.2
 BuildRequires:	readline-static >= 4.3
 %endif
-Requires(post):	grep
-Requires(preun):	grep
+Requires(post,preun):	grep
 Requires:	readline >= 4.3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	bash-doc
@@ -155,8 +154,7 @@ Summary:	Statically linked GNU Bourne Again Shell (bash)
 Summary(pl):	Statycznie zlinkowany GNU Bourne Again Shell (bash)
 Group:		Applications/Shells
 Requires:	%{name}
-Requires(post):	grep
-Requires(preun):	grep
+Requires(post,preun):	grep
 
 %description static
 Bash is a GNU project sh-compatible shell or command language
@@ -254,6 +252,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 if [ ! -f /etc/shells ]; then
+	umask 022
 	echo "/bin/bash" > /etc/shells
 	echo "/bin/rbash" >> /etc/shells
 else
@@ -269,6 +268,7 @@ fi
 
 %post static
 if [ ! -f /etc/shells ]; then
+	umask 022
 	echo "/bin/bash.static" > /etc/shells
 else
 	if ! grep -q '^/bin/bash.static$' /etc/shells; then
@@ -278,12 +278,14 @@ fi
 
 %preun
 if [ "$1" = "0" ]; then
+	umask 022
 	grep -v /bin/bash /etc/shells | grep -v /bin/rbash > /etc/shells.new
 	mv -f /etc/shells.new /etc/shells
 fi
 
 %preun static
 if [ "$1" = "0" ]; then
+	umask 022
 	grep -v /bin/bash.static /etc/shells > /etc/shells.new
 	mv -f /etc/shells.new /etc/shells
 fi
@@ -305,7 +307,7 @@ fi
 %attr(755,root,root) %{_bindir}/bashbug
 
 %{?_with_bash_history:%attr(751,root,root) %dir /var/log/bash_hist}
-%{_infodir}/bash.info.gz
+%{_infodir}/bash.info*
 %{_mandir}/man1/*
 %lang(es) %{_mandir}/es/man1/*
 %lang(fr) %{_mandir}/fr/man1/*
