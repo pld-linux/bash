@@ -16,11 +16,13 @@ Release:	9%{?_with_bash_history:inv}
 License:	GPL
 Group:		Applications/Shells
 Source0:	ftp://ftp.gnu.org/pub/gnu/bash/%{name}-%{version}.tar.gz
+# Source0-md5: 5238251b4926d778dfe162f6ce729733
 Source1:	%{name}rc
 Source2:	%{name}-skel-.%{name}_logout
 Source3:	%{name}-skel-.%{name}_profile
 Source4:	%{name}-skel-.%{name}rc
 Source5:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
+# Source5-md5: d2aacf89c4a444c5da648da69afdb01a
 Patch0:		%{name}-paths.patch
 Patch1:		%{name}-security.patch
 Patch2:		%{name}-autoconf.patch
