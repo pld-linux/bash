@@ -62,6 +62,7 @@ PreReq:		grep
 Requires(preun):	fileutils
 Requires:	setup >= 2.4.6-2
 Requires:	readline >= 4.3
+Requires:	findutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	bash-doc
 Obsoletes:	bash2
