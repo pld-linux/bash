@@ -12,7 +12,7 @@ Summary(ru):	GNU Bourne Again Shell (bash)
 Summary(uk):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.05b
-Release:	17%{?with_bash_history:inv}
+Release:	17.2%{?with_bash_history:inv}
 License:	GPL
 Group:		Applications/Shells
 Source0:	ftp://ftp.gnu.org/pub/gnu/bash/%{name}-%{version}.tar.gz
@@ -62,7 +62,6 @@ PreReq:		grep
 Requires(preun):	fileutils
 Requires:	setup >= 2.4.6-2
 Requires:	readline >= 4.3
-Requires:	findutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	bash-doc
 Obsoletes:	bash2
