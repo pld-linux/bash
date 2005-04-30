@@ -11,7 +11,10 @@ PS1="[\u@\h \W]\\$ "
 alias which="type -p"
 
 # SYSTEM WIDE ALIASES ETC.
-for i in `find /etc/shrc.d -name '*.sh'` ; do
-	. $i
-done
-unset i
+# use shell glob to get files sorted and prevent extra dep on findutils
+if [ "$(echo /etc/shrc.d/*.sh)" != "/etc/shrc.d/*.sh" ]; then
+	for i in /etc/shrc.d/*.sh; do
+		. $i
+	done
+	unset i
+fi
