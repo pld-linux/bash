@@ -12,6 +12,7 @@ case $TERM in
 		PS1="[\u@\h \W]\\$ "
 		;;
 esac
+export PS1
 
 alias which="type -p"
 
