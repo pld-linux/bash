@@ -5,7 +5,7 @@
 
 # We set PS1 for each terminal:
 case $TERM in
-	gnome|xterm*|rxvt)
+	gnome|nxterm|xterm*|rxvt)
 		PS1="\[\033]0;\u@\h: \w\007\][\u@\h \W]\\$ "
 		;;
 	*)
