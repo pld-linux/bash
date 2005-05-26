@@ -3,17 +3,15 @@
 # System wide functions and aliases
 # Environment stuff goes in /etc/profile
 
-# If shell is run in environment without set PS1
-if [ ! "$PS1" ]; then
-	case $TERM in
-		gnome|xterm*|rxvt)
-			PS1="\[\033]0;\u@\h: \w\007\][\u@\h \W]\\$ "
-			;;
-		*)
-			PS1="[\u@\h \W]\\$ "
-			;;
-	esac
-fi
+# We set PS1 for each terminal:
+case $TERM in
+	gnome|xterm*|rxvt)
+		PS1="\[\033]0;\u@\h: \w\007\][\u@\h \W]\\$ "
+		;;
+	*)
+		PS1="[\u@\h \W]\\$ "
+		;;
+esac
 
 alias which="type -p"
 
