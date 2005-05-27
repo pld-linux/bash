@@ -22,4 +22,4 @@ for i in `find /etc/shrc.d -name '*.sh'` ; do
 done
 unset i
 
-stty erase `tput kbs`
+[ "`LANG= tty`" = "not a tty" ] || stty erase `tput kbs`
