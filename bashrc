@@ -22,4 +22,4 @@ for i in `find /etc/shrc.d -name '*.sh'` ; do
 done
 unset i
 
-[ "`LC_ALL= tty`" = "not a tty" ] || stty erase `tput kbs`
+[ -n "$TERM" ] && tty >/dev/null 2>&1 && stty erase `tput kbs`
