@@ -16,7 +16,7 @@
 +      if (wcontinued_not_supported)
 +	waitpid_flags &= ~WCONTINUED;
        pid = WAITPID (-1, &status, waitpid_flags);
-+      if (errno == EINVAL)
++      if ((pid == -1) && (errno == EINVAL))
 +	{
 +	  wcontinued_not_supported = 1;
 +	  goto retry;
