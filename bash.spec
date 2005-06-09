@@ -12,7 +12,7 @@ Summary(ru):	GNU Bourne Again Shell (bash)
 Summary(uk):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.05b
-Release:	12%{?with_bash_history:inv}
+Release:	22%{?with_bash_history:inv}
 License:	GPL
 Group:		Applications/Shells
 Source0:	ftp://ftp.gnu.org/pub/gnu/bash/%{name}-%{version}.tar.gz
@@ -44,12 +44,13 @@ Patch17:	ftp://ftp.gnu.org/pub/gnu/bash/bash-2.05b-patches/bash205b-006
 Patch18:	ftp://ftp.gnu.org/pub/gnu/bash/bash-2.05b-patches/bash205b-007
 Patch19:	%{name}-pmake.patch
 Patch20:	%{name}-gcc34.patch
+Patch21:	%{name}-act_like_sh.patch
+Patch22:	%{name}-WCONTINUED.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
-BuildRequires:	glibc-devel >= 2.2
 BuildRequires:	ncurses-devel >= 5.2
-BuildRequires:	readline-devel >= 4.2
+BuildRequires:	readline-devel >= 4.3
 BuildRequires:	texinfo
 %if %{with static}
 # Require static library only for static build
@@ -57,8 +58,9 @@ BuildRequires:	glibc-static >= 2.2
 BuildRequires:	ncurses-static >= 5.2
 BuildRequires:	readline-static >= 4.3
 %endif
-Requires(post,preun):	grep
+PreReq:		grep
 Requires(preun):	fileutils
+Requires:	setup >= 2.4.6-2
 Requires:	readline >= 4.3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	bash-doc
@@ -163,7 +165,7 @@ Summary(pl):	Statycznie skonsolidowany GNU Bourne Again Shell (bash)
 Group:		Applications/Shells
 Requires(post,preun):	grep
 Requires(preun):	fileutils
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description static
 Bash is a GNU project sh-compatible shell or command language
@@ -209,28 +211,32 @@ tym pakiecie jest wersja basha skonsolidowana statycznie.
 %patch18 -p0
 %patch19 -p1
 %patch20 -p1
+%patch21 -p1
+%patch22 -p1
 
 echo %{version} > _distribution
 echo %{release} > _patchlevel
 
 %build
 %{__autoconf}
-cp -f /usr/share/automake/config.* support/
+cp -f /usr/share/automake/config.* support
 for mode in %{?with_static:static} shared; do
 %configure \
 	--enable-alias \
+	--enable-dparen-arithmetic \
+	--enable-extended-glob \
 	--enable-help-builtin \
 	--enable-history \
 	--enable-job-control \
 	--enable-restricted \
 	--enable-readline \
-	--with-curses \
-	--enable-extended-glob \
-	--enable-dparen-arithmetic \
 	`[ "$mode" = "static" ] && echo "--enable-static-link"` \
-	--with-installed-readline
+	--with-curses \
+	--with-installed-readline \
+	--without-bash-malloc
 
-%{__make} DEFS="-DHAVE_CONFIG_H -D_GNU_SOURCE"
+%{__make} \
+	DEFS="-DHAVE_CONFIG_H -D_GNU_SOURCE"
 
 [ "$mode" = "static" ] && mv -f bash bash.static || :
 done
@@ -311,7 +317,7 @@ fi
 %defattr(644,root,root,755)
 %doc NEWS README doc/{FAQ,INTRO}
 
-%config %verify(not md5 size mtime) %{_sysconfdir}/bashrc
+%config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/bashrc
 %config(noreplace,missingok) %verify(not md5 size mtime) /etc/skel/.bash_logout
 %config(noreplace,missingok) %verify(not md5 size mtime) /etc/skel/.bash_profile
 %config(noreplace,missingok) %verify(not md5 size mtime) /etc/skel/.bashrc
