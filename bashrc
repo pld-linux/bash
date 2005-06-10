@@ -3,15 +3,15 @@
 # System wide functions and aliases
 # Environment stuff goes in /etc/profile
 
-# We set PS1 for each terminal:
+# If this is an xterm set the title to user@host:dir
 case $TERM in
-	gnome|xterm*|rxvt)
-		PS1="\[\033]0;\u@\h: \w\007\][\u@\h \W]\\$ "
+	gnome|xterm*|rxvt*)
+		PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
 		;;
 	*)
-		PS1="[\u@\h \W]\\$ "
 		;;
 esac
+PS1="[\u@\h \W]\\$ "
 
 alias which="type -p"
 
