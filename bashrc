@@ -4,14 +4,14 @@
 # Environment stuff goes in /etc/profile
 
 # We set PS1 for each terminal:
-case $TERM in
-	gnome|xterm*|rxvt)
-		PS1="\[\033]0;\u@\h: \w\007\][\u@\h \W]\\$ "
-		;;
-	*)
+#case $TERM in
+#	gnome|xterm*|rxvt)
+#		PS1="\[\033]0;\u@\h: \w\007\][\u@\h \W]\\$ "
+#		;;
+#	*)
 		PS1="[\u@\h \W]\\$ "
-		;;
-esac
+#		;;
+#esac
 
 alias which="type -p"
 
