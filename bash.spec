@@ -2,7 +2,7 @@
 # Conditional build:
 %bcond_without	static		# don't build static version
 %bcond_with	bash_history	# build with additional history in /var/log/bash_hist ;)
-##
+#
 Summary:	GNU Bourne Again Shell (bash)
 Summary(es):	GNU Bourne Again Shell (bash)
 Summary(fr):	Le shell Bourne Again de GNU
@@ -12,7 +12,7 @@ Summary(ru):	GNU Bourne Again Shell (bash)
 Summary(uk):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	2.05b
-Release:	25%{?with_bash_history:inv}
+Release:	26%{?with_bash_history:inv}
 License:	GPL
 Group:		Applications/Shells
 Source0:	ftp://ftp.gnu.org/pub/gnu/bash/%{name}-%{version}.tar.gz
