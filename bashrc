@@ -25,4 +25,5 @@ if [ "$(echo /etc/shrc.d/*.sh)" != "/etc/shrc.d/*.sh" ]; then
 	unset i
 fi
 
-[ -n "$TERM" ] && tty >/dev/null 2>&1 && stty erase `tput kbs`
+[ -n "$TERM" -a "$TERM" != "rxvt" ] && tty >/dev/null 2>&1 && \
+	tput kbs >/dev/null 2>&1 && stty erase `tput kbs`
