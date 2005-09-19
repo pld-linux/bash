@@ -5,15 +5,13 @@
 
 # If this is an xterm set the title to user@host:dir
 case $TERM in
-	gnome|nxterm|xterm*|rxvt*)
+	gnome|xterm*|rxvt*)
 		PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
 		;;
 	*)
 		;;
 esac
-
 PS1="[\u@\h \W]\\$ "
-export PS1
 
 alias which="type -p"
 
