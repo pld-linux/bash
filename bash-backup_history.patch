@@ -18,17 +18,15 @@
  
  /* Is the history expansion starting at string[i] one that should not
     be expanded? */
-@@ -511,6 +515,10 @@
+@@ -530,6 +534,8 @@
    HIST_ENTRY *temp;
    int r;
  
++  backup_add_history(line);
 +
-+ backup_add_history(line);
-+ 
-+ 
-   switch (history_control)
-     {
-     case 0:			/* nothing */
+   if (history_control == 0)
+     return 1;
+ 
 @@ -766,4 +774,34 @@
  
    return match;
