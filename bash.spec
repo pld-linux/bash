@@ -12,7 +12,7 @@ Summary(ru):	GNU Bourne Again Shell (bash)
 Summary(uk):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	3.0
-Release:	8%{?with_bash_history:inv}
+Release:	9%{?with_bash_history:inv}
 License:	GPL
 Group:		Applications/Shells
 Source0:	ftp://ftp.gnu.org/pub/gnu/bash/%{name}-%{version}.tar.gz
