@@ -1,17 +1,19 @@
-diff -uNr bash-2.02-orig/config.h.in bash-2.02/config.h.in
---- bash-2.02-orig/config.h.in	Thu Oct  9 17:43:00 1997
-+++ bash-2.02/config.h.in	Sun Apr 19 16:59:03 1998
-@@ -345,7 +345,7 @@
+diff -urbB bash-3.0.org/config.h.in bash-3.0/config.h.in
+--- bash-3.0.org/config.h.in	2004-07-21 22:08:31.000000000 +0200
++++ bash-3.0/config.h.in	2005-10-08 19:35:26.593219000 +0200
+@@ -197,7 +197,7 @@
  
- #undef HAVE_POSIX_SIGSETJMP
+ /* System paths */
  
 -#define DEFAULT_MAIL_DIRECTORY "/usr/spool/mail"
 +#define DEFAULT_MAIL_DIRECTORY "/var/spool/mail"
  
- /* Define if you have the bcopy function.  */
- #undef HAVE_BCOPY
---- bash-3.0/config-top.h.orig	2003-08-05 16:36:12.000000000 +0200
-+++ bash-3.0/config-top.h	2004-08-06 08:36:33.117941904 +0200
+ /* Characteristics of the system's header files and libraries that affect
+    the compilation environment. */
+Tylko w bash-3.0: config.h.in.orig
+diff -urbB bash-3.0.org/config-top.h bash-3.0/config-top.h
+--- bash-3.0.org/config-top.h	2003-08-05 16:36:12.000000000 +0200
++++ bash-3.0/config-top.h	2005-10-08 19:36:04.395581500 +0200
 @@ -52,14 +52,14 @@
  /* The default value of the PATH variable. */
  #ifndef DEFAULT_PATH_VALUE
@@ -29,3 +31,12 @@ diff -uNr bash-2.02-orig/config.h.in bash-2.02/config.h.in
  #endif
  
  /* Default primary and secondary prompt strings. */
+@@ -73,7 +73,7 @@
+ #define KSH_COMPATIBLE_SELECT
+ 
+ /* System-wide .bashrc file for interactive shells. */
+-/* #define SYS_BASHRC "/etc/bash.bashrc" */
++#define SYS_BASHRC "/etc/bashrc"
+ 
+ /* System-wide .bash_logout for login shells. */
+ /* #define SYS_BASH_LOGOUT "/etc/bash.bash_logout" */
