@@ -65,7 +65,7 @@ BuildRequires:	glibc-static >= 2.2
 BuildRequires:	ncurses-static >= 5.2
 BuildRequires:	readline-static >= 5.0
 %endif
-PreReq:		grep
+Requires:	grep
 Requires(preun):	fileutils
 Requires:	setup >= 2.4.6-2
 Requires:	readline >= 5.0
@@ -332,10 +332,10 @@ fi
 %defattr(644,root,root,755)
 %doc CHANGES NEWS README doc/{FAQ,INTRO}
 
-%config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/bashrc
-%config(noreplace,missingok) %verify(not md5 size mtime) /etc/skel/.bash_logout
-%config(noreplace,missingok) %verify(not md5 size mtime) /etc/skel/.bash_profile
-%config(noreplace,missingok) %verify(not md5 size mtime) /etc/skel/.bashrc
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/bashrc
+%config(noreplace,missingok) %verify(not md5 mtime size) /etc/skel/.bash_logout
+%config(noreplace,missingok) %verify(not md5 mtime size) /etc/skel/.bash_profile
+%config(noreplace,missingok) %verify(not md5 mtime size) /etc/skel/.bashrc
 
 %attr(755,root,root) /bin/bash
 %attr(755,root,root) /bin/rbash
