@@ -65,7 +65,7 @@ BuildRequires:	glibc-static >= 2.2
 BuildRequires:	ncurses-static >= 5.2
 BuildRequires:	readline-static >= 5.0
 %endif
-Requires:	grep
+Requires(post,preun):	grep
 Requires(preun):	fileutils
 Requires:	setup >= 2.4.6-2
 Requires:	readline >= 5.0
