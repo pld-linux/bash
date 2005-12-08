@@ -45,8 +45,8 @@ BuildRequires:	readline-static >= 5.1
 %endif
 Requires(post,preun):	grep
 Requires(preun):	fileutils
+Requires:	readline >= 5.1
 Requires:	setup >= 2.4.6-2
-Requires:	readline >= 5.0
 Obsoletes:	bash-doc
 Obsoletes:	bash2
 Obsoletes:	bash2-doc
