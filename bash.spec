@@ -4,12 +4,8 @@
 %bcond_with	bash_history	# build with additional history in /var/log/bash_hist ;)
 ##
 Summary:	GNU Bourne Again Shell (bash)
-Summary(es):	GNU Bourne Again Shell (bash)
 Summary(fr):	Le shell Bourne Again de GNU
 Summary(pl):	Pow³oka GNU Bourne Again Shell (bash)
-Summary(pt_BR):	GNU Bourne Again Shell (bash)
-Summary(ru):	GNU Bourne Again Shell (bash)
-Summary(uk):	GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	3.1
 Release:	1%{?with_bash_history:inv}
