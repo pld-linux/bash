@@ -11,12 +11,12 @@ Summary(pt_BR):	GNU Bourne Again Shell (bash)
 Summary(ru):	GNU Bourne Again Shell (bash)
 Summary(uk):	GNU Bourne Again Shell (bash)
 Name:		bash
-Version:	3.0
-Release:	9%{?with_bash_history:inv}
+Version:	3.1
+Release:	1%{?with_bash_history:inv}
 License:	GPL
 Group:		Applications/Shells
 Source0:	ftp://ftp.gnu.org/pub/gnu/bash/%{name}-%{version}.tar.gz
-# Source0-md5:	26c4d642e29b3533d8d754995bc277b3
+# Source0-md5:	ef5304c4b22aaa5088972c792ed45d72
 Source1:	%{name}rc
 Source2:	%{name}-skel-.%{name}_logout
 Source3:	%{name}-skel-.%{name}_profile
@@ -30,40 +30,22 @@ Patch3:		%{name}-info.patch
 Patch4:		%{name}-profile.patch
 Patch5:		%{name}-requires.patch
 Patch6:		%{name}-compat.patch
-Patch7:		%{name}-rlimit_locks.patch
 Patch8:		%{name}-sighup.patch
 Patch9:		%{name}-backup_history.patch
 Patch10:	%{name}-pmake.patch
 Patch11:	%{name}-act_like_sh.patch
-Patch21:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-001
-Patch22:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-002
-Patch23:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-003
-Patch24:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-004
-Patch25:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-005
-Patch26:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-006
-Patch27:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-007
-Patch28:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-008
-Patch29:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-009
-Patch30:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-010
-Patch31:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-011
-Patch32:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-012
-Patch33:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-013
-Patch34:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-014
-Patch35:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-015
-Patch36:	ftp://ftp.cwru.edu/pub/bash/bash-3.0-patches/bash30-016
-Patch37:	%{name}-WCONTINUED.patch
 URL:		http://www.gnu.org/software/bash/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	ncurses-devel >= 5.2
-BuildRequires:	readline-devel >= 5.0
+BuildRequires:	readline-devel >= 5.1
 BuildRequires:	texinfo
 %if %{with static}
 # Require static library only for static build
 BuildRequires:	glibc-static >= 2.2
 BuildRequires:	ncurses-static >= 5.2
-BuildRequires:	readline-static >= 5.0
+BuildRequires:	readline-static >= 5.1
 %endif
 Requires(post,preun):	grep
 Requires(preun):	fileutils
@@ -204,28 +186,10 @@ tym pakiecie jest wersja basha skonsolidowana statycznie.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-%patch7 -p1
 %patch8 -p1
 %{?with_bash_history:%patch9 -p1}
 #%patch10 -p1	-- no longer needed?
 %patch11 -p1
-%patch21 -p0
-%patch22 -p0
-%patch23 -p0
-%patch24 -p0
-%patch25 -p0
-%patch26 -p0
-%patch27 -p0
-%patch28 -p0
-%patch29 -p0
-%patch30 -p0
-%patch31 -p0
-%patch32 -p0
-%patch33 -p0
-%patch34 -p0
-%patch35 -p0
-%patch36 -p0
-%patch37 -p1
 
 echo %{version} > _distribution
 echo %{release} > _patchlevel
