@@ -8,7 +8,7 @@ Summary(fr):	Le shell Bourne Again de GNU
 Summary(pl):	Pow³oka GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	3.1
-Release:	1%{?with_bash_history:inv}
+Release:	2%{?with_bash_history:inv}
 License:	GPL
 Group:		Applications/Shells
 Source0:	ftp://ftp.gnu.org/pub/gnu/bash/%{name}-%{version}.tar.gz
