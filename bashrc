@@ -3,6 +3,14 @@
 # System wide functions and aliases
 # Environment stuff goes in /etc/profile
 
+# Test for an interactive shell.  There is no need to set anything
+# past this point for scp and rcp, and it's important to refrain from
+# outputting anything in those cases.
+if [[ $- != *i* ]] ; then
+	# Shell is non-interactive.  Be done now!
+	return
+fi
+
 # If this is an xterm set the title to user@host:dir
 case $TERM in
 	gnome|nxterm|xterm*|rxvt*)
