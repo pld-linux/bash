@@ -3,15 +3,19 @@
 %bcond_without	static		# don't build static version
 %bcond_with	bash_history	# build with additional history in /var/log/bash_hist ;)
 ##
+%define		_ver		3.1
+%define		_patchlevel	005
+%define		_rel		1
+#
 Summary:	GNU Bourne Again Shell (bash)
 Summary(fr):	Le shell Bourne Again de GNU
 Summary(pl):	Pow³oka GNU Bourne Again Shell (bash)
 Name:		bash
-Version:	3.1
-Release:	2%{?with_bash_history:inv}
+Version:	%{_ver}.%{_patchlevel}
+Release:	%{_rel}%{?with_bash_history:inv}
 License:	GPL
 Group:		Applications/Shells
-Source0:	ftp://ftp.gnu.org/pub/gnu/bash/%{name}-%{version}.tar.gz
+Source0:	ftp://ftp.gnu.org/pub/gnu/bash/%{name}-%{_ver}.tar.gz
 # Source0-md5:	ef5304c4b22aaa5088972c792ed45d72
 Source1:	%{name}rc
 Source2:	%{name}-skel-.%{name}_logout
@@ -30,6 +34,11 @@ Patch8:		%{name}-sighup.patch
 Patch9:		%{name}-backup_history.patch
 Patch10:	%{name}-pmake.patch
 Patch11:	%{name}-act_like_sh.patch
+Patch101:	ftp://ftp.cwru.edu/pub/bash/bash-3.1-patches/bash31-001
+Patch102:	ftp://ftp.cwru.edu/pub/bash/bash-3.1-patches/bash31-002
+Patch103:	ftp://ftp.cwru.edu/pub/bash/bash-3.1-patches/bash31-003
+Patch104:	ftp://ftp.cwru.edu/pub/bash/bash-3.1-patches/bash31-004
+Patch105:	ftp://ftp.cwru.edu/pub/bash/bash-3.1-patches/bash31-005
 URL:		http://www.gnu.org/software/bash/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -174,7 +183,14 @@ Shell oraz jest zgodny ze specyfikacj± - IEEE Working Group 1003.2. W
 tym pakiecie jest wersja basha skonsolidowana statycznie.
 
 %prep
-%setup -q -a5
+%setup -q -n %{name}-%{_ver} -a5
+# official patches
+%patch101 -p0
+%patch102 -p0
+%patch103 -p0
+%patch104 -p0
+%patch105 -p0
+
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -186,9 +202,6 @@ tym pakiecie jest wersja basha skonsolidowana statycznie.
 %{?with_bash_history:%patch9 -p1}
 #%patch10 -p1	-- no longer needed?
 %patch11 -p1
-
-echo %{version} > _distribution
-echo %{release} > _patchlevel
 
 %build
 %{__autoconf}
@@ -204,6 +217,7 @@ for mode in %{?with_static:static} shared; do
 	--with-curses \
 	--enable-extended-glob \
 	--enable-dparen-arithmetic \
+	--enable-separate-helpfiles \
 	--without-bash-malloc \
 	`[ "$mode" = "static" ] && echo "--enable-static-link"` \
 	--with-installed-readline
@@ -216,7 +230,7 @@ done
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/{bin,etc/skel}
+install -d $RPM_BUILD_ROOT{/bin,/etc/skel,%{_datadir}/%{name}}
 %{?with_bash_history:install -d $RPM_BUILD_ROOT/var/log/bash_hist}
 
 %{__make} install \
@@ -239,6 +253,7 @@ ln -sf bash $RPM_BUILD_ROOT/bin/rbash
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/skel/.bash_logout
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/skel/.bash_profile
 install %{SOURCE4} $RPM_BUILD_ROOT/etc/skel/.bashrc
+rm -f $RPM_BUILD_ROOT/usr/share/info/dir
 
 %find_lang %{name}
 
@@ -311,6 +326,7 @@ fi
 %lang(ko) %{_mandir}/ko/man1/*
 %lang(nl) %{_mandir}/nl/man1/*
 %lang(pl) %{_mandir}/pl/man1/*
+%{_datadir}/%{name}
 
 %if %{with static}
 %files static
