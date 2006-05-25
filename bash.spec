@@ -4,7 +4,7 @@
 %bcond_with	bash_history	# build with additional history in /var/log/bash_hist ;)
 ##
 %define		_ver		3.1
-%define		_patchlevel	011
+%define		_patchlevel	017
 %define		_rel		1
 #
 Summary:	GNU Bourne Again Shell (bash)
@@ -45,6 +45,12 @@ Patch108:	ftp://ftp.cwru.edu/pub/bash/bash-3.1-patches/bash31-008
 Patch109:	ftp://ftp.cwru.edu/pub/bash/bash-3.1-patches/bash31-009
 Patch110:	ftp://ftp.cwru.edu/pub/bash/bash-3.1-patches/bash31-010
 Patch111:	ftp://ftp.cwru.edu/pub/bash/bash-3.1-patches/bash31-011
+Patch112:	ftp://ftp.cwru.edu/pub/bash/bash-3.1-patches/bash31-012
+Patch113:	ftp://ftp.cwru.edu/pub/bash/bash-3.1-patches/bash31-013
+Patch114:	ftp://ftp.cwru.edu/pub/bash/bash-3.1-patches/bash31-014
+Patch115:	ftp://ftp.cwru.edu/pub/bash/bash-3.1-patches/bash31-015
+Patch116:	ftp://ftp.cwru.edu/pub/bash/bash-3.1-patches/bash31-016
+Patch117:	ftp://ftp.cwru.edu/pub/bash/bash-3.1-patches/bash31-017
 URL:		http://www.gnu.org/software/bash/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -203,6 +209,12 @@ tym pakiecie jest wersja basha skonsolidowana statycznie.
 %patch109 -p0
 %patch110 -p0
 %patch111 -p0
+%patch112 -p0
+%patch113 -p0
+%patch114 -p0
+%patch115 -p0
+%patch116 -p0
+%patch117 -p0
 
 %patch0 -p1
 %patch1 -p1
