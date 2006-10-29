@@ -2,6 +2,7 @@
 # Conditional build:
 %bcond_without	static		# don't build static version
 %bcond_with	bash_history	# build with additional history in /var/log/bash_hist ;)
+%bcond_without	tests	# do not perform "make test"
 ##
 %define		_ver		3.2
 %define		_patchlevel	000
@@ -216,6 +217,8 @@ for mode in %{?with_static:static} shared; do
 
 [ "$mode" = "static" ] && mv -f bash bash.static || :
 done
+
+%{?with_tests:%{__make} tests}
 
 %install
 rm -rf $RPM_BUILD_ROOT
