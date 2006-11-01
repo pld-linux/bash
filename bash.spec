@@ -1,5 +1,7 @@
 # TODO:
 # - patch 001 (ftp://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-001)
+# - patch 002 (ftp://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-002 ; replaces -po.patch)
+# - patch 003 (ftp://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-003)
 # - broken octal mode in echo if first digit is non-zero (e.g. \137, breaks mc on dirs containing '_')
 #
 # Conditional build:
