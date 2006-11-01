@@ -1,7 +1,4 @@
 # TODO:
-# - patch 001 (ftp://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-001)
-# - patch 002 (ftp://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-002 ; replaces -po.patch)
-# - patch 003 (ftp://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-003)
 # - broken octal mode in echo if first digit is non-zero (e.g. \137, breaks mc on dirs containing '_')
 #
 # Conditional build:
@@ -10,14 +7,13 @@
 %bcond_without	tests	# do not perform "make test"
 ##
 %define		_ver		3.2
-%define		_patchlevel	000
+%define		_patchlevel	003
 #
 Summary:	GNU Bourne Again Shell (bash)
 Summary(fr):	Le shell Bourne Again de GNU
 Summary(pl):	Pow³oka GNU Bourne Again Shell (bash)
 Name:		bash
-Version:	%{_ver}
-#.%{_patchlevel}
+Version:	%{_ver}.%{_patchlevel}
 Release:	1%{?with_bash_history:inv}
 License:	GPL
 Group:		Applications/Shells
@@ -38,8 +34,10 @@ Patch5:		%{name}-requires.patch
 Patch6:		%{name}-compat.patch
 Patch8:		%{name}-sighup.patch
 Patch9:		%{name}-backup_history.patch
-Patch10:	%{name}-po.patch
-Patch11:	%{name}-act_like_sh.patch
+Patch10:	%{name}-act_like_sh.patch
+Patch1001:	ftp://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-001
+Patch1002:	ftp://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-002
+Patch1003:	ftp://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-003
 URL:		http://www.gnu.org/software/bash/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -186,6 +184,9 @@ tym pakiecie jest wersja basha skonsolidowana statycznie.
 
 %prep
 %setup -q -n %{name}-%{_ver} -a5
+%patch1001 -p0
+%patch1002 -p0
+%patch1003 -p0
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -196,7 +197,6 @@ tym pakiecie jest wersja basha skonsolidowana statycznie.
 %patch8 -p1
 %{?with_bash_history:%patch9 -p1}
 %patch10 -p1
-%patch11 -p1
 
 %build
 cp -f /usr/share/automake/config.* support
