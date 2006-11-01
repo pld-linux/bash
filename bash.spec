@@ -1,3 +1,6 @@
+# TODO:
+# - patch 001 (ftp://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-001)
+# - broken octal mode in echo if first digit is non-zero (e.g. \137, breaks mc on dirs containing '_')
 #
 # Conditional build:
 %bcond_without	static		# don't build static version
