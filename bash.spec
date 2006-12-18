@@ -3,16 +3,16 @@
 %bcond_without	static		# don't build static version
 %bcond_with	bash_history	# build with additional history in /var/log/bash_hist ;)
 %bcond_without	tests	# do not perform "make test"
-##
-%define		_ver		3.2
-%define		_patchlevel	003
 #
+%define		_ver		3.2
+%define		_patchlevel	008
+%define		_rel	1
 Summary:	GNU Bourne Again Shell (bash)
 Summary(fr):	Le shell Bourne Again de GNU
 Summary(pl):	Pow³oka GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	%{_ver}.%{_patchlevel}
-Release:	1%{?with_bash_history:inv}
+Release:	%{_rel}%{?with_bash_history:inv}
 License:	GPL
 Group:		Applications/Shells
 Source0:	ftp://ftp.gnu.org/gnu/bash/%{name}-%{_ver}.tar.gz
@@ -36,6 +36,11 @@ Patch10:	%{name}-act_like_sh.patch
 Patch1001:	ftp://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-001
 Patch1002:	ftp://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-002
 Patch1003:	ftp://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-003
+Patch1004:	ftp://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-004
+Patch1005:	ftp://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-005
+Patch1006:	ftp://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-006
+Patch1007:	ftp://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-007
+Patch1008:	ftp://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-008
 URL:		http://www.gnu.org/software/bash/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -185,6 +190,11 @@ tym pakiecie jest wersja basha skonsolidowana statycznie.
 %patch1001 -p0
 %patch1002 -p0
 %patch1003 -p0
+%patch1004 -p0
+%patch1005 -p0
+%patch1006 -p0
+%patch1007 -p0
+%patch1008 -p0
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -248,7 +258,7 @@ ln -sf bash $RPM_BUILD_ROOT/bin/rbash
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/skel/.bash_logout
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/skel/.bash_profile
 install %{SOURCE4} $RPM_BUILD_ROOT/etc/skel/.bashrc
-rm -f $RPM_BUILD_ROOT/usr/share/info/dir
+rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 
 %find_lang %{name}
 
