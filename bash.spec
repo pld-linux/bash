@@ -5,7 +5,7 @@
 %bcond_without	tests	# do not perform "make test"
 #
 %define		_ver		3.2
-%define		_patchlevel	008
+%define		_patchlevel	9
 %define		_rel	1
 Summary:	GNU Bourne Again Shell (bash)
 Summary(fr):	Le shell Bourne Again de GNU
@@ -33,20 +33,14 @@ Patch6:		%{name}-compat.patch
 Patch8:		%{name}-sighup.patch
 Patch9:		%{name}-backup_history.patch
 Patch10:	%{name}-act_like_sh.patch
-Patch1001:	ftp://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-001
-Patch1002:	ftp://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-002
-Patch1003:	ftp://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-003
-Patch1004:	ftp://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-004
-Patch1005:	ftp://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-005
-Patch1006:	ftp://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-006
-Patch1007:	ftp://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-007
-Patch1008:	ftp://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-008
+%patchset_source -f ftp://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-%03g 1 %{_patchlevel}
 URL:		http://www.gnu.org/software/bash/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	ncurses-devel >= 5.2
 BuildRequires:	readline-devel >= 5.2
+BuildRequires:	rpmbuild(macros) >= 1.353
 BuildRequires:	texinfo
 %if %{with static}
 # Require static library only for static build
@@ -187,14 +181,8 @@ tym pakiecie jest wersja basha skonsolidowana statycznie.
 
 %prep
 %setup -q -n %{name}-%{_ver} -a5
-%patch1001 -p0
-%patch1002 -p0
-%patch1003 -p0
-%patch1004 -p0
-%patch1005 -p0
-%patch1006 -p0
-%patch1007 -p0
-%patch1008 -p0
+# official patches
+%patchset_patch 1 %{_patchlevel}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
