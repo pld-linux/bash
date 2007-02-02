@@ -6,7 +6,7 @@
 #
 %define		_ver		3.2
 %define		_patchlevel	9
-%define		_rel	1
+%define		_rel		2
 Summary:	GNU Bourne Again Shell (bash)
 Summary(fr):	Le shell Bourne Again de GNU
 Summary(pl):	Pow³oka GNU Bourne Again Shell (bash)
@@ -23,6 +23,9 @@ Source3:	%{name}-skel-.%{name}_profile
 Source4:	%{name}-skel-.%{name}rc
 Source5:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source5-md5:	d2aacf89c4a444c5da648da69afdb01a
+# based on GNU TP; omitted: eo (not supported), rw (empty)
+Source6:	%{name}-translations.tar.bz2
+# Source6-md5:	99701bc1f919cfc527cb95fadbc66c93
 Patch0:		%{name}-paths.patch
 Patch1:		%{name}-security.patch
 Patch2:		%{name}-autoconf.patch
@@ -41,6 +44,7 @@ BuildRequires:	bison
 BuildRequires:	ncurses-devel >= 5.2
 BuildRequires:	readline-devel >= 5.2
 BuildRequires:	rpmbuild(macros) >= 1.353
+BuildRequires:	sed >= 4.0
 BuildRequires:	texinfo
 %if %{with static}
 # Require static library only for static build
@@ -193,6 +197,8 @@ tym pakiecie jest wersja basha skonsolidowana statycznie.
 %patch8 -p1
 %{?with_bash_history:%patch9 -p1}
 %patch10 -p1
+tar xjf %SOURCE6 -C po
+sed -e 's/boldquot ru/boldquot ru af ca de es et fr hu ja nl pl pt_BR ro tr vi/' -i po/LINGUAS
 
 %build
 cp -f /usr/share/automake/config.* support
