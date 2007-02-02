@@ -25,6 +25,7 @@ Source5:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-ma
 # Source5-md5:	d2aacf89c4a444c5da648da69afdb01a
 # based on GNU TP; omitted: eo (not supported), rw (empty)
 Source6:	%{name}-translations.tar.bz2
+# Source6-md5:	99701bc1f919cfc527cb95fadbc66c93
 Patch0:		%{name}-paths.patch
 Patch1:		%{name}-security.patch
 Patch2:		%{name}-autoconf.patch
