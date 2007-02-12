@@ -8,8 +8,8 @@
 %define		_patchlevel	9
 %define		_rel		2
 Summary:	GNU Bourne Again Shell (bash)
-Summary(fr.UTF-8):   Le shell Bourne Again de GNU
-Summary(pl.UTF-8):   Powłoka GNU Bourne Again Shell (bash)
+Summary(fr.UTF-8):	Le shell Bourne Again de GNU
+Summary(pl.UTF-8):	Powłoka GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	%{_ver}.%{_patchlevel}
 Release:	%{_rel}%{?with_bash_history:inv}
@@ -156,7 +156,7 @@ Tools specification (IEEE Working Group 1003.2).
 
 %package static
 Summary:	Statically linked GNU Bourne Again Shell (bash)
-Summary(pl.UTF-8):   Statycznie skonsolidowany GNU Bourne Again Shell (bash)
+Summary(pl.UTF-8):	Statycznie skonsolidowany GNU Bourne Again Shell (bash)
 Group:		Applications/Shells
 Requires(post,preun):	grep
 Requires(preun):	fileutils
