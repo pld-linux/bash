@@ -4,17 +4,14 @@ if [ -f ~/.bashrc ]; then
 	. ~/.bashrc
 fi
 
-HISTSIZE=1000
-HISTFILESIZE=1000
-TMP=~/tmp
-TMPDIR="$TMP"
+export HISTSIZE=1000
+export HISTFILESIZE=1000
+export TMP=~/tmp
+export TMPDIR="$TMP"
 
 # setup LOCALE variables
-#LANG=
-#LC_ALL=
-#export LANG LC_ALL
-
-export HISTSIZE HISTFILESIZE TMP TMPDIR
+#export LANG=
+#export LC_ALL=
 
 umask 077
 
