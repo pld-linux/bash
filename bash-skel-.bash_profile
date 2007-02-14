@@ -13,8 +13,8 @@ export TMPDIR="$TMP"
 #export LANG=
 #export LC_ALL=
 
-umask 077
+# only You can access your files
+#umask 077
 
-if [ -x /usr/bin/mesg ]; then
-	mesg n
-fi
+# turn off accept of 'wall' and 'write':
+#[ ! -x /usr/bin/mesg ] || mesg n
