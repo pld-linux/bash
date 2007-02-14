@@ -1,3 +1,5 @@
 # .bash_logout - file executed when logging out
 
-clear
+if [ -x /sbin/consoletype ] && [ `/sbin/consoletype` = vt ]; then
+	clear
+fi
