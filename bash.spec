@@ -5,11 +5,11 @@
 %bcond_without	tests	# do not perform "make test"
 #
 %define		_ver		3.2
-%define		_patchlevel	10
+%define		_patchlevel	15
 %define		_rel		1
 Summary:	GNU Bourne Again Shell (bash)
-Summary(fr.UTF-8):	Le shell Bourne Again de GNU
-Summary(pl.UTF-8):	PowÅ‚oka GNU Bourne Again Shell (bash)
+Summary(fr):	Le shell Bourne Again de GNU
+Summary(pl):	Pow³oka GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	%{_ver}.%{_patchlevel}
 Release:	%{_rel}%{?with_bash_history:inv}
@@ -76,87 +76,87 @@ Shell and Tools standard. Bash is the default shell for Linux
 Mandrake. You should install bash because of its popularity and power.
 You'll probably end up using it.
 
-%description -l es.UTF-8
+%description -l es
 Bash es un interpretador de comandos compatible con sh, que ejecuta
-comandos leÃ­dos de la entrada padrÃ³n o de un archivo. Bash tambiÃ©n
-incorpora caracterÃ­sticas Ãºtiles de las shells Korn y C (ksh y csh).
-Bash ha sido desarrollado para ser una adiciÃ³n compatible con la
-especificaciÃ³n IEEE Posix para shells y herramientas (IEEE Working
+comandos leídos de la entrada padrón o de un archivo. Bash también
+incorpora características útiles de las shells Korn y C (ksh y csh).
+Bash ha sido desarrollado para ser una adición compatible con la
+especificación IEEE Posix para shells y herramientas (IEEE Working
 Group 1003.2).
 
-%description -l de.UTF-8
+%description -l de
 Bash ist eine sh-kompatible Shell und Kommandosprache aus dem
-GNU-Projekt. Bash (Bourne Again Shell) vereinigt die nÃ¼tzlichen
+GNU-Projekt. Bash (Bourne Again Shell) vereinigt die nützlichen
 Features aus der Korn-Shell (ksh) und der C-Shell (csh). Die meisten
-sh-Skripte laufen ohne Ã„nderungen auf bash. Bash hat viele
+sh-Skripte laufen ohne Änderungen auf bash. Bash hat viele
 Erweiterungen im Vergleich zur "normalen" sh, wie z.B.
-Kommandozeilenbearbeitung, unbeschrÃ¤nkte GrÃ¶ÃŸe der command-history,
-Job-Kontrolle, Shell-Funktionen und -Aliase, unbegrenzt groÃŸe
+Kommandozeilenbearbeitung, unbeschränkte Größe der command-history,
+Job-Kontrolle, Shell-Funktionen und -Aliase, unbegrenzt große
 indizierte Arrays und Integer-Arithmetik in einer Basis von 2 bis 64.
 Hauptziel von bash ist es, den IEEE POSIX P1003.2/ISO 9945.2 Shell-
-und Tools-Standard einzuhalten. Bash ist die Standard-Shell fÃ¼r Linux
+und Tools-Standard einzuhalten. Bash ist die Standard-Shell für Linux
 Mandrake.
 
-%description -l fr.UTF-8
-Bash est un shell (interprÃ©teur de commande) du projet GNU, compatible
+%description -l fr
+Bash est un shell (interpréteur de commande) du projet GNU, compatible
 avec le shell historique sh. Bash (Bourne Again SHell) comprend de
-nombreuses fonctionnalitÃ©s du Korn SHell (ksh) et du C SHell (csh). La
-plupart des scripts sh sont exÃ©cutables sans modifications. Bash
-comprend nombre d'amÃ©liorations par rapport Ã  sh : Ã©dition de la ligne
-de commande, historique illimitÃ©, contrÃ´le des processus
-d'arriÃ¨re-plan, fonctions de shell, alias, tableaux indexÃ©s de taille
-illimitÃ©e et calcul sur des entiers dans n'importe quelle base de 2 Ã 
+nombreuses fonctionnalités du Korn SHell (ksh) et du C SHell (csh). La
+plupart des scripts sh sont exécutables sans modifications. Bash
+comprend nombre d'améliorations par rapport à sh : édition de la ligne
+de commande, historique illimité, contrôle des processus
+d'arrière-plan, fonctions de shell, alias, tableaux indexés de taille
+illimitée et calcul sur des entiers dans n'importe quelle base de 2 à
 64. Bash est conforme au standard IEEE POSIX P1003.2/ISO 9945.2 Shell
-and Tools. Bash est le shell par dÃ©faut de Mandrake. Vous devriez
-l'installer du fait de sa puissance et de sa popularitÃ©. Vous finirez
+and Tools. Bash est le shell par défaut de Mandrake. Vous devriez
+l'installer du fait de sa puissance et de sa popularité. Vous finirez
 probablement par l'utiliser.
 
-%description -l pl.UTF-8
-Bash (Bourne Again SHell) jest projektem GNU powÅ‚oki kompatybilnej z
-sh oraz interpretera jÄ™zyka poleceÅ„. Posiada uÅ¼yteczne wÅ‚aÅ›ciwoÅ›ci
-powÅ‚ok Korn (ksh) i C (csh). WiÄ™kszoÅ›Ä‡ skryptÃ³w sh moÅ¼e byÄ‡
-uruchamiana w bashu bez modyfikacji. Oferuje on kilka ulepszeÅ„ w
-stosunku do sh, wÅ‚Ä…czajÄ…c edycjÄ™ linii poleceÅ„, nieograniczony rozmiar
-historii poleceÅ„, funkcje i aliasy, indeksowane tablice
-nieograniczonych rozmiarÃ³w oraz arytmetykÄ™ caÅ‚kowitoliczbowÄ… o
-dowolnej podstawie od 2 do 64. W zamierzeniu ostatecznie ma byÄ‡ zgodny
+%description -l pl
+Bash (Bourne Again SHell) jest projektem GNU pow³oki kompatybilnej z
+sh oraz interpretera jêzyka poleceñ. Posiada u¿yteczne w³a¶ciwo¶ci
+pow³ok Korn (ksh) i C (csh). Wiêkszo¶æ skryptów sh mo¿e byæ
+uruchamiana w bashu bez modyfikacji. Oferuje on kilka ulepszeñ w
+stosunku do sh, w³±czaj±c edycjê linii poleceñ, nieograniczony rozmiar
+historii poleceñ, funkcje i aliasy, indeksowane tablice
+nieograniczonych rozmiarów oraz arytmetykê ca³kowitoliczbow± o
+dowolnej podstawie od 2 do 64. W zamierzeniu ostatecznie ma byæ zgodny
 ze standardem IEEE POSIX P1003.2/ISO 9945.2 Shell and Tools.
 
-%description -l pt_BR.UTF-8
-Bash Ã© um interpretador de comandos compatÃ­vel com sh, que executa
-comandos lidos da entrada padrÃ£o ou de um arquivo. Bash tambÃ©m
-incorpora caracterÃ­sticas Ãºteis das shells Korn e C (ksh e csh). Bash
-tem sido desenvolvido para ser uma implementaÃ§Ã£o compatÃ­vel com a
-especificaÃ§Ã£o IEEE Posix para shells e ferramentas (IEEE Working Group
+%description -l pt_BR
+Bash é um interpretador de comandos compatível com sh, que executa
+comandos lidos da entrada padrão ou de um arquivo. Bash também
+incorpora características úteis das shells Korn e C (ksh e csh). Bash
+tem sido desenvolvido para ser uma implementação compatível com a
+especificação IEEE Posix para shells e ferramentas (IEEE Working Group
 1003.2).
 
-%description -l ru.UTF-8
-Bash - ÑÑ‚Ğ¾ sh-ÑĞ¾Ğ²Ğ¼ĞµÑÑ‚Ğ¸Ğ¼Ñ‹Ğ¹ Ğ¸Ğ½Ñ‚ĞµÑ€Ğ¿Ñ€ĞµÑ‚Ğ°Ñ‚Ğ¾Ñ€ ĞºĞ¾Ğ¼Ğ°Ğ½Ğ´Ğ½Ğ¾Ğ³Ğ¾ ÑĞ·Ñ‹ĞºĞ° (shell),
-Ğ¸ÑĞ¿Ğ¾Ğ»Ğ½ÑÑÑ‰Ğ¸Ğ¹ ĞºĞ¾Ğ¼Ğ°Ğ½Ğ´Ñ‹, Ğ¿Ğ¾ÑÑ‚ÑƒĞ¿Ğ°ÑÑ‰Ğ¸Ğµ ÑĞ¾ ÑÑ‚Ğ°Ğ½Ğ´Ğ°Ñ€Ñ‚Ğ½Ğ¾Ğ³Ğ¾ Ğ²Ğ²Ğ¾Ğ´Ğ° Ğ¸Ğ»Ğ¸ Ğ¸Ğ· Ñ„Ğ°Ğ¹Ğ»Ğ°.
-Bash Ğ²ĞºĞ»ÑÑ‡Ğ°ĞµÑ‚ Ğ¿Ğ¾Ğ»ĞµĞ·Ğ½Ñ‹Ğµ Ñ€Ğ°ÑÑˆĞ¸Ñ€ĞµĞ½Ğ¸Ñ Ğ¸Ğ· Ğ¸Ğ½Ñ‚ĞµÑ€Ğ¿Ñ€ĞµÑ‚Ğ°Ñ‚Ğ¾Ñ€Ğ¾Ğ² Korn Ğ¸ C shell
-(ksh Ğ¸ csh).
+%description -l ru
+Bash - ÜÔÏ sh-ÓÏ×ÍÅÓÔÉÍÙÊ ÉÎÔÅÒĞÒÅÔÁÔÏÒ ËÏÍÁÎÄÎÏÇÏ ÑÚÙËÁ (shell),
+ÉÓĞÏÌÎÑÀİÉÊ ËÏÍÁÎÄÙ, ĞÏÓÔÕĞÁÀİÉÅ ÓÏ ÓÔÁÎÄÁÒÔÎÏÇÏ ××ÏÄÁ ÉÌÉ ÉÚ ÆÁÊÌÁ.
+Bash ×ËÌÀŞÁÅÔ ĞÏÌÅÚÎÙÅ ÒÁÓÛÉÒÅÎÉÑ ÉÚ ÉÎÔÅÒĞÒÅÔÁÔÏÒÏ× Korn É C shell
+(ksh É csh).
 
-Bash Ñ€Ğ°Ğ·Ñ€Ğ°Ğ±Ğ°Ñ‚Ñ‹Ğ²Ğ°ĞµÑ‚ÑÑ ĞºĞ°Ğº Ñ€ĞµĞ°Ğ»Ğ¸Ğ·Ğ°Ñ†Ğ¸Ñ, Ğ¾Ñ‚Ğ²ĞµÑ‡Ğ°ÑÑ‰Ğ°Ñ IEEE Posix Shell and
+Bash ÒÁÚÒÁÂÁÔÙ×ÁÅÔÓÑ ËÁË ÒÅÁÌÉÚÁÃÉÑ, ÏÔ×ÅŞÁÀİÁÑ IEEE Posix Shell and
 Tools specification (IEEE Working Group 1003.2).
 
-%description -l tr.UTF-8
-Bash standart giriÅŸten ya da bir dosyadan komut okuyup Ã§alÄ±ÅŸtÄ±ran sh
-uyumlu bir komut dili yorumlayÄ±cÄ±sÄ±dÄ±r. AynÄ± zamanda Korn ve C
-kabuklarÄ±nÄ±n (ksh ve csh) kullanÄ±ÅŸlÄ± Ã¶zelliklerini de kapsar. Bash,
-IEEE Posix Kabuk ve AraÃ§ ayrÄ±ntÄ±larÄ±na (IEEE Working Group 1003.2)
-uyumlu bir uygulama olarak tasarlanmÄ±ÅŸtÄ±r.
+%description -l tr
+Bash standart girişten ya da bir dosyadan komut okuyup çalıştıran sh
+uyumlu bir komut dili yorumlayıcısıdır. Aynı zamanda Korn ve C
+kabuklarının (ksh ve csh) kullanışlı özelliklerini de kapsar. Bash,
+IEEE Posix Kabuk ve Araç ayrıntılarına (IEEE Working Group 1003.2)
+uyumlu bir uygulama olarak tasarlanmıştır.
 
-%description -l uk.UTF-8
-Bash - Ñ†Ğµ sh-ÑÑƒĞ¼Ñ–ÑÑ‚Ğ½Ğ¸Ğ¹ Ñ–Ğ½Ñ‚ĞµÑ€Ğ¿Ñ€ĞµÑ‚Ğ°Ñ‚Ğ¾Ñ€ ĞºĞ¾Ğ¼Ğ°Ğ½Ğ´Ğ½Ğ¾Ñ— Ğ¼Ğ¾Ğ²Ğ¸ (shell),
-Ğ²Ğ¸ĞºĞ¾Ğ½ÑƒÑÑ‡Ğ¸Ğ¹ ĞºĞ¾Ğ¼Ğ°Ğ½Ğ´Ğ¸ Ğ·Ñ– ÑÑ‚Ğ°Ğ½Ğ´Ğ°Ñ€Ñ‚Ğ½Ğ¾Ğ³Ğ¾ Ğ²Ğ²Ğ¾Ğ´Ñƒ Ğ°Ğ±Ğ¾ Ğ· Ñ„Ğ°Ğ¹Ğ»Ğ°. Bash Ğ¼Ñ–ÑÑ‚Ğ¸Ñ‚ÑŒ
-ĞºĞ¾Ñ€Ğ¸ÑÑ‚Ğ½Ñ– Ñ€Ğ¾Ğ·ÑˆĞ¸Ñ€ĞµĞ½Ğ½Ñ Ğ· Ñ–Ğ½Ñ‚ĞµÑ€Ğ¿Ñ€ĞµÑ‚Ğ°Ñ‚Ğ¾Ñ€Ñ–Ğ² Korn Ñ‚Ğ° C shell (ksh Ñ‚Ğ° csh).
+%description -l uk
+Bash - ÃÅ sh-ÓÕÍ¦ÓÔÎÉÊ ¦ÎÔÅÒĞÒÅÔÁÔÏÒ ËÏÍÁÎÄÎÏ§ ÍÏ×É (shell),
+×ÉËÏÎÕÀŞÉÊ ËÏÍÁÎÄÉ Ú¦ ÓÔÁÎÄÁÒÔÎÏÇÏ ××ÏÄÕ ÁÂÏ Ú ÆÁÊÌÁ. Bash Í¦ÓÔÉÔØ
+ËÏÒÉÓÔÎ¦ ÒÏÚÛÉÒÅÎÎÑ Ú ¦ÎÔÅÒĞÒÅÔÁÔÏÒ¦× Korn ÔÁ C shell (ksh ÔÁ csh).
 
-Bash Ñ€Ğ¾Ğ·Ñ€Ğ¾Ğ±Ğ»ÑĞ²ÑÑ ÑĞº Ñ€ĞµĞ°Ğ»Ñ–Ğ·Ğ°Ñ†Ñ–Ñ, Ñ‰Ğ¾ Ğ²Ñ–Ğ´Ğ¿Ğ¾Ğ²Ñ–Ğ´Ğ°Ñ” IEEE Posix Shell and
+Bash ÒÏÚÒÏÂÌÑ×ÓÑ ÑË ÒÅÁÌ¦ÚÁÃ¦Ñ, İÏ ×¦ÄĞÏ×¦ÄÁ¤ IEEE Posix Shell and
 Tools specification (IEEE Working Group 1003.2).
 
 %package static
 Summary:	Statically linked GNU Bourne Again Shell (bash)
-Summary(pl.UTF-8):	Statycznie skonsolidowany GNU Bourne Again Shell (bash)
+Summary(pl):	Statycznie skonsolidowany GNU Bourne Again Shell (bash)
 Group:		Applications/Shells
 Requires(post,preun):	grep
 Requires(preun):	fileutils
@@ -176,11 +176,11 @@ Mandrake. You should install bash because of its popularity and power.
 You'll probably end up using it. This package contains statically
 linked version of bash.
 
-%description static -l pl.UTF-8
-Bash jest zaawansowanÄ… powÅ‚okÄ…, ktÃ³ra wykonuje komendy czytane ze
-standardowego wejÅ›cia (stdin) lub z pliku. Posiada wÅ‚aÅ›ciwoÅ›ci powÅ‚ok
-Korn i C (ksh i csh). Bash jest rÃ³wnieÅ¼ zaimplementowany IEEE Posix
-Shell oraz jest zgodny ze specyfikacjÄ… - IEEE Working Group 1003.2. W
+%description static -l pl
+Bash jest zaawansowan± pow³ok±, która wykonuje komendy czytane ze
+standardowego wej¶cia (stdin) lub z pliku. Posiada w³a¶ciwo¶ci pow³ok
+Korn i C (ksh i csh). Bash jest równie¿ zaimplementowany IEEE Posix
+Shell oraz jest zgodny ze specyfikacj± - IEEE Working Group 1003.2. W
 tym pakiecie jest wersja basha skonsolidowana statycznie.
 
 %prep
