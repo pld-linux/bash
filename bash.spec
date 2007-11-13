@@ -5,8 +5,8 @@
 %bcond_without	tests	# do not perform "make test"
 #
 %define		_ver		3.2
-%define		_patchlevel	17
-%define		_rel		2
+%define		_patchlevel	25
+%define		_rel		1
 Summary:	GNU Bourne Again Shell (bash)
 Summary(fr.UTF-8):	Le shell Bourne Again de GNU
 Summary(pl.UTF-8):	Powłoka GNU Bourne Again Shell (bash)
