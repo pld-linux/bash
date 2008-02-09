@@ -4,18 +4,18 @@
 %bcond_with	bash_history	# build with additional history in /var/log/bash_hist ;)
 %bcond_without	tests	# do not perform "make test"
 #
-%define		_ver		3.2
-%define		_patchlevel	25
-%define		_rel		2
+%define		ver		3.2
+%define		patchlevel	33
+%define		rel		1
 Summary:	GNU Bourne Again Shell (bash)
 Summary(fr.UTF-8):	Le shell Bourne Again de GNU
 Summary(pl.UTF-8):	Powłoka GNU Bourne Again Shell (bash)
 Name:		bash
-Version:	%{_ver}.%{_patchlevel}
-Release:	%{_rel}%{?with_bash_history:inv}
+Version:	%{ver}.%{patchlevel}
+Release:	%{rel}%{?with_bash_history:inv}
 License:	GPL
 Group:		Applications/Shells
-Source0:	ftp://ftp.gnu.org/gnu/bash/%{name}-%{_ver}.tar.gz
+Source0:	ftp://ftp.gnu.org/gnu/bash/%{name}-%{ver}.tar.gz
 # Source0-md5:	00bfa16d58e034e3c2aa27f390390d30
 Source1:	%{name}rc
 Source2:	%{name}-skel-.%{name}_logout
@@ -36,7 +36,7 @@ Patch6:		%{name}-compat.patch
 Patch8:		%{name}-sighup.patch
 Patch9:		%{name}-backup_history.patch
 Patch10:	%{name}-act_like_sh.patch
-%patchset_source -f ftp://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-%03g 1 %{_patchlevel}
+%patchset_source -f ftp://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-%03g 1 %{patchlevel}
 URL:		http://www.gnu.org/software/bash/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -184,9 +184,9 @@ Shell oraz jest zgodny ze specyfikacją - IEEE Working Group 1003.2. W
 tym pakiecie jest wersja basha skonsolidowana statycznie.
 
 %prep
-%setup -q -n %{name}-%{_ver} -a5
+%setup -q -n %{name}-%{ver} -a5
 # official patches
-%patchset_patch 1 %{_patchlevel}
+%patchset_patch 1 %{patchlevel}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
