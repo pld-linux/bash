@@ -21,7 +21,6 @@ case $TERM in
 esac
 PS1="[\u@\h \W]\\$ "
 
-alias grep="grep --colour=auto"
 alias which="type -p"
 
 # SYSTEM WIDE ALIASES ETC.
