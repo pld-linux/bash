@@ -15,7 +15,7 @@ Version:	%{ver}.%{patchlevel}
 Release:	%{rel}%{?with_bash_history:inv}
 License:	GPL
 Group:		Applications/Shells
-Source0:	ftp://ftp.gnu.org/gnu/bash/%{name}-%{ver}.tar.gz
+Source0:	http://ftp.gnu.org/gnu/bash/%{name}-%{ver}.tar.gz
 # Source0-md5:	00bfa16d58e034e3c2aa27f390390d30
 Source1:	%{name}rc
 Source2:	%{name}-skel-.%{name}_logout
@@ -36,7 +36,7 @@ Patch6:		%{name}-compat.patch
 Patch8:		%{name}-sighup.patch
 Patch9:		%{name}-backup_history.patch
 Patch10:	%{name}-act_like_sh.patch
-%patchset_source -f ftp://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-%03g 1 %{patchlevel}
+%patchset_source -f http://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-%03g 1 %{patchlevel}
 URL:		http://www.gnu.org/software/bash/
 BuildRequires:	autoconf
 BuildRequires:	automake
