@@ -44,7 +44,7 @@ BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	ncurses-devel >= 5.2
 BuildRequires:	readline-devel >= 5.2
-BuildRequires:	rpmbuild(macros) >= 1.353
+BuildRequires:	rpmbuild(macros) >= 1.429
 BuildRequires:	sed >= 4.0
 BuildRequires:	texinfo
 %if %{with static}
@@ -275,34 +275,16 @@ else
 	fi
 fi
 
+# XXX need this in lua
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
-%preun
-if [ "$1" = "0" ]; then
-	umask 022
-	grep -v /bin/bash /etc/shells | grep -v /bin/rbash > /etc/shells.new
-	mv -f /etc/shells.new /etc/shells
-fi
-
-%post static
-umask 022
-if [ ! -f /etc/shells ]; then
-	echo "/bin/bash.static" > /etc/shells
-else
-	if ! grep -q '^/bin/bash.static$' /etc/shells; then
-		echo "/bin/bash.static" >> /etc/shells
-	fi
-fi
-
-%preun static
-if [ "$1" = "0" ]; then
-	umask 022
-	grep -v /bin/bash.static /etc/shells > /etc/shells.new
-	mv -f /etc/shells.new /etc/shells
-fi
+%preun	-p %remove_etc_shells -p /bin/bash /bin/rbash
 
 %postun	-p	/sbin/postshell
 -/usr/sbin/fix-info-dir -c %{_infodir}
+
+%post static -p %add_etc_shells -p /bin/bash.static
+%preun static -p %remove_etc_shells -p /bin/bash.static
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
