@@ -251,6 +251,9 @@ install %{SOURCE3} $RPM_BUILD_ROOT/etc/skel/.bash_profile
 install %{SOURCE4} $RPM_BUILD_ROOT/etc/skel/.bashrc
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 
+# use our bugtracker, upstream will ignore reports from this anyway
+rm -f $RPM_BUILD_ROOT%{_bindir}/bashbug
+
 %find_lang %{name}
 
 %clean
@@ -278,7 +281,6 @@ os.execute("/usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1")
 
 %attr(755,root,root) /bin/bash
 %attr(755,root,root) /bin/rbash
-%attr(755,root,root) %{_bindir}/bashbug
 
 %{?with_bash_history:%attr(1733,root,root) %dir /var/log/bash_hist}
 %{_infodir}/bash.info*
