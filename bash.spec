@@ -261,22 +261,8 @@ rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post
-umask 022
-if [ ! -f /etc/shells ]; then
-	echo "/bin/bash" > /etc/shells
-	echo "/bin/rbash" >> /etc/shells
-else
-	if ! grep -q '^/bin/bash$' /etc/shells; then
-		echo "/bin/bash" >> /etc/shells
-	fi
-	if ! grep -q '^/bin/rbash$' /etc/shells; then
-		echo "/bin/rbash" >> /etc/shells
-	fi
-fi
-
-# XXX need this in lua
-[ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
+%post	-p %add_etc_shells -p /bin/sh /bin/ksh
+os.execute("/usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1")
 
 %preun	-p %remove_etc_shells -p /bin/bash /bin/rbash
 
