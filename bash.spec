@@ -44,7 +44,7 @@ BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	ncurses-devel >= 5.2
 BuildRequires:	readline-devel >= 5.2
-BuildRequires:	rpmbuild(macros) >= 1.429
+BuildRequires:	rpmbuild(macros) >= 1.462
 BuildRequires:	sed >= 4.0
 BuildRequires:	texinfo
 %if %{with static}
@@ -259,16 +259,25 @@ rm -f $RPM_BUILD_ROOT%{_bindir}/bashbug
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post	-p %add_etc_shells -p /bin/sh /bin/ksh
+%post	-p <lua>
+%lua_add_etc_shells /bin/bash /bin/rbash
 os.execute("/usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1")
 
-%preun	-p %remove_etc_shells -p /bin/bash /bin/rbash
+%preun	-p <lua>
+if arg[2] == 0 then
+	%lua_remove_etc_shells /bin/bash /bin/rbash
+end
 
 %postun	-p	/sbin/postshell
 -/usr/sbin/fix-info-dir -c %{_infodir}
 
-%post static -p %add_etc_shells -p /bin/bash.static
-%preun static -p %remove_etc_shells -p /bin/bash.static
+%post static -p <lua>
+%lua_add_etc_shells /bin/bash.static
+
+%preun static -p <lua>
+if arg[2] == 0 then
+	%lua_remove_etc_shells /bin/bash.static
+end
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
