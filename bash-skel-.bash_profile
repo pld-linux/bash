@@ -1,6 +1,8 @@
 # .bash_profile - file executed when logging in
 
-if [ -f ~/.bashrc ]; then
+# execute local (and so system wide) rc file only when interactive (not from scp etc.)
+# bash is too dumb to do in on it's own when started as login shell
+if [ $- = *i* && -f ~/.bashrc ]; then
 	. ~/.bashrc
 fi
 
@@ -12,6 +14,7 @@ export TMPDIR="$TMP"
 # setup LOCALE variables
 #export LANG=
 #export LC_ALL=
+#export LANGUAGE=
 
 # only You can access your files
 #umask 077
