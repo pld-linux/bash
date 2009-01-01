@@ -5,7 +5,7 @@
 %bcond_without	tests	# do not perform "make test"
 #
 %define		ver		3.2
-%define		patchlevel	39
+%define		patchlevel	48
 %define		rel		1
 Summary:	GNU Bourne Again Shell (bash)
 Summary(fr.UTF-8):	Le shell Bourne Again de GNU
