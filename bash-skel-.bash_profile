@@ -2,7 +2,7 @@
 
 # execute local (and so system wide) rc file only when interactive (not from scp etc.)
 # bash is too dumb to do in on it's own when started as login shell
-if [ "${-##*i}" != "$-" -a -f ~/.bashrc ]; then
+if [[ $- = *i* ]] && [ -f ~/.bashrc ]; then
 	. ~/.bashrc
 fi
 
