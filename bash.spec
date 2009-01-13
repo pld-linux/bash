@@ -194,7 +194,7 @@ tym pakiecie jest wersja basha skonsolidowana statycznie.
 %{?with_bash_history:%patch9 -p1}
 %patch10 -p1
 %patch11 -p1
-tar xjf %SOURCE6 -C po
+%{__tar} xjf %{SOURCE6} -C po
 sed -e 's/boldquot ru/boldquot ru af ca de es et fr hu ja nl pl pt_BR ro tr vi/' -i po/LINGUAS
 
 %build
