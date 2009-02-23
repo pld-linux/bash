@@ -4,9 +4,9 @@
 %bcond_with	bash_history	# build with additional history in /var/log/bash_hist ;)
 %bcond_without	tests	# do not perform "make test"
 #
-%define		ver		3.2
-%define		patchlevel	48
-%define		rel		3
+%define		ver		4.0
+%define		patchlevel	0
+%define		rel		1
 Summary:	GNU Bourne Again Shell (bash)
 Summary(fr.UTF-8):	Le shell Bourne Again de GNU
 Summary(pl.UTF-8):	Powłoka GNU Bourne Again Shell (bash)
@@ -16,7 +16,7 @@ Release:	%{rel}%{?with_bash_history:inv}
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://ftp.gnu.org/gnu/bash/%{name}-%{ver}.tar.gz
-# Source0-md5:	00bfa16d58e034e3c2aa27f390390d30
+# Source0-md5:	a90a1b5a6db4838483f05438e05e8eb9
 Source1:	%{name}rc
 Source2:	%{name}-skel-.%{name}_logout
 Source3:	%{name}-skel-.%{name}_profile
@@ -37,13 +37,13 @@ Patch8:		%{name}-sighup.patch
 Patch9:		%{name}-backup_history.patch
 Patch10:	%{name}-act_like_sh.patch
 Patch11:	%{name}-elinks_cont.patch
-%patchset_source -f http://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-%03g 1 %{patchlevel}
+# %%patchset_source -f http://ftp.gnu.org/gnu/bash/bash-4.0-patches/bash40-%03g 1 %{patchlevel}
 URL:		http://www.gnu.org/software/bash/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	ncurses-devel >= 5.2
-BuildRequires:	readline-devel >= 5.2
+BuildRequires:	readline-devel >= 6.0
 BuildRequires:	rpmbuild(macros) >= 1.462
 BuildRequires:	sed >= 4.0
 BuildRequires:	texinfo
@@ -51,9 +51,9 @@ BuildRequires:	texinfo
 # Require static library only for static build
 BuildRequires:	glibc-static >= 2.2
 BuildRequires:	ncurses-static >= 5.2
-BuildRequires:	readline-static >= 5.2
+BuildRequires:	readline-static >= 6.0
 %endif
-Requires:	readline >= 5.2
+Requires:	readline >= 6.0
 Requires:	setup >= 2.4.6-2
 Obsoletes:	bash-doc
 Obsoletes:	bash2
