@@ -9,12 +9,13 @@ fi
 export HISTSIZE=1000
 export HISTFILESIZE=1000
 export TMP=~/tmp
-export TMPDIR="$TMP"
+export TMPDIR=$TMP
 
 # setup LOCALE variables
 #export LANG=
 #export LC_ALL=
 #export LANGUAGE=
+#export TZ=
 
 # only You can access your files
 #umask 077
