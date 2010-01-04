@@ -6,7 +6,7 @@
 #
 %define		ver		4.1
 %define		patchlevel	0
-%define		rel		1
+%define		rel		2
 Summary:	GNU Bourne Again Shell (bash)
 Summary(fr.UTF-8):	Le shell Bourne Again de GNU
 Summary(pl.UTF-8):	Powłoka GNU Bourne Again Shell (bash)
@@ -43,7 +43,7 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	ncurses-devel >= 5.2
-BuildRequires:	readline-devel >= 6.0
+BuildRequires:	readline-devel >= 6.1
 BuildRequires:	rpmbuild(macros) >= 1.462
 BuildRequires:	sed >= 4.0
 BuildRequires:	texinfo
@@ -51,9 +51,9 @@ BuildRequires:	texinfo
 # Require static library only for static build
 BuildRequires:	glibc-static >= 2.2
 BuildRequires:	ncurses-static >= 5.2
-BuildRequires:	readline-static >= 6.0
+BuildRequires:	readline-static >= 6.1
 %endif
-Requires:	readline >= 6.0
+Requires:	readline >= 6.1
 Requires:	setup >= 2.4.6-2
 Obsoletes:	bash-doc
 Obsoletes:	bash2
