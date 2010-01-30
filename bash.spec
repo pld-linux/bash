@@ -6,7 +6,7 @@
 #
 %define		ver		4.1
 %define		patchlevel	0
-%define		rel		2
+%define		rel		3
 Summary:	GNU Bourne Again Shell (bash)
 Summary(fr.UTF-8):	Le shell Bourne Again de GNU
 Summary(pl.UTF-8):	Powłoka GNU Bourne Again Shell (bash)
@@ -301,7 +301,8 @@ end
 %lang(ko) %{_mandir}/ko/man1/*
 %lang(nl) %{_mandir}/nl/man1/*
 %lang(pl) %{_mandir}/pl/man1/*
-%{_datadir}/%{name}
+%dir %{_datadir}/%{name}
+%doc %{_datadir}/%{name}/*
 
 %if %{with static}
 %files static
