@@ -5,7 +5,7 @@
 %bcond_without	tests	# do not perform "make test"
 #
 %define		ver		4.1
-%define		patchlevel	0
+%define		patchlevel	2
 %define		rel		3
 Summary:	GNU Bourne Again Shell (bash)
 Summary(fr.UTF-8):	Le shell Bourne Again de GNU
@@ -37,7 +37,7 @@ Patch8:		%{name}-sighup.patch
 Patch9:		%{name}-backup_history.patch
 Patch10:	%{name}-act_like_sh.patch
 Patch11:	%{name}-elinks_cont.patch
-#%%patchset_source -f http://ftp.gnu.org/gnu/bash/bash-4.0-patches/bash40-%03g 1 %{patchlevel}
+%patchset_source -f http://ftp.gnu.org/gnu/bash/bash-4.1-patches/bash41-%03g 1 %{patchlevel}
 URL:		http://www.gnu.org/software/bash/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -182,7 +182,7 @@ tym pakiecie jest wersja basha skonsolidowana statycznie.
 %prep
 %setup -q -n %{name}-%{ver} -a5
 # official patches
-#%%patchset_patch 1 %{patchlevel}
+%patchset_patch 1 %{patchlevel}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
