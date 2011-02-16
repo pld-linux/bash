@@ -43,7 +43,7 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	ncurses-devel >= 5.2
-BuildRequires:	readline-devel >= 6.1
+BuildRequires:	readline-devel >= 6.2
 BuildRequires:	rpmbuild(macros) >= 1.462
 BuildRequires:	sed >= 4.0
 BuildRequires:	texinfo
@@ -51,9 +51,9 @@ BuildRequires:	texinfo
 # Require static library only for static build
 BuildRequires:	glibc-static >= 2.2
 BuildRequires:	ncurses-static >= 5.2
-BuildRequires:	readline-static >= 6.1
+BuildRequires:	readline-static >= 6.2
 %endif
-Requires:	readline >= 6.1
+Requires:	readline >= 6.2
 Requires:	setup >= 2.4.6-2
 Obsoletes:	bash-doc
 Obsoletes:	bash2
