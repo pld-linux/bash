@@ -18,14 +18,11 @@ Group:		Applications/Shells
 Source0:	http://ftp.gnu.org/gnu/bash/%{name}-%{ver}.tar.gz
 # Source0-md5:	3fb927c7c33022f1c327f14a81c0d4b0
 Source1:	%{name}rc
-Source2:	%{name}-skel-.%{name}_logout
-Source3:	%{name}-skel-.%{name}_profile
-Source4:	%{name}-skel-.%{name}rc
+Source2:	%{name}-skel-.bash_logout
+Source3:	%{name}-skel-.bash_profile
+Source4:	%{name}-skel-.bashrc
 Source5:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source5-md5:	d2aacf89c4a444c5da648da69afdb01a
-# based on GNU TP; omitted: eo (not supported), rw (empty)
-Source6:	%{name}-translations.tar.bz2
-# Source6-md5:	99701bc1f919cfc527cb95fadbc66c93
 Patch0:		%{name}-paths.patch
 Patch1:		%{name}-security.patch
 Patch2:		%{name}-autoconf.patch
@@ -37,6 +34,7 @@ Patch8:		%{name}-sighup.patch
 Patch9:		%{name}-backup_history.patch
 Patch10:	%{name}-act_like_sh.patch
 Patch11:	%{name}-elinks_cont.patch
+Patch12:	%{name}-pl.po-update.patch
 %{?patchlevel:%patchset_source -f http://ftp.gnu.org/gnu/bash/bash-4.2-patches/bash41-%03g 1 %{patchlevel}}
 URL:		http://www.gnu.org/software/bash/
 BuildRequires:	autoconf
@@ -194,8 +192,7 @@ tym pakiecie jest wersja basha skonsolidowana statycznie.
 %{?with_bash_history:%patch9 -p1}
 %patch10 -p1
 %patch11 -p1
-%{__tar} xjf %{SOURCE6} -C po
-sed -e 's/boldquot ru/boldquot ru af ca de es et fr hu ja nl pl pt_BR ro tr vi/' -i po/LINGUAS
+%patch12 -p1
 
 %build
 cp -f /usr/share/automake/config.* support
