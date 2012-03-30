@@ -8,8 +8,6 @@ fi
 
 export HISTSIZE=1000
 export HISTFILESIZE=1000
-export TMP=~/tmp
-export TMPDIR=$TMP
 
 # setup LOCALE variables
 #export LANG=
