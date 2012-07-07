@@ -8,6 +8,7 @@ fi
 
 export HISTSIZE=1000
 export HISTFILESIZE=1000
+export HISTCONTROL=ignoredups
 
 # setup LOCALE variables
 #export LANG=

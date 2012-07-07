@@ -6,7 +6,7 @@
 
 %define		ver		4.2
 %define		patchlevel	20
-%define		rel		3
+%define		rel		4
 Summary:	GNU Bourne Again Shell (bash)
 Summary(fr.UTF-8):	Le shell Bourne Again de GNU
 Summary(pl.UTF-8):	Powłoka GNU Bourne Again Shell (bash)
