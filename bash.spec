@@ -4,7 +4,7 @@
 %bcond_without	tests	# do not perform "make test"
 
 %define		ver		4.2
-%define		patchlevel	42
+%define		patchlevel	45
 %define		rel		1
 Summary:	GNU Bourne Again Shell (bash)
 Summary(fr.UTF-8):	Le shell Bourne Again de GNU
@@ -35,7 +35,7 @@ Patch10:	%{name}-act_like_sh.patch
 Patch11:	%{name}-elinks_cont.patch
 Patch12:	%{name}-pl.po-update.patch
 Patch13:	%{name}-format-string.patch
-%{?patchlevel:%patchset_source -f http://ftp.gnu.org/gnu/bash/bash-4.2-patches/bash42-%03g 1 %{patchlevel}}
+%patchset_source -f http://ftp.gnu.org/gnu/bash/bash-4.2-patches/bash42-%03g 1 %{patchlevel}
 URL:		http://www.gnu.org/software/bash/
 BuildRequires:	autoconf
 BuildRequires:	automake
