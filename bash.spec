@@ -5,7 +5,7 @@
 
 %define		ver		4.2
 %define		patchlevel	45
-%define		rel		1
+%define		rel		2
 Summary:	GNU Bourne Again Shell (bash)
 Summary(fr.UTF-8):	Le shell Bourne Again de GNU
 Summary(pl.UTF-8):	Powłoka GNU Bourne Again Shell (bash)
@@ -35,6 +35,7 @@ Patch10:	%{name}-act_like_sh.patch
 Patch11:	%{name}-elinks_cont.patch
 Patch12:	%{name}-pl.po-update.patch
 Patch13:	%{name}-format-string.patch
+Patch14:	%{name}-4.2-missing_closes.patch
 %patchset_source -f http://ftp.gnu.org/gnu/bash/bash-4.2-patches/bash42-%03g 1 %{patchlevel}
 URL:		http://www.gnu.org/software/bash/
 BuildRequires:	autoconf
@@ -194,6 +195,7 @@ tym pakiecie jest wersja basha skonsolidowana statycznie.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
 
 %build
 cp -f /usr/share/automake/config.* support
@@ -211,13 +213,13 @@ for mode in %{?with_static:static} shared; do
 	--enable-dparen-arithmetic \
 	--enable-separate-helpfiles \
 	--without-bash-malloc \
-	`[ "$mode" = "static" ] && echo "--enable-static-link"` \
+	$([ "$mode" = "static" ] && echo "--enable-static-link") \
 	--with-installed-readline
 
 %{__make} \
 	DEFS="-DHAVE_CONFIG_H -D_GNU_SOURCE"
 
-[ "$mode" = "static" ] && mv -f bash bash.static || :
+[ "$mode" = "static" ] && mv -f bash bash.static
 done
 
 %{?with_tests:%{__make} tests}
