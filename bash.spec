@@ -3,9 +3,9 @@
 %bcond_with	bash_history	# build with additional history in /var/log/bash_hist ;)
 %bcond_without	tests	# do not perform "make test"
 
-%define		ver		4.2
-%define		patchlevel	45
-%define		rel		2
+%define		ver		4.3
+%define		patchlevel	0
+%define		rel		1
 Summary:	GNU Bourne Again Shell (bash)
 Summary(fr.UTF-8):	Le shell Bourne Again de GNU
 Summary(pl.UTF-8):	Powłoka GNU Bourne Again Shell (bash)
@@ -15,7 +15,7 @@ Release:	%{rel}%{?with_bash_history:inv}
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://ftp.gnu.org/gnu/bash/%{name}-%{ver}.tar.gz
-# Source0-md5:	3fb927c7c33022f1c327f14a81c0d4b0
+# Source0-md5:	81348932d5da294953e15d4814c74dd1
 Source1:	%{name}rc
 Source2:	%{name}-skel-.bash_logout
 Source3:	%{name}-skel-.bash_profile
@@ -34,15 +34,13 @@ Patch9:		%{name}-backup_history.patch
 Patch10:	%{name}-act_like_sh.patch
 Patch11:	%{name}-elinks_cont.patch
 Patch12:	%{name}-pl.po-update.patch
-Patch13:	%{name}-format-string.patch
-Patch14:	%{name}-4.2-missing_closes.patch
-%patchset_source -f http://ftp.gnu.org/gnu/bash/bash-4.2-patches/bash42-%03g 1 %{patchlevel}
+%patchset_source -f http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-%03g 1 %{patchlevel}
 URL:		http://www.gnu.org/software/bash/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	ncurses-devel >= 5.2
-BuildRequires:	readline-devel >= 6.2
+BuildRequires:	readline-devel >= 6.3
 BuildRequires:	rpmbuild(macros) >= 1.462
 BuildRequires:	sed >= 4.0
 BuildRequires:	texinfo
@@ -50,9 +48,9 @@ BuildRequires:	texinfo
 # Require static library only for static build
 BuildRequires:	glibc-static >= 2.2
 BuildRequires:	ncurses-static >= 5.2
-BuildRequires:	readline-static >= 6.2
+BuildRequires:	readline-static >= 6.3
 %endif
-Requires:	readline >= 6.2
+Requires:	readline >= 6.3
 Requires:	setup >= 2.4.6-2
 Obsoletes:	bash-doc
 Obsoletes:	bash2
@@ -193,9 +191,7 @@ tym pakiecie jest wersja basha skonsolidowana statycznie.
 %{?with_bash_history:%patch9 -p1}
 %patch10 -p1
 %patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
+#%patch12 -p1
 
 %build
 cp -f /usr/share/automake/config.* support

@@ -14,11 +14,11 @@ Tylko w bash-3.0: config.h.in.orig
 diff -urbB bash-3.0.org/config-top.h bash-3.0/config-top.h
 --- bash-3.0.org/config-top.h	2003-08-05 16:36:12.000000000 +0200
 +++ bash-3.0/config-top.h	2005-10-08 19:36:04.395581500 +0200
-@@ -52,14 +52,14 @@
+@@ -59,14 +59,14 @@
  /* The default value of the PATH variable. */
  #ifndef DEFAULT_PATH_VALUE
  #define DEFAULT_PATH_VALUE \
--  "/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:."
+-  "/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin:."
 +  "/usr/local/bin:/bin:/usr/bin"
  #endif
  
