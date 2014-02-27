@@ -1,3 +1,4 @@
+#
 # Conditional build:
 %bcond_without	static		# don't build static version
 %bcond_with	bash_history	# build with additional history in /var/log/bash_hist ;)
@@ -191,7 +192,7 @@ tym pakiecie jest wersja basha skonsolidowana statycznie.
 %{?with_bash_history:%patch9 -p1}
 %patch10 -p1
 %patch11 -p1
-#%patch12 -p1
+%patch12 -p1
 
 %build
 cp -f /usr/share/automake/config.* support
