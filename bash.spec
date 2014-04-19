@@ -35,7 +35,7 @@ Patch9:		%{name}-backup_history.patch
 Patch10:	%{name}-act_like_sh.patch
 Patch11:	%{name}-elinks_cont.patch
 Patch12:	%{name}-pl.po-update.patch
-%patchset_source -f http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-%03g 1 %{patchlevel}
+%patchset_source -f https://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-%03g 1 %{patchlevel}
 URL:		http://www.gnu.org/software/bash/
 BuildRequires:	autoconf
 BuildRequires:	automake
