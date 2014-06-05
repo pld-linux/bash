@@ -6,7 +6,7 @@
 
 # NOTE: when updating patchleve, do not forget to update 'sources' file!
 %define		ver		4.3
-%define		patchlevel	11
+%define		patchlevel	18
 %define		rel		1
 Summary:	GNU Bourne Again Shell (bash)
 Summary(fr.UTF-8):	Le shell Bourne Again de GNU
@@ -194,6 +194,8 @@ tym pakiecie jest wersja basha skonsolidowana statycznie.
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+
+sed -i -e 's#/usr/bin/printf#/bin/printf#g' tests/intl2.sub
 
 %build
 cp -f /usr/share/automake/config.* support
