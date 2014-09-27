@@ -7,7 +7,7 @@
 # NOTE: when updating patchleve, do not forget to update 'sources' file!
 %define		ver		4.3
 %define		patchlevel	26
-%define		rel		1
+%define		rel		2
 Summary:	GNU Bourne Again Shell (bash)
 Summary(fr.UTF-8):	Le shell Bourne Again de GNU
 Summary(pl.UTF-8):	Powłoka GNU Bourne Again Shell (bash)
@@ -36,6 +36,9 @@ Patch9:		%{name}-backup_history.patch
 Patch10:	%{name}-act_like_sh.patch
 Patch11:	%{name}-elinks_cont.patch
 Patch12:	%{name}-pl.po-update.patch
+# http://www.openwall.com/lists/oss-security/2014/09/25/13 ; patches from FC
+Patch13:	bash-4.2-cve-2014-7169-1.patch
+Patch14:	bash-4.2-cve-2014-7169-2.patch
 %patchset_source -f https://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-%03g 1 %{patchlevel}
 URL:		http://www.gnu.org/software/bash/
 BuildRequires:	autoconf
@@ -194,6 +197,8 @@ tym pakiecie jest wersja basha skonsolidowana statycznie.
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p0
+%patch14 -p0
 
 sed -i -e 's#/usr/bin/printf#/bin/printf#g' tests/intl2.sub
 
