@@ -6,7 +6,7 @@
 
 # NOTE: when updating patchleve, do not forget to update 'sources' file!
 %define		ver		4.3
-%define		patchlevel	29
+%define		patchlevel	30
 %define		rel		1
 Summary:	GNU Bourne Again Shell (bash)
 Summary(fr.UTF-8):	Le shell Bourne Again de GNU
