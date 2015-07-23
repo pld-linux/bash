@@ -4,6 +4,7 @@
 %bcond_with	bash_history	# build with additional history in /var/log/bash_hist ;)
 %bcond_without	tests	# do not perform "make test"
 
+# NOTE: do not forget to update 'sources' file when updating patchlevel
 %define		ver		3.2
 %define		patchlevel	57
 %define		rel		1
