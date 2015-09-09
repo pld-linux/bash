@@ -7,7 +7,7 @@
 # NOTE: when updating patchlevel, do not forget to update 'sources' file:
 # $ md5sum bash43-??? > sources
 %define		ver		4.3
-%define		patchlevel	39
+%define		patchlevel	42
 %define		rel		1
 Summary:	GNU Bourne Again Shell (bash)
 Summary(fr.UTF-8):	Le shell Bourne Again de GNU
