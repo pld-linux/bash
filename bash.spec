@@ -1,4 +1,6 @@
-#
+# TODO:
+# - bash-devel with headers and pc
+
 # Conditional build:
 %bcond_without	static		# don't build static version
 %bcond_with	bash_history	# build with additional history in /var/log/bash_hist ;)
@@ -6,8 +8,8 @@
 
 # NOTE: when updating patchlevel, do not forget to update 'sources' file:
 # $ md5sum bash43-??? > sources
-%define		ver		4.3
-%define		patchlevel	46
+%define		ver		4.4
+%define		patchlevel	0
 %define		rel		1
 Summary:	GNU Bourne Again Shell (bash)
 Summary(fr.UTF-8):	Le shell Bourne Again de GNU
@@ -18,7 +20,7 @@ Release:	%{rel}%{?with_bash_history:inv}
 License:	GPL
 Group:		Applications/Shells
 Source0:	http://ftp.gnu.org/gnu/bash/%{name}-%{ver}.tar.gz
-# Source0-md5:	81348932d5da294953e15d4814c74dd1
+# Source0-md5:	148888a7c95ac23705559b6f477dfe25
 Source1:	%{name}rc
 Source2:	%{name}-skel-.bash_logout
 Source3:	%{name}-skel-.bash_profile
@@ -36,14 +38,13 @@ Patch8:		%{name}-sighup.patch
 Patch9:		%{name}-backup_history.patch
 Patch10:	%{name}-act_like_sh.patch
 Patch11:	%{name}-elinks_cont.patch
-Patch12:	%{name}-pl.po-update.patch
-%patchset_source -f https://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-%03g 1 %{patchlevel}
+%patchset_source -f https://ftp.gnu.org/gnu/bash/bash-4.4-patches/bash44-%03g 1 %{patchlevel}
 URL:		http://www.gnu.org/software/bash/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	ncurses-devel >= 5.2
-BuildRequires:	readline-devel >= 6.3
+BuildRequires:	readline-devel >= 7.0
 BuildRequires:	rpmbuild(macros) >= 1.462
 BuildRequires:	sed >= 4.0
 BuildRequires:	texinfo
@@ -51,9 +52,9 @@ BuildRequires:	texinfo
 # Require static library only for static build
 BuildRequires:	glibc-static >= 2.2
 BuildRequires:	ncurses-static >= 5.2
-BuildRequires:	readline-static >= 6.3
+BuildRequires:	readline-static >= 7.0
 %endif
-Requires:	readline >= 6.3
+Requires:	readline >= 7.0
 Requires:	setup >= 2.4.6-2
 Obsoletes:	bash-doc
 Obsoletes:	bash2
@@ -194,7 +195,6 @@ tym pakiecie jest wersja basha skonsolidowana statycznie.
 %{?with_bash_history:%patch9 -p1}
 %patch10 -p1
 %patch11 -p1
-%patch12 -p1
 
 sed -i -e 's#/usr/bin/printf#/bin/printf#g' tests/intl2.sub
 
