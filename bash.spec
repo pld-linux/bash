@@ -1,13 +1,11 @@
-# TODO:
-# - bash-devel with headers and pc
-
+# NOTE: when updating patchlevel, do not forget to update 'sources' file:
+# $ md5sum bash43-??? > sources
+#
 # Conditional build:
 %bcond_without	static		# don't build static version
 %bcond_with	bash_history	# build with additional history in /var/log/bash_hist ;)
 %bcond_without	tests	# do not perform "make test"
 
-# NOTE: when updating patchlevel, do not forget to update 'sources' file:
-# $ md5sum bash43-??? > sources
 %define		ver		4.4
 %define		patchlevel	0
 %define		rel		1
@@ -17,7 +15,7 @@ Summary(pl.UTF-8):	Powłoka GNU Bourne Again Shell (bash)
 Name:		bash
 Version:	%{ver}%{?patchlevel:.%{patchlevel}}
 Release:	%{rel}%{?with_bash_history:inv}
-License:	GPL
+License:	GPL v3+
 Group:		Applications/Shells
 Source0:	http://ftp.gnu.org/gnu/bash/%{name}-%{ver}.tar.gz
 # Source0-md5:	148888a7c95ac23705559b6f477dfe25
@@ -40,7 +38,7 @@ Patch10:	%{name}-act_like_sh.patch
 Patch11:	%{name}-elinks_cont.patch
 %patchset_source -f https://ftp.gnu.org/gnu/bash/bash-4.4-patches/bash44-%03g 1 %{patchlevel}
 URL:		http://www.gnu.org/software/bash/
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	ncurses-devel >= 5.2
@@ -180,6 +178,18 @@ Korn i C (ksh i csh). Bash jest również zaimplementowany IEEE Posix
 Shell oraz jest zgodny ze specyfikacją - IEEE Working Group 1003.2. W
 tym pakiecie jest wersja basha skonsolidowana statycznie.
 
+%package devel
+Summary:	Header files for bash plugins development
+Summary(pl.UTF-8):	Pliki nagłówkowe do tworzenia wtyczek basha
+Group:		Development/Libraries
+# doesn't require base
+
+%description devel
+Header files for bash plugins development.
+
+%description devel -l pl.UTF-8
+Pliki nagłówkowe do tworzenia wtyczek basha.
+
 %prep
 %setup -q -n %{name}-%{ver} -a5
 # official patches
@@ -233,7 +243,7 @@ install -d $RPM_BUILD_ROOT{/bin,/etc/skel,%{_datadir}/%{name}}
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-mv -f $RPM_BUILD_ROOT%{_bindir}/bash $RPM_BUILD_ROOT/bin
+%{__mv} $RPM_BUILD_ROOT%{_bindir}/bash $RPM_BUILD_ROOT/bin
 %{?with_static:install bash.static $RPM_BUILD_ROOT/bin}
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/bashrc
@@ -250,10 +260,15 @@ ln -sf bash $RPM_BUILD_ROOT/bin/rbash
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/skel/.bash_logout
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/skel/.bash_profile
 install %{SOURCE4} $RPM_BUILD_ROOT/etc/skel/.bashrc
-rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 
 # use our bugtracker, upstream will ignore reports from this anyway
-rm -f $RPM_BUILD_ROOT%{_bindir}/bashbug
+%{__rm} $RPM_BUILD_ROOT%{_bindir}/bashbug \
+	$RPM_BUILD_ROOT%{_mandir}/man1/bashbug.1 \
+	$RPM_BUILD_ROOT%{_mandir}/*/man1/bashbug.1
+# packaged as %doc
+%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/bash
+
+rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 
 %find_lang %{name}
 
@@ -269,7 +284,7 @@ if arg[2] == 0 then
 	%lua_remove_etc_shells /bin/bash /bin/rbash
 end
 
-%postun	-p	/sbin/postshell
+%postun	-p /sbin/postshell
 -/usr/sbin/fix-info-dir -c %{_infodir}
 
 %post static -p <lua>
@@ -282,7 +297,7 @@ end
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc CHANGES NEWS README doc/{FAQ,INTRO}
+%doc AUTHORS CHANGES COMPAT NEWS POSIX README RBASH doc/{FAQ,INTRO,bash.html,bashref.html} 
 
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/bashrc
 %config(noreplace,missingok) %verify(not md5 mtime size) /etc/skel/.bash_logout
@@ -294,7 +309,8 @@ end
 
 %{?with_bash_history:%attr(1733,root,root) %dir /var/log/bash_hist}
 %{_infodir}/bash.info*
-%{_mandir}/man1/*
+%{_mandir}/man1/bash.1*
+%{_mandir}/man1/rbash.1*
 %lang(es) %{_mandir}/es/man1/*
 %lang(fr) %{_mandir}/fr/man1/*
 %lang(it) %{_mandir}/it/man1/*
@@ -305,8 +321,43 @@ end
 %dir %{_datadir}/%{name}
 %doc %{_datadir}/%{name}/*
 
+# loadables
+%dir %{_libdir}/%{name}
+%attr(755,root,root) %{_libdir}/%{name}/basename
+%attr(755,root,root) %{_libdir}/%{name}/dirname
+%attr(755,root,root) %{_libdir}/%{name}/finfo
+%attr(755,root,root) %{_libdir}/%{name}/head
+%attr(755,root,root) %{_libdir}/%{name}/id
+%attr(755,root,root) %{_libdir}/%{name}/ln
+%attr(755,root,root) %{_libdir}/%{name}/logname
+%attr(755,root,root) %{_libdir}/%{name}/mkdir
+%attr(755,root,root) %{_libdir}/%{name}/mypid
+%attr(755,root,root) %{_libdir}/%{name}/pathchk
+%attr(755,root,root) %{_libdir}/%{name}/print
+%attr(755,root,root) %{_libdir}/%{name}/printenv
+%attr(755,root,root) %{_libdir}/%{name}/push
+%attr(755,root,root) %{_libdir}/%{name}/realpath
+%attr(755,root,root) %{_libdir}/%{name}/rmdir
+%attr(755,root,root) %{_libdir}/%{name}/setpgid
+%attr(755,root,root) %{_libdir}/%{name}/sleep
+%attr(755,root,root) %{_libdir}/%{name}/strftime
+%attr(755,root,root) %{_libdir}/%{name}/sync
+%attr(755,root,root) %{_libdir}/%{name}/tee
+%attr(755,root,root) %{_libdir}/%{name}/truefalse
+%attr(755,root,root) %{_libdir}/%{name}/tty
+%attr(755,root,root) %{_libdir}/%{name}/uname
+%attr(755,root,root) %{_libdir}/%{name}/unlink
+%attr(755,root,root) %{_libdir}/%{name}/whoami
+
 %if %{with static}
 %files static
 %defattr(644,root,root,755)
 %attr(755,root,root) /bin/bash.static
 %endif
+
+%files devel
+%defattr(644,root,root,755)
+%{_includedir}/bash
+%dir %{_libdir}/%{name}
+%dir %{_libdir}/%{name}/Makefile.inc
+%{_pkgconfigdir}/bash.pc
