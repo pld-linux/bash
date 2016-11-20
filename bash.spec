@@ -1,5 +1,5 @@
 # NOTE: when updating patchlevel, do not forget to update 'sources' file:
-# $ md5sum bash43-??? > sources
+# $ md5sum bash44-??? > sources
 #
 # Conditional build:
 %bcond_without	static		# don't build static version
@@ -7,7 +7,7 @@
 %bcond_without	tests	# do not perform "make test"
 
 %define		ver		4.4
-%define		patchlevel	0
+%define		patchlevel	5
 %define		rel		1
 Summary:	GNU Bourne Again Shell (bash)
 Summary(fr.UTF-8):	Le shell Bourne Again de GNU
