@@ -6,9 +6,10 @@
 %bcond_with	bash_history	# build with additional history in /var/log/bash_hist ;)
 %bcond_without	tests	# do not perform "make test"
 
-%define		ver		4.4
-%define		patchlevel	23
+%define		ver		5.0
+%define		patchlevel	3
 %define		rel		1
+%define		min_readline	8.0
 Summary:	GNU Bourne Again Shell (bash)
 Summary(fr.UTF-8):	Le shell Bourne Again de GNU
 Summary(pl.UTF-8):	Powłoka GNU Bourne Again Shell (bash)
@@ -18,7 +19,7 @@ Release:	%{rel}%{?with_bash_history:inv}
 License:	GPL v3+
 Group:		Applications/Shells
 Source0:	http://ftp.gnu.org/gnu/bash/%{name}-%{ver}.tar.gz
-# Source0-md5:	148888a7c95ac23705559b6f477dfe25
+# Source0-md5:	2b44b47b905be16f45709648f671820b
 Source1:	%{name}rc
 Source2:	%{name}-skel-.bash_logout
 Source3:	%{name}-skel-.bash_profile
@@ -32,17 +33,18 @@ Patch3:		%{name}-info.patch
 Patch4:		%{name}-profile.patch
 Patch5:		%{name}-requires.patch
 Patch6:		%{name}-compat.patch
+Patch7:		%{name}-loadables.patch
 Patch8:		%{name}-sighup.patch
 Patch9:		%{name}-backup_history.patch
 Patch10:	%{name}-act_like_sh.patch
 Patch11:	%{name}-elinks_cont.patch
-%patchset_source -f https://ftp.gnu.org/gnu/bash/bash-4.4-patches/bash44-%03g 1 %{patchlevel}
+%patchset_source -f https://ftp.gnu.org/gnu/bash/bash-5.0-patches/bash50-%03g 1 %{patchlevel}
 URL:		http://www.gnu.org/software/bash/
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	ncurses-devel >= 5.2
-BuildRequires:	readline-devel >= 7.0
+BuildRequires:	readline-devel >= %{min_readline}
 BuildRequires:	rpmbuild(macros) >= 1.462
 BuildRequires:	sed >= 4.0
 BuildRequires:	texinfo
@@ -50,9 +52,9 @@ BuildRequires:	texinfo
 # Require static library only for static build
 BuildRequires:	glibc-static >= 2.2
 BuildRequires:	ncurses-static >= 5.2
-BuildRequires:	readline-static >= 7.0
+BuildRequires:	readline-static >= %{min_readline}
 %endif
-Requires:	readline >= 7.0
+Requires:	readline >= %{min_readline}
 Requires:	setup >= 2.4.6-2
 Obsoletes:	bash-doc
 Obsoletes:	bash2
@@ -201,6 +203,7 @@ Pliki nagłówkowe do tworzenia wtyczek basha.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 %patch8 -p1
 %{?with_bash_history:%patch9 -p1}
 %patch10 -p1
@@ -325,6 +328,7 @@ end
 %dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/basename
 %attr(755,root,root) %{_libdir}/%{name}/dirname
+%attr(755,root,root) %{_libdir}/%{name}/fdflags
 %attr(755,root,root) %{_libdir}/%{name}/finfo
 %attr(755,root,root) %{_libdir}/%{name}/head
 %attr(755,root,root) %{_libdir}/%{name}/id
@@ -338,6 +342,7 @@ end
 %attr(755,root,root) %{_libdir}/%{name}/push
 %attr(755,root,root) %{_libdir}/%{name}/realpath
 %attr(755,root,root) %{_libdir}/%{name}/rmdir
+%attr(755,root,root) %{_libdir}/%{name}/seq
 %attr(755,root,root) %{_libdir}/%{name}/setpgid
 %attr(755,root,root) %{_libdir}/%{name}/sleep
 %attr(755,root,root) %{_libdir}/%{name}/strftime

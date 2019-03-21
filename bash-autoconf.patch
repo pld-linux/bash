@@ -1,20 +1,20 @@
---- bash-3.0/aclocal.m4.orig	2004-05-13 19:37:25.000000000 +0200
-+++ bash-3.0/aclocal.m4	2004-08-06 08:39:20.961425816 +0200
-@@ -943,10 +943,10 @@
- fi
+--- bash-5.0/aclocal.m4~	2018-12-05 15:31:34.000000000 +0100
++++ bash-5.0/aclocal.m4	2019-03-21 14:19:55.805259147 +0100
+@@ -959,11 +959,10 @@ fi
  AC_CACHE_VAL(bash_cv_termcap_lib,
  [AC_CHECK_FUNC(tgetent, bash_cv_termcap_lib=libc,
--  [AC_CHECK_LIB(termcap, tgetent, bash_cv_termcap_lib=libtermcap,
+   [AC_CHECK_LIB(termcap, tgetent, bash_cv_termcap_lib=libtermcap,
 -    [AC_CHECK_LIB(tinfo, tgetent, bash_cv_termcap_lib=libtinfo,
 -        [AC_CHECK_LIB(curses, tgetent, bash_cv_termcap_lib=libcurses,
--	    [AC_CHECK_LIB(ncurses, tgetent, bash_cv_termcap_lib=libncurses,
-+  [AC_CHECK_LIB(tinfo, tgetent, bash_cv_termcap_lib=libtinfo,
-+      [AC_CHECK_LIB(curses, tgetent, bash_cv_termcap_lib=libcurses,
-+	[AC_CHECK_LIB(ncurses, tgetent, bash_cv_termcap_lib=libncurses,
-+	    [AC_CHECK_LIB(termcap, tgetent, bash_cv_termcap_lib=libtermcap,
- 	        bash_cv_termcap_lib=gnutermcap)])])])])])
++        [AC_CHECK_LIB(libncursesw, tgetent, bash_cv_termcap_lib=libncursesw,
+ 	    [AC_CHECK_LIB(ncurses, tgetent, bash_cv_termcap_lib=libncurses,
+-                [AC_CHECK_LIB(ncursesw, tgetent, bash_cv_termcap_lib=libncursesw,
+-	            bash_cv_termcap_lib=gnutermcap)])])])])])])
++                [AC_CHECK_LIB(curses, tgetent, bash_cv_termcap_lib=libcurses,
++	            bash_cv_termcap_lib=gnutermcap)])])])])])
  if test "X$_bash_needmsg" = "Xyes"; then
  AC_MSG_CHECKING(which library has the termcap functions)
+ fi
 --- bash-2.05a-new/Makefile.in	Fri Feb  8 00:20:46 2002
 +++ bash-2.05a/Makefile.in	Thu Feb  7 22:38:32 2002
 @@ -727,8 +727,8 @@ pathnames.h:		Makefile $(srcdir)/pathnam
