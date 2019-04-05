@@ -364,5 +364,6 @@ end
 %defattr(644,root,root,755)
 %{_includedir}/bash
 %dir %{_libdir}/%{name}
-%dir %{_libdir}/%{name}/Makefile.inc
+%{_libdir}/%{name}/Makefile.inc
+%{_libdir}/%{name}/loadables.h
 %{_pkgconfigdir}/bash.pc
