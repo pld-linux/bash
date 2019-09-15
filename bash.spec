@@ -7,7 +7,7 @@
 %bcond_without	tests	# do not perform "make test"
 
 %define		ver		5.0
-%define		patchlevel	3
+%define		patchlevel	11
 %define		rel		1
 %define		min_readline	8.0
 Summary:	GNU Bourne Again Shell (bash)
