@@ -233,7 +233,9 @@ for mode in %{?with_static:static} shared; do
 %{__make} \
 	DEFS="-DHAVE_CONFIG_H -D_GNU_SOURCE"
 
-[ "$mode" = "static" ] && mv -f bash bash.static
+if [ "$mode" = "static" ]; then
+	mv -f bash bash.static
+fi
 done
 
 %{?with_tests:%{__make} tests}
