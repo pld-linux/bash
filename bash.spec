@@ -6,10 +6,10 @@
 %bcond_with	bash_history	# build with additional history in /var/log/bash_hist ;)
 %bcond_without	tests	# do not perform "make test"
 
-%define		ver		5.0
-%define		patchlevel	18
+%define		ver		5.1
+%define		patchlevel	0
 %define		rel		1
-%define		min_readline	8.0
+%define		min_readline	8.1
 Summary:	GNU Bourne Again Shell (bash)
 Summary(fr.UTF-8):	Le shell Bourne Again de GNU
 Summary(pl.UTF-8):	Powłoka GNU Bourne Again Shell (bash)
@@ -19,7 +19,7 @@ Release:	%{rel}%{?with_bash_history:inv}
 License:	GPL v3+
 Group:		Applications/Shells
 Source0:	http://ftp.gnu.org/gnu/bash/%{name}-%{ver}.tar.gz
-# Source0-md5:	2b44b47b905be16f45709648f671820b
+# Source0-md5:	bb91a17fd6c9032c26d0b2b78b50aff5
 Source1:	%{name}rc
 Source2:	%{name}-skel-.bash_logout
 Source3:	%{name}-skel-.bash_profile
@@ -33,7 +33,7 @@ Patch3:		%{name}-info.patch
 Patch4:		%{name}-profile.patch
 Patch5:		%{name}-requires.patch
 Patch6:		%{name}-compat.patch
-Patch7:		%{name}-loadables.patch
+Patch7:		bash-5.1-parallel_make.patch
 Patch8:		%{name}-sighup.patch
 Patch9:		%{name}-backup_history.patch
 Patch10:	%{name}-act_like_sh.patch
