@@ -33,11 +33,12 @@ Patch3:		%{name}-info.patch
 Patch4:		%{name}-profile.patch
 Patch5:		%{name}-requires.patch
 Patch6:		%{name}-compat.patch
-Patch7:		bash-5.1-parallel_make.patch
+Patch7:		%{name}-loadables.patch
 Patch8:		%{name}-sighup.patch
 Patch9:		%{name}-backup_history.patch
 Patch10:	%{name}-act_like_sh.patch
 Patch11:	%{name}-elinks_cont.patch
+Patch12:	bash-5.1-parallel_make.patch
 %patchset_source -f https://ftp.gnu.org/gnu/bash/bash-5.0-patches/bash50-%03g 1 %{patchlevel}
 URL:		http://www.gnu.org/software/bash/
 BuildRequires:	autoconf >= 2.61
@@ -208,6 +209,7 @@ Pliki nagłówkowe do tworzenia wtyczek basha.
 %{?with_bash_history:%patch9 -p1}
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 
 sed -i -e 's#/usr/bin/printf#/bin/printf#g' tests/intl2.sub
 
@@ -328,7 +330,10 @@ end
 
 # loadables
 %dir %{_libdir}/%{name}
+%attr(755,root,root) %{_libdir}/%{name}/accept
 %attr(755,root,root) %{_libdir}/%{name}/basename
+%attr(755,root,root) %{_libdir}/%{name}/csv
+%attr(755,root,root) %{_libdir}/%{name}/cut
 %attr(755,root,root) %{_libdir}/%{name}/dirname
 %attr(755,root,root) %{_libdir}/%{name}/fdflags
 %attr(755,root,root) %{_libdir}/%{name}/finfo
@@ -337,12 +342,15 @@ end
 %attr(755,root,root) %{_libdir}/%{name}/ln
 %attr(755,root,root) %{_libdir}/%{name}/logname
 %attr(755,root,root) %{_libdir}/%{name}/mkdir
+%attr(755,root,root) %{_libdir}/%{name}/mkfifo
+%attr(755,root,root) %{_libdir}/%{name}/mktemp
 %attr(755,root,root) %{_libdir}/%{name}/mypid
 %attr(755,root,root) %{_libdir}/%{name}/pathchk
 %attr(755,root,root) %{_libdir}/%{name}/print
 %attr(755,root,root) %{_libdir}/%{name}/printenv
 %attr(755,root,root) %{_libdir}/%{name}/push
 %attr(755,root,root) %{_libdir}/%{name}/realpath
+%attr(755,root,root) %{_libdir}/%{name}/rm
 %attr(755,root,root) %{_libdir}/%{name}/rmdir
 %attr(755,root,root) %{_libdir}/%{name}/seq
 %attr(755,root,root) %{_libdir}/%{name}/setpgid
