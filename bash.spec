@@ -7,7 +7,7 @@
 %bcond_without	tests	# do not perform "make test"
 
 %define		ver		5.1
-%define		patchlevel	0
+%define		patchlevel	4
 %define		rel		1
 %define		min_readline	8.1
 Summary:	GNU Bourne Again Shell (bash)
@@ -39,7 +39,7 @@ Patch9:		%{name}-backup_history.patch
 Patch10:	%{name}-act_like_sh.patch
 Patch11:	%{name}-elinks_cont.patch
 Patch12:	bash-5.1-parallel_make.patch
-%patchset_source -f https://ftp.gnu.org/gnu/bash/bash-5.0-patches/bash50-%03g 1 %{patchlevel}
+%patchset_source -f https://ftp.gnu.org/gnu/bash/bash-5.1-patches/bash51-%03g 1 %{patchlevel}
 URL:		http://www.gnu.org/software/bash/
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake
@@ -62,6 +62,8 @@ Obsoletes:	bash2
 Obsoletes:	bash2-doc
 Obsoletes:	etcskel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		_noautoprovfiles	%{_libdir}/%{name}
 
 %description
 Bash is a GNU project sh-compatible shell or command language
@@ -211,7 +213,7 @@ Pliki nagłówkowe do tworzenia wtyczek basha.
 %patch11 -p1
 %patch12 -p1
 
-sed -i -e 's#/usr/bin/printf#/bin/printf#g' tests/intl2.sub
+%{__sed} -i -e 's#/usr/bin/printf#/bin/printf#g' tests/intl2.sub
 
 %build
 cp -f /usr/share/automake/config.* support
@@ -236,7 +238,7 @@ for mode in %{?with_static:static} shared; do
 	DEFS="-DHAVE_CONFIG_H -D_GNU_SOURCE"
 
 if [ "$mode" = "static" ]; then
-	mv -f bash bash.static
+	%{__mv} bash bash.static
 fi
 done
 
