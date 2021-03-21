@@ -1,8 +1,9 @@
---- bash-2.03/config-top.h.profile	Mon Feb 22 14:37:17 1999
-+++ bash-2.03/config-top.h	Mon Feb 22 14:37:29 1999
-@@ -3,6 +3,8 @@
- /* This contains various user-settable options not under the control of
-    autoconf. */
+diff -urNp -x '*.orig' bash-5.1.org/config-top.h bash-5.1/config-top.h
+--- bash-5.1.org/config-top.h	2021-03-21 13:21:19.045594925 +0100
++++ bash-5.1/config-top.h	2021-03-21 13:21:19.703594925 +0100
+@@ -18,6 +18,8 @@
+    along with Bash.  If not, see <http://www.gnu.org/licenses/>.
+ */
  
 +#define NON_INTERACTIVE_LOGIN_SHELLS
 +
