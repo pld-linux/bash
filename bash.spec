@@ -7,7 +7,7 @@
 %bcond_without	tests	# do not perform "make test"
 
 %define		ver		5.1
-%define		patchlevel	8
+%define		patchlevel	16
 %define		rel		1
 %define		min_readline	8.1
 Summary:	GNU Bourne Again Shell (bash)
@@ -18,7 +18,7 @@ Version:	%{ver}%{?patchlevel:.%{patchlevel}}
 Release:	%{rel}%{?with_bash_history:inv}
 License:	GPL v3+
 Group:		Applications/Shells
-Source0:	http://ftp.gnu.org/gnu/bash/%{name}-%{ver}.tar.gz
+Source0:	https://ftp.gnu.org/gnu/bash/%{name}-%{ver}.tar.gz
 # Source0-md5:	bb91a17fd6c9032c26d0b2b78b50aff5
 Source1:	%{name}rc
 Source2:	%{name}-skel-.bash_logout
