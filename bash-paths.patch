@@ -1,6 +1,5 @@
-diff -urNp -x '*.orig' bash-5.1.org/config-top.h bash-5.1/config-top.h
---- bash-5.1.org/config-top.h	2020-11-16 16:34:26.000000000 +0100
-+++ bash-5.1/config-top.h	2021-03-21 13:21:08.467594925 +0100
+--- bash-5.2/config-top.h.orig	2021-11-05 14:11:12.000000000 +0100
++++ bash-5.2/config-top.h	2022-12-11 18:19:28.772442216 +0100
 @@ -63,7 +63,7 @@
  /* The default value of the PATH variable. */
  #ifndef DEFAULT_PATH_VALUE
@@ -18,8 +17,8 @@ diff -urNp -x '*.orig' bash-5.1.org/config-top.h bash-5.1/config-top.h
 +  "/usr/local/bin:/bin:/usr/bin"
  #endif
  
- /* Default primary and secondary prompt strings. */
-@@ -91,7 +91,7 @@
+ /* The default path for enable -f */
+@@ -97,7 +97,7 @@
  #define DEFAULT_BASHRC "~/.bashrc"
  
  /* System-wide .bashrc file for interactive shells. */

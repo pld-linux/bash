@@ -1,7 +1,18 @@
-diff -urNp -x '*.orig' bash-5.1.org/builtins/mkbuiltins.c bash-5.1/builtins/mkbuiltins.c
---- bash-5.1.org/builtins/mkbuiltins.c	2020-06-05 19:14:43.000000000 +0200
-+++ bash-5.1/builtins/mkbuiltins.c	2021-03-21 13:21:29.803594925 +0100
-@@ -69,10 +69,15 @@ extern char *strcpy ();
+diff --git a/builtins.h b/builtins.h
+--- a/builtins.h
++++ b/builtins.h
+@@ -46,6 +46,7 @@
+ #define POSIX_BUILTIN	0x20	/* This builtins is special in the Posix command search order. */
+ #define LOCALVAR_BUILTIN   0x40	/* This builtin creates local variables */
+ #define ARRAYREF_BUILTIN 0x80	/* This builtin takes array references as arguments */
++#define REQUIRES_BUILTIN 0x100  /* This builtin requires other files. */
+ 
+ #define BASE_INDENT	4
+ 
+diff --git a/builtins/mkbuiltins.c b/builtins/mkbuiltins.c
+--- a/builtins/mkbuiltins.c
++++ b/builtins/mkbuiltins.c
+@@ -69,11 +69,16 @@ extern char *strcpy ();
  #define whitespace(c) (((c) == ' ') || ((c) == '\t'))
  
  /* Flag values that builtins can have. */
@@ -12,15 +23,18 @@ diff -urNp -x '*.orig' bash-5.1.org/builtins/mkbuiltins.c bash-5.1/builtins/mkbu
  #define BUILTIN_FLAG_SPECIAL	0x01
  #define BUILTIN_FLAG_ASSIGNMENT 0x02
  #define BUILTIN_FLAG_LOCALVAR	0x04
- #define BUILTIN_FLAG_POSIX_BUILTIN 0x08
-+#define BUILTIN_FLAG_REQUIRES  0x10
+ #define BUILTIN_FLAG_POSIX_BUILTIN	0x08
+ #define BUILTIN_FLAG_ARRAYREF_ARG	0x10
++#define BUILTIN_FLAG_REQUIRES  0x20
  
  #define BASE_INDENT	4
  
-@@ -173,11 +178,19 @@ char *posix_builtins[] =
+@@ -189,13 +194,21 @@ char *arrayvar_builtins[] =
+   "typeset", "unset", "wait",		/*]*/
    (char *)NULL
  };
- 
+-	
++
 +/* The builtin commands that cause requirements on other files. */
 +static char *requires_builtins[] =
 +{
@@ -33,36 +47,38 @@ diff -urNp -x '*.orig' bash-5.1.org/builtins/mkbuiltins.c bash-5.1/builtins/mkbu
  static int is_assignment_builtin ();
  static int is_localvar_builtin ();
  static int is_posix_builtin ();
+ static int is_arrayvar_builtin ();
 +static int is_requires_builtin ();
  
  #if !defined (HAVE_RENAME)
  static int rename ();
-@@ -831,6 +844,8 @@ builtin_handler (self, defs, arg)
-     new->flags |= BUILTIN_FLAG_LOCALVAR;
-   if (is_posix_builtin (name))
+@@ -856,6 +869,8 @@ builtin_handler (self, defs, arg)
      new->flags |= BUILTIN_FLAG_POSIX_BUILTIN;
+   if (is_arrayvar_builtin (name))
+     new->flags |= BUILTIN_FLAG_ARRAYREF_ARG;
 +  if (is_requires_builtin (name))
 +    new->flags |= BUILTIN_FLAG_REQUIRES;
  
    array_add ((char *)new, defs->builtins);
    building_builtin = 1;
-@@ -1250,12 +1265,13 @@ write_builtins (defs, structfile, extern
+@@ -1275,13 +1290,14 @@ write_builtins (defs, structfile, externfile)
  		  else
  		    fprintf (structfile, "(sh_builtin_func_t *)0x0, ");
  
--		  fprintf (structfile, "%s%s%s%s%s, %s_doc,\n",
-+		  fprintf (structfile, "%s%s%s%s%s%s, %s_doc,\n",
+-		  fprintf (structfile, "%s%s%s%s%s%s, %s_doc,\n",
++		  fprintf (structfile, "%s%s%s%s%s%s%s, %s_doc,\n",
  		    "BUILTIN_ENABLED | STATIC_BUILTIN",
  		    (builtin->flags & BUILTIN_FLAG_SPECIAL) ? " | SPECIAL_BUILTIN" : "",
  		    (builtin->flags & BUILTIN_FLAG_ASSIGNMENT) ? " | ASSIGNMENT_BUILTIN" : "",
  		    (builtin->flags & BUILTIN_FLAG_LOCALVAR) ? " | LOCALVAR_BUILTIN" : "",
  		    (builtin->flags & BUILTIN_FLAG_POSIX_BUILTIN) ? " | POSIX_BUILTIN" : "",
+ 		    (builtin->flags & BUILTIN_FLAG_ARRAYREF_ARG) ? " | ARRAYREF_BUILTIN" : "",
 +		    (builtin->flags & BUILTIN_FLAG_REQUIRES) ? " | REQUIRES_BUILTIN" : "",
  		    document_name (builtin));
  
  		  /* Don't translate short document summaries that are identical
-@@ -1645,6 +1661,13 @@ is_posix_builtin (name)
-   return (_find_in_table (name, posix_builtins));
+@@ -1678,6 +1694,13 @@ is_arrayvar_builtin (name)
+   return (_find_in_table (name, arrayvar_builtins));
  }
  
 +static int
@@ -75,20 +91,9 @@ diff -urNp -x '*.orig' bash-5.1.org/builtins/mkbuiltins.c bash-5.1/builtins/mkbu
  #if !defined (HAVE_RENAME)
  static int
  rename (from, to)
-diff -urNp -x '*.orig' bash-5.1.org/builtins.h bash-5.1/builtins.h
---- bash-5.1.org/builtins.h	2017-04-19 15:15:48.000000000 +0200
-+++ bash-5.1/builtins.h	2021-03-21 13:21:29.803594925 +0100
-@@ -45,6 +45,7 @@
- #define ASSIGNMENT_BUILTIN 0x10	/* This builtin takes assignment statements. */
- #define POSIX_BUILTIN	0x20	/* This builtins is special in the Posix command search order. */
- #define LOCALVAR_BUILTIN   0x40	/* This builtin creates local variables */
-+#define REQUIRES_BUILTIN 0x80  /* This builtin requires other files. */
- 
- #define BASE_INDENT	4
- 
-diff -urNp -x '*.orig' bash-5.1.org/doc/bash.1 bash-5.1/doc/bash.1
---- bash-5.1.org/doc/bash.1	2020-11-18 21:03:59.000000000 +0100
-+++ bash-5.1/doc/bash.1	2021-03-21 13:21:29.804594925 +0100
+diff --git a/doc/bash.1 b/doc/bash.1
+--- a/doc/bash.1
++++ b/doc/bash.1
 @@ -239,6 +239,14 @@ The shell becomes restricted (see
  .B "RESTRICTED SHELL"
  below).
@@ -104,10 +109,10 @@ diff -urNp -x '*.orig' bash-5.1.org/doc/bash.1 bash-5.1/doc/bash.1
  .B \-\-verbose
  Equivalent to \fB\-v\fP.
  .TP
-diff -urNp -x '*.orig' bash-5.1.org/doc/bashref.texi bash-5.1/doc/bashref.texi
---- bash-5.1.org/doc/bashref.texi	2021-03-21 13:21:29.428594925 +0100
-+++ bash-5.1/doc/bashref.texi	2021-03-21 13:21:29.806594925 +0100
-@@ -6554,6 +6554,13 @@ standard.  @xref{Bash POSIX Mode}, for a
+diff --git a/doc/bashref.texi b/doc/bashref.texi
+--- a/doc/bashref.texi
++++ b/doc/bashref.texi
+@@ -6927,6 +6927,13 @@ standard.  @xref{Bash POSIX Mode}, for a description of the Bash
  @item --restricted
  Make the shell a restricted shell (@pxref{The Restricted Shell}).
  
@@ -121,10 +126,10 @@ diff -urNp -x '*.orig' bash-5.1.org/doc/bashref.texi bash-5.1/doc/bashref.texi
  @item --verbose
  Equivalent to @option{-v}.  Print shell input lines as they're read.
  
-diff -urNp -x '*.orig' bash-5.1.org/eval.c bash-5.1/eval.c
---- bash-5.1.org/eval.c	2020-08-31 16:39:51.000000000 +0200
-+++ bash-5.1/eval.c	2021-03-21 13:21:29.806594925 +0100
-@@ -137,7 +137,8 @@ reader_loop ()
+diff --git a/eval.c b/eval.c
+--- a/eval.c
++++ b/eval.c
+@@ -138,7 +138,8 @@ reader_loop ()
  
        if (read_command () == 0)
  	{
@@ -132,12 +137,12 @@ diff -urNp -x '*.orig' bash-5.1.org/eval.c bash-5.1/eval.c
 +
 +	  if (interactive_shell == 0 && (read_but_dont_execute && !rpm_requires))
  	    {
- 	      set_exit_status (EXECUTION_SUCCESS);
+ 	      set_exit_status (last_command_exit_value);
  	      dispose_command (global_command);
-diff -urNp -x '*.orig' bash-5.1.org/execute_cmd.c bash-5.1/execute_cmd.c
---- bash-5.1.org/execute_cmd.c	2020-10-12 16:16:13.000000000 +0200
-+++ bash-5.1/execute_cmd.c	2021-03-21 13:21:29.807594925 +0100
-@@ -539,6 +539,8 @@ async_redirect_stdin ()
+diff --git a/execute_cmd.c b/execute_cmd.c
+--- a/execute_cmd.c
++++ b/execute_cmd.c
+@@ -561,6 +561,8 @@ async_redirect_stdin ()
  
  #define DESCRIBE_PID(pid) do { if (interactive) describe_pid (pid); } while (0)
  
@@ -146,22 +151,22 @@ diff -urNp -x '*.orig' bash-5.1.org/execute_cmd.c bash-5.1/execute_cmd.c
  /* Execute the command passed in COMMAND, perhaps doing it asynchronously.
     COMMAND is exactly what read_command () places into GLOBAL_COMMAND.
     ASYNCHRONOUS, if non-zero, says to do this command in the background.
-@@ -570,7 +572,13 @@ execute_command_internal (command, async
+@@ -592,7 +594,13 @@ execute_command_internal (command, asynchronous, pipe_in, pipe_out,
  
    if (breaking || continuing)
      return (last_command_exit_value);
--  if (command == 0 || read_but_dont_execute)
+-  if (read_but_dont_execute)
 +  if (command == 0 || (read_but_dont_execute && !rpm_requires))
 +    return (EXECUTION_SUCCESS);
 +  if (rpm_requires && command->type == cm_function_def)
 +    return last_command_exit_value =
 +      execute_intern_function (command->value.Function_def->name,
 +                              command->value.Function_def);
-+  if (read_but_dont_execute)
++ if (read_but_dont_execute)
+     return (last_command_exit_value);
+   if (command == 0)
      return (EXECUTION_SUCCESS);
- 
-   QUIT;
-@@ -2832,7 +2840,7 @@ execute_for_command (for_command)
+@@ -2883,7 +2891,7 @@ execute_for_command (for_command)
    save_line_number = line_number;
    if (check_identifier (for_command->name, 1) == 0)
      {
@@ -170,9 +175,9 @@ diff -urNp -x '*.orig' bash-5.1.org/execute_cmd.c bash-5.1/execute_cmd.c
  	{
  	  last_command_exit_value = EX_BADUSAGE;
  	  jump_to_top_level (ERREXIT);
-diff -urNp -x '*.orig' bash-5.1.org/execute_cmd.h bash-5.1/execute_cmd.h
---- bash-5.1.org/execute_cmd.h	2020-03-03 17:39:04.000000000 +0100
-+++ bash-5.1/execute_cmd.h	2021-03-21 13:21:29.807594925 +0100
+diff --git a/execute_cmd.h b/execute_cmd.h
+--- a/execute_cmd.h
++++ b/execute_cmd.h
 @@ -22,6 +22,9 @@
  #define _EXECUTE_CMD_H_
  
@@ -183,10 +188,19 @@ diff -urNp -x '*.orig' bash-5.1.org/execute_cmd.h bash-5.1/execute_cmd.h
  
  #if defined (ARRAY_VARS)
  struct func_array_state
-diff -urNp -x '*.orig' bash-5.1.org/make_cmd.c bash-5.1/make_cmd.c
---- bash-5.1.org/make_cmd.c	2020-06-05 19:09:16.000000000 +0200
-+++ bash-5.1/make_cmd.c	2021-03-21 13:21:29.807594925 +0100
-@@ -828,6 +828,27 @@ make_coproc_command (name, command)
+diff --git a/make_cmd.c b/make_cmd.c
+--- a/make_cmd.c
++++ b/make_cmd.c
+@@ -35,6 +35,8 @@
+ #include "bashintl.h"
+ 
+ #include "shell.h"
++#include "builtins.h"
++#include "builtins/common.h"
+ #include "execute_cmd.h"
+ #include "parser.h"
+ #include "flags.h"
+@@ -839,6 +841,30 @@ make_coproc_command (name, command)
    return (make_command (cm_coproc, (SIMPLE_COM *)temp));
  }
  
@@ -195,6 +209,9 @@ diff -urNp -x '*.orig' bash-5.1.org/make_cmd.c bash-5.1/make_cmd.c
 +const char *deptype;
 +char *filename;
 +{
++  static char *alphabet_set = "abcdefghijklmnopqrstuvwxyz"
++                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
++
 +  if (strchr(filename, '$') || (filename[0] != '/' && strchr(filename, '/')))
 +    return;
 +
@@ -214,7 +231,7 @@ diff -urNp -x '*.orig' bash-5.1.org/make_cmd.c bash-5.1/make_cmd.c
  /* Reverse the word list and redirection list in the simple command
     has just been parsed.  It seems simpler to do this here the one
     time then by any other method that I can think of. */
-@@ -845,6 +866,28 @@ clean_simple_command (command)
+@@ -856,6 +882,28 @@ clean_simple_command (command)
  	REVERSE_LIST (command->value.Simple->redirects, REDIRECT *);
      }
  
@@ -243,10 +260,10 @@ diff -urNp -x '*.orig' bash-5.1.org/make_cmd.c bash-5.1/make_cmd.c
    parser_state &= ~PST_REDIRLIST;
    return (command);
  }
-diff -urNp -x '*.orig' bash-5.1.org/shell.c bash-5.1/shell.c
---- bash-5.1.org/shell.c	2020-08-04 17:00:24.000000000 +0200
-+++ bash-5.1/shell.c	2021-03-21 13:21:29.807594925 +0100
-@@ -194,6 +194,9 @@ int have_devfd = 0;
+diff --git a/shell.c b/shell.c
+--- a/shell.c
++++ b/shell.c
+@@ -196,6 +196,9 @@ int have_devfd = 0;
  /* The name of the .(shell)rc file. */
  static char *bashrc_file = DEFAULT_BASHRC;
  
@@ -256,7 +273,7 @@ diff -urNp -x '*.orig' bash-5.1.org/shell.c bash-5.1/shell.c
  /* Non-zero means to act more like the Bourne shell on startup. */
  static int act_like_sh;
  
-@@ -260,6 +263,7 @@ static const struct {
+@@ -266,6 +269,7 @@ static const struct {
    { "protected", Int, &protected_mode, (char **)0x0 },
  #endif
    { "rcfile", Charp, (int *)0x0, &bashrc_file },
@@ -264,9 +281,9 @@ diff -urNp -x '*.orig' bash-5.1.org/shell.c bash-5.1/shell.c
  #if defined (RESTRICTED_SHELL)
    { "restricted", Int, &restricted, (char **)0x0 },
  #endif
-@@ -502,6 +506,12 @@ main (argc, argv, env)
-   if (dump_translatable_strings)
+@@ -510,6 +514,12 @@ main (argc, argv, env)
      read_but_dont_execute = 1;
+ #endif
  
 +  if (rpm_requires)
 +    {
@@ -277,32 +294,14 @@ diff -urNp -x '*.orig' bash-5.1.org/shell.c bash-5.1/shell.c
    if (running_setuid && privileged_mode == 0)
      disable_priv_mode ();
  
-diff -urNp -x '*.orig' bash-5.1.org/shell.h bash-5.1/shell.h
---- bash-5.1.org/shell.h	2020-06-05 19:10:44.000000000 +0200
-+++ bash-5.1/shell.h	2021-03-21 13:21:29.807594925 +0100
-@@ -34,12 +34,15 @@
- #include "maxpath.h"
- #include "unwind_prot.h"
- #include "dispose_cmd.h"
-+#include "execute_cmd.h"
- #include "make_cmd.h"
- #include "ocache.h"
- #include "subst.h"
- #include "sig.h"
- #include "pathnames.h"
- #include "externs.h"
-+#include "builtins.h"
-+#include "builtins/common.h"
- 
- extern int EOF_Reached;
- 
-@@ -99,6 +102,9 @@ extern int interactive, interactive_shel
+diff --git a/shell.h b/shell.h
+--- a/shell.h
++++ b/shell.h
+@@ -100,6 +100,7 @@ extern int interactive, interactive_shell;
  extern int startup_state;
  extern int reading_shell_script;
  extern int shell_initialized;
 +extern int rpm_requires;
-+static char *alphabet_set = "abcdefghijklmnopqrstuvwxyz"
-+                     "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
  extern int bash_argv_initialized;
  extern int subshell_environment;
  extern int current_command_number;

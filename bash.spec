@@ -2,14 +2,14 @@
 # $ md5sum bash44-??? > sources
 #
 # Conditional build:
-%bcond_without	static		# don't build static version
-%bcond_with	bash_history	# build with additional history in /var/log/bash_hist ;)
-%bcond_without	tests	# do not perform "make test"
+%bcond_without	static		# static version
+%bcond_with	bash_history	# additional history in /var/log/bash_hist ;)
+%bcond_without	tests		# unit testing
 
-%define		ver		5.1
-%define		patchlevel	16
+%define		ver		5.2
+%define		patchlevel	11
 %define		rel		1
-%define		min_readline	8.1
+%define		min_readline	8.2
 Summary:	GNU Bourne Again Shell (bash)
 Summary(fr.UTF-8):	Le shell Bourne Again de GNU
 Summary(pl.UTF-8):	Powłoka GNU Bourne Again Shell (bash)
@@ -19,7 +19,7 @@ Release:	%{rel}%{?with_bash_history:inv}
 License:	GPL v3+
 Group:		Applications/Shells
 Source0:	https://ftp.gnu.org/gnu/bash/%{name}-%{ver}.tar.gz
-# Source0-md5:	bb91a17fd6c9032c26d0b2b78b50aff5
+# Source0-md5:	cfb4cf795fc239667f187b3d6b3d396f
 Source1:	%{name}rc
 Source2:	%{name}-skel-.bash_logout
 Source3:	%{name}-skel-.bash_profile
@@ -38,10 +38,9 @@ Patch8:		%{name}-sighup.patch
 Patch9:		%{name}-backup_history.patch
 Patch10:	%{name}-act_like_sh.patch
 Patch11:	%{name}-elinks_cont.patch
-Patch12:	bash-5.1-parallel_make.patch
-%patchset_source -f https://ftp.gnu.org/gnu/bash/bash-5.1-patches/bash51-%03g 1 %{patchlevel}
+%patchset_source -f https://ftp.gnu.org/gnu/bash/bash-5.2-patches/bash52-%03g 1 %{patchlevel}
 URL:		http://www.gnu.org/software/bash/
-BuildRequires:	autoconf >= 2.61
+BuildRequires:	autoconf >= 2.69
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	ncurses-devel >= 5.2
@@ -58,8 +57,8 @@ BuildRequires:	readline-static >= %{min_readline}
 Requires:	readline >= %{min_readline}
 Requires:	setup >= 2.4.6-2
 Obsoletes:	bash-doc
-Obsoletes:	bash2
-Obsoletes:	bash2-doc
+Obsoletes:	bash2 < 3
+Obsoletes:	bash2-doc < 3
 Obsoletes:	etcskel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -211,7 +210,6 @@ Pliki nagłówkowe do tworzenia wtyczek basha.
 %{?with_bash_history:%patch9 -p1}
 %patch10 -p1
 %patch11 -p1
-%patch12 -p1
 
 %{__sed} -i -e 's#/usr/bin/printf#/bin/printf#g' tests/intl2.sub
 
@@ -337,8 +335,10 @@ end
 %attr(755,root,root) %{_libdir}/%{name}/csv
 %attr(755,root,root) %{_libdir}/%{name}/cut
 %attr(755,root,root) %{_libdir}/%{name}/dirname
+%attr(755,root,root) %{_libdir}/%{name}/dsv
 %attr(755,root,root) %{_libdir}/%{name}/fdflags
 %attr(755,root,root) %{_libdir}/%{name}/finfo
+%attr(755,root,root) %{_libdir}/%{name}/getconf
 %attr(755,root,root) %{_libdir}/%{name}/head
 %attr(755,root,root) %{_libdir}/%{name}/id
 %attr(755,root,root) %{_libdir}/%{name}/ln
@@ -357,6 +357,7 @@ end
 %attr(755,root,root) %{_libdir}/%{name}/seq
 %attr(755,root,root) %{_libdir}/%{name}/setpgid
 %attr(755,root,root) %{_libdir}/%{name}/sleep
+%attr(755,root,root) %{_libdir}/%{name}/stat
 %attr(755,root,root) %{_libdir}/%{name}/strftime
 %attr(755,root,root) %{_libdir}/%{name}/sync
 %attr(755,root,root) %{_libdir}/%{name}/tee
@@ -377,5 +378,6 @@ end
 %{_includedir}/bash
 %dir %{_libdir}/%{name}
 %{_libdir}/%{name}/Makefile.inc
+%{_libdir}/%{name}/Makefile.sample
 %{_libdir}/%{name}/loadables.h
 %{_pkgconfigdir}/bash.pc
