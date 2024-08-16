@@ -7,7 +7,7 @@
 %bcond_without	tests		# unit testing
 
 %define		ver		5.2
-%define		patchlevel	26
+%define		patchlevel	32
 %define		rel		1
 %define		min_readline	8.2
 Summary:	GNU Bourne Again Shell (bash)
