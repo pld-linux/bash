@@ -7,7 +7,7 @@
 %bcond_without	tests		# unit testing
 
 %define		ver		5.2
-%define		patchlevel	32
+%define		patchlevel	37
 %define		rel		1
 %define		min_readline	8.2
 Summary:	GNU Bourne Again Shell (bash)
@@ -198,18 +198,18 @@ Pliki nagłówkowe do tworzenia wtyczek basha.
 %setup -q -n %{name}-%{ver} -a5
 # official patches
 %{?patchlevel:%patchset_patch 1 %{patchlevel}}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%{?with_bash_history:%patch9 -p1}
-%patch10 -p1
-%patch11 -p1
+%patch -P0 -p1
+%patch -P1 -p1
+%patch -P2 -p1
+%patch -P3 -p1
+%patch -P4 -p1
+%patch -P5 -p1
+%patch -P6 -p1
+%patch -P7 -p1
+%patch -P8 -p1
+%{?with_bash_history:%patch -P9 -p1}
+%patch -P10 -p1
+%patch -P11 -p1
 
 %{__sed} -i -e 's#/usr/bin/printf#/bin/printf#g' tests/intl2.sub
 
