@@ -8,6 +8,7 @@
 
 %define		ver		5.2
 %define		patchlevel	37
+%define		min_patch_nr	1000
 %define		rel		1
 %define		min_readline	8.2
 Summary:	GNU Bourne Again Shell (bash)
@@ -38,7 +39,7 @@ Patch8:		%{name}-sighup.patch
 Patch9:		%{name}-backup_history.patch
 Patch10:	%{name}-act_like_sh.patch
 Patch11:	%{name}-elinks_cont.patch
-%patchset_source -f https://ftp.gnu.org/gnu/bash/bash-5.2-patches/bash52-%03g 1 %{patchlevel}
+%patchset_source -f https://ftp.gnu.org/gnu/bash/bash-5.2-patches/bash52-%03g -b %{min_patch_nr} 1 %{patchlevel}
 URL:		http://www.gnu.org/software/bash/
 BuildRequires:	autoconf >= 2.69
 BuildRequires:	automake
@@ -197,7 +198,7 @@ Pliki nagłówkowe do tworzenia wtyczek basha.
 %prep
 %setup -q -n %{name}-%{ver} -a5
 # official patches
-%{?patchlevel:%patchset_patch 1 %{patchlevel}}
+%{?patchlevel:%autopatch -v -p0 -m %{min_patch_nr}}
 %patch -P0 -p1
 %patch -P1 -p1
 %patch -P2 -p1
