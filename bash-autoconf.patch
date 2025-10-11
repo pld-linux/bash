@@ -1,24 +1,7 @@
---- bash-5.0/aclocal.m4~	2018-12-05 15:31:34.000000000 +0100
-+++ bash-5.0/aclocal.m4	2019-03-21 14:19:55.805259147 +0100
-@@ -959,11 +959,10 @@ fi
- AC_CACHE_VAL(bash_cv_termcap_lib,
- [AC_CHECK_FUNC(tgetent, bash_cv_termcap_lib=libc,
-   [AC_CHECK_LIB(termcap, tgetent, bash_cv_termcap_lib=libtermcap,
--    [AC_CHECK_LIB(tinfo, tgetent, bash_cv_termcap_lib=libtinfo,
--        [AC_CHECK_LIB(curses, tgetent, bash_cv_termcap_lib=libcurses,
-+        [AC_CHECK_LIB(libncursesw, tgetent, bash_cv_termcap_lib=libncursesw,
- 	    [AC_CHECK_LIB(ncurses, tgetent, bash_cv_termcap_lib=libncurses,
--                [AC_CHECK_LIB(ncursesw, tgetent, bash_cv_termcap_lib=libncursesw,
--	            bash_cv_termcap_lib=gnutermcap)])])])])])])
-+                [AC_CHECK_LIB(curses, tgetent, bash_cv_termcap_lib=libcurses,
-+	            bash_cv_termcap_lib=gnutermcap)])])])])])
- if test "X$_bash_needmsg" = "Xyes"; then
- AC_MSG_CHECKING(which library has the termcap functions)
- fi
---- bash-2.05a-new/Makefile.in	Fri Feb  8 00:20:46 2002
-+++ bash-2.05a/Makefile.in	Thu Feb  7 22:38:32 2002
-@@ -727,8 +727,8 @@ pathnames.h:		Makefile $(srcdir)/pathnam
- 	@${RM} pathnames.tmp
+--- bash-5.3/Makefile.in~	2025-05-16 20:56:31.000000000 +0200
++++ bash-5.3/Makefile.in	2025-10-11 19:11:44.184553852 +0200
+@@ -862,8 +862,8 @@ $(SUPPORT_DIR)/bashbug.sh: $(SUPPORT_DIR
+ 	CONFIG_FILES=$(SUPPORT_DIR)/bashbug.sh CONFIG_HEADERS= $(SHELL) ./config.status
  
  # comment out for distribution
 -$(srcdir)/configure:	$(srcdir)/configure.ac $(srcdir)/aclocal.m4 $(srcdir)/config.h.in
@@ -28,4 +11,3 @@
  
  # for chet
  reconfig: force
-

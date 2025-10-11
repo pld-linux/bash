@@ -6,11 +6,11 @@
 %bcond_with	bash_history	# additional history in /var/log/bash_hist ;)
 %bcond_without	tests		# unit testing
 
-%define		ver		5.2
-%define		patchlevel	37
+%define		ver		5.3
+%define		patchlevel	03
 %define		min_patch_nr	1000
 %define		rel		1
-%define		min_readline	8.2
+%define		min_readline	8.3
 Summary:	GNU Bourne Again Shell (bash)
 Summary(fr.UTF-8):	Le shell Bourne Again de GNU
 Summary(pl.UTF-8):	Powłoka GNU Bourne Again Shell (bash)
@@ -20,7 +20,7 @@ Release:	%{rel}%{?with_bash_history:inv}
 License:	GPL v3+
 Group:		Applications/Shells
 Source0:	https://ftp.gnu.org/gnu/bash/%{name}-%{ver}.tar.gz
-# Source0-md5:	cfb4cf795fc239667f187b3d6b3d396f
+# Source0-md5:	4c7fb7d82586f93ab1d833ef20378ee8
 Source1:	%{name}rc
 Source2:	%{name}-skel-.bash_logout
 Source3:	%{name}-skel-.bash_profile
@@ -34,12 +34,11 @@ Patch3:		%{name}-info.patch
 Patch4:		%{name}-profile.patch
 Patch5:		%{name}-requires.patch
 Patch6:		%{name}-compat.patch
-Patch7:		%{name}-loadables.patch
-Patch8:		%{name}-sighup.patch
+
 Patch9:		%{name}-backup_history.patch
 Patch10:	%{name}-act_like_sh.patch
-Patch11:	%{name}-elinks_cont.patch
-%patchset_source -f https://ftp.gnu.org/gnu/bash/bash-5.2-patches/bash52-%03g -b %{min_patch_nr} 1 %{patchlevel}
+
+%patchset_source -f https://ftp.gnu.org/gnu/bash/bash-5.3-patches/bash53-%03g -b %{min_patch_nr} 1 %{patchlevel}
 URL:		http://www.gnu.org/software/bash/
 BuildRequires:	autoconf >= 2.69
 BuildRequires:	automake
@@ -206,11 +205,9 @@ Pliki nagłówkowe do tworzenia wtyczek basha.
 %patch -P4 -p1
 %patch -P5 -p1
 %patch -P6 -p1
-%patch -P7 -p1
-%patch -P8 -p1
+
 %{?with_bash_history:%patch -P9 -p1}
 %patch -P10 -p1
-%patch -P11 -p1
 
 %{__sed} -i -e 's#/usr/bin/printf#/bin/printf#g' tests/intl2.sub
 
@@ -333,15 +330,18 @@ end
 %dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/accept
 %attr(755,root,root) %{_libdir}/%{name}/basename
+%attr(755,root,root) %{_libdir}/%{name}/chmod
 %attr(755,root,root) %{_libdir}/%{name}/csv
 %attr(755,root,root) %{_libdir}/%{name}/cut
 %attr(755,root,root) %{_libdir}/%{name}/dirname
 %attr(755,root,root) %{_libdir}/%{name}/dsv
 %attr(755,root,root) %{_libdir}/%{name}/fdflags
 %attr(755,root,root) %{_libdir}/%{name}/finfo
+%attr(755,root,root) %{_libdir}/%{name}/fltexpr
 %attr(755,root,root) %{_libdir}/%{name}/getconf
 %attr(755,root,root) %{_libdir}/%{name}/head
 %attr(755,root,root) %{_libdir}/%{name}/id
+%attr(755,root,root) %{_libdir}/%{name}/kv
 %attr(755,root,root) %{_libdir}/%{name}/ln
 %attr(755,root,root) %{_libdir}/%{name}/logname
 %attr(755,root,root) %{_libdir}/%{name}/mkdir
@@ -360,6 +360,7 @@ end
 %attr(755,root,root) %{_libdir}/%{name}/sleep
 %attr(755,root,root) %{_libdir}/%{name}/stat
 %attr(755,root,root) %{_libdir}/%{name}/strftime
+%attr(755,root,root) %{_libdir}/%{name}/strptime
 %attr(755,root,root) %{_libdir}/%{name}/sync
 %attr(755,root,root) %{_libdir}/%{name}/tee
 %attr(755,root,root) %{_libdir}/%{name}/truefalse
