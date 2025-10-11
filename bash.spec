@@ -20,7 +20,7 @@ Release:	%{rel}%{?with_bash_history:inv}
 License:	GPL v3+
 Group:		Applications/Shells
 Source0:	https://ftp.gnu.org/gnu/bash/%{name}-%{ver}.tar.gz
-# Source0-md5:	4c7fb7d82586f93ab1d833ef20378ee8
+# Source0-md5:	977c8c0c5ae6309191e7768e28ebc951
 Source1:	%{name}rc
 Source2:	%{name}-skel-.bash_logout
 Source3:	%{name}-skel-.bash_profile
