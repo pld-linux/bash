@@ -48,7 +48,7 @@ diff --git a/builtins/mkbuiltins.c b/builtins/mkbuiltins.c
  static int is_localvar_builtin (char *);
  static int is_posix_builtin (char *);
  static int is_arrayvar_builtin (char *);
-+static int is_requires_builtin ();
++static int is_requires_builtin (char *);
  
  #if !defined (HAVE_RENAME)
  static int rename (char *, char *);
