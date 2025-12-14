@@ -7,9 +7,9 @@
 %bcond_without	tests		# unit testing
 
 %define		ver		5.3
-%define		patchlevel	3
+%define		patchlevel	9
 %define		min_patch_nr	1000
-%define		rel		2
+%define		rel		1
 %define		min_readline	8.3
 Summary:	GNU Bourne Again Shell (bash)
 Summary(fr.UTF-8):	Le shell Bourne Again de GNU
